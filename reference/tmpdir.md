@@ -38,7 +38,7 @@ Returns the path to the temporary session directory.
 
 ``` r
 tmpdir()
-#> [1] "/tmp/RtmpaJSYde/metabodeconplus"
+#> [1] "/tmp/RtmpaRFoao/metabodeconplus"
 tmpdir("simulate_spectra")
-#> [1] "/tmp/RtmpaJSYde/metabodeconplus/simulate_spectra"
+#> [1] "/tmp/RtmpaRFoao/metabodeconplus/simulate_spectra"
 ```

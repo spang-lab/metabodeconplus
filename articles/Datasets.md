@@ -55,7 +55,7 @@ spectrum of the [blood](#blood) dataset:
 The first two of the 16 simulated spectra are plotted
 [below](#fig-simulated-datasets). For further details about the
 simulation process, see the source code of function
-[simulate_spectrum()](https://github.com/spang-lab/metabodeconplus/blob/main/R/test_helpers.R).
+[simulate_spectrum()](https://github.com/spang-lab/metabodeconplus/blob/main/R/spec.R).
 
 ![Simulated Dataset 1](Datasets/svg/sim_01.svg)![Simulated Dataset
 2](Datasets/svg/sim_02.svg)

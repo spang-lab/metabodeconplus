@@ -82,7 +82,7 @@ Out of the 16 generated plots, the first two are shown as examples in
 2.  That the superposition of the lorentz curves is a good approximation
     of the smoothed SI. If major peaks are missed by the algorithm, you
     should reduce the threshold `delta` in the call to
-    `generate_lorentz_curves()`.
+    [`deconvolute()`](https://spang-lab.github.io/metabodeconplus/reference/deconvolute.md).
 
 ![\<strong\>Figure 2.\</strong\> Deconvolution results for the first two
 spectra of the Sim dataset. The raw SI (black), smoothed SI (blue), and

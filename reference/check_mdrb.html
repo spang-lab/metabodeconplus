@@ -29,10 +29,8 @@ installation status of mdrb system dependencies."><meta property="og:image" cont
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/Get_Started.html">Get Started</a></li>
     <li><a class="dropdown-item" href="../articles/MDM.html">Metabodecon Models</a></li>
     <li><a class="dropdown-item" href="../articles/FAQ.html">FAQ</a></li>
-    <li><a class="dropdown-item" href="../articles/MetaboDecon1D.html">MetaboDecon1D</a></li>
     <li><a class="dropdown-item" href="../articles/Datasets.html">Datasets</a></li>
     <li><a class="dropdown-item" href="../articles/Contributing.html">Contributing</a></li>
-    <li><a class="dropdown-item" href="../articles/Compatibility.html">Compatibility</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
@@ -46,7 +44,7 @@ installation status of mdrb system dependencies."><meta property="og:image" cont
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Check Rust Backend Requirements</h1>
-      <small class="dont-index">Source: <a href="https://github.com/spang-lab/metabodeconplus/blob/example-datasets-v1.6.3/R/mdrb.R" class="external-link"><code>R/mdrb.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/spang-lab/metabodeconplus/blob/main/R/mdrb.R" class="external-link"><code>R/mdrb.R</code></a></small>
       <div class="d-none name"><code>check_mdrb.Rd</code></div>
     </div>
 
@@ -111,17 +109,17 @@ Column <code>comment</code> is a string string describing the check result.</p>
 <span class="r-in"><span><span class="co"># depending on your system, might involve updating or installing</span></span></span>
 <span class="r-in"><span><span class="co"># Rust toolchain components.</span></span></span>
 <span class="r-in"><span><span class="fu">check_mdrb_deps</span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 19:12:16.32 Checking R version...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 19:12:16.32 Checking if buildtools exist...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 19:18:11.90 Checking R version...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 19:18:11.90 Checking if buildtools exist...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Trying to compile a simple C file</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Running /opt/R/4.6.1/lib/R/bin/R CMD SHLIB foo.c</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> using C compiler: ‘gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0’</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> gcc -std=gnu2x -I"/opt/R/4.6.1/lib/R/include" -DNDEBUG   -I/usr/local/include    -fpic  -g -O2  -c foo.c -o foo.o</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> gcc -std=gnu2x -shared -L/opt/R/4.6.1/lib/R/lib -L/usr/local/lib -o foo.so foo.o -L/opt/R/4.6.1/lib/R/lib -lR</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 19:12:16.50 Checking cargo version...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 19:12:16.51 Checking rustc version...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 19:12:16.53 Done</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 19:18:12.08 Checking cargo version...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 19:18:12.09 Checking rustc version...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 19:18:12.11 Done</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                check passed                                      comment</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> r           R &gt;= 4.2   TRUE                             Current: R 4.6.1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> rtools  Rtools exist   TRUE        Testcall: pkgbuild::has_build_tools()</span>
