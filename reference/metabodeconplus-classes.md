@@ -188,44 +188,44 @@ is_spectrum(s)
 #> [1] TRUE
 
 d <- deconvolute(s, sfr = c(3.55, 3.35))
-#> 2026-07-09 08:07:41.40 Starting deconvolution (spectra: 1, workers: 1)
-#> 2026-07-09 08:07:41.40 Starting deconvolution of sim_01 using R backend
-#> 2026-07-09 08:07:41.40 Starting peak selection
-#> 2026-07-09 08:07:41.40 Detected 312 peaks
-#> 2026-07-09 08:07:41.40 Removing peaks with low scores
-#> 2026-07-09 08:07:41.41 Removed 285 peaks
-#> 2026-07-09 08:07:41.41 Fitting Lorentz curves (3 iterations)
-#> 2026-07-09 08:07:41.41 Finished deconvolution of sim_01
-#> 2026-07-09 08:07:41.41 Finished deconvolution 0.004 secs
+#> 2026-07-09 09:09:55.84 Starting deconvolution (spectra: 1, workers: 1)
+#> 2026-07-09 09:09:55.84 Starting deconvolution of sim_01 using R backend
+#> 2026-07-09 09:09:55.84 Starting peak selection
+#> 2026-07-09 09:09:55.84 Detected 312 peaks
+#> 2026-07-09 09:09:55.84 Removing peaks with low scores
+#> 2026-07-09 09:09:55.84 Removed 285 peaks
+#> 2026-07-09 09:09:55.84 Fitting Lorentz curves (3 iterations)
+#> 2026-07-09 09:09:55.85 Finished deconvolution of sim_01
+#> 2026-07-09 09:09:55.85 Finished deconvolution 0.004 secs
 class(d) # c("decon2", "spectrum")
 #> [1] "decon2"   "spectrum"
 inherits(d, "spectrum") # TRUE
 #> [1] TRUE
 
 ds <- deconvolute(sim[1:3], sfr = c(3.55, 3.35))
-#> 2026-07-09 08:07:41.41 Starting deconvolution (spectra: 3, workers: 1)
-#> 2026-07-09 08:07:41.41 Starting deconvolution of sim_01 using R backend
-#> 2026-07-09 08:07:41.41 Starting peak selection
-#> 2026-07-09 08:07:41.41 Detected 312 peaks
-#> 2026-07-09 08:07:41.41 Removing peaks with low scores
-#> 2026-07-09 08:07:41.42 Removed 285 peaks
-#> 2026-07-09 08:07:41.42 Fitting Lorentz curves (3 iterations)
-#> 2026-07-09 08:07:41.42 Finished deconvolution of sim_01
-#> 2026-07-09 08:07:41.42 Starting deconvolution of sim_02 using R backend
-#> 2026-07-09 08:07:41.42 Starting peak selection
-#> 2026-07-09 08:07:41.42 Detected 316 peaks
-#> 2026-07-09 08:07:41.42 Removing peaks with low scores
-#> 2026-07-09 08:07:41.42 Removed 286 peaks
-#> 2026-07-09 08:07:41.42 Fitting Lorentz curves (3 iterations)
-#> 2026-07-09 08:07:41.42 Finished deconvolution of sim_02
-#> 2026-07-09 08:07:41.42 Starting deconvolution of sim_03 using R backend
-#> 2026-07-09 08:07:41.42 Starting peak selection
-#> 2026-07-09 08:07:41.42 Detected 333 peaks
-#> 2026-07-09 08:07:41.42 Removing peaks with low scores
-#> 2026-07-09 08:07:41.42 Removed 308 peaks
-#> 2026-07-09 08:07:41.42 Fitting Lorentz curves (3 iterations)
-#> 2026-07-09 08:07:41.42 Finished deconvolution of sim_03
-#> 2026-07-09 08:07:41.42 Finished deconvolution 0.011 secs
+#> 2026-07-09 09:09:55.85 Starting deconvolution (spectra: 3, workers: 1)
+#> 2026-07-09 09:09:55.85 Starting deconvolution of sim_01 using R backend
+#> 2026-07-09 09:09:55.85 Starting peak selection
+#> 2026-07-09 09:09:55.85 Detected 312 peaks
+#> 2026-07-09 09:09:55.85 Removing peaks with low scores
+#> 2026-07-09 09:09:55.85 Removed 285 peaks
+#> 2026-07-09 09:09:55.85 Fitting Lorentz curves (3 iterations)
+#> 2026-07-09 09:09:55.85 Finished deconvolution of sim_01
+#> 2026-07-09 09:09:55.85 Starting deconvolution of sim_02 using R backend
+#> 2026-07-09 09:09:55.85 Starting peak selection
+#> 2026-07-09 09:09:55.85 Detected 316 peaks
+#> 2026-07-09 09:09:55.85 Removing peaks with low scores
+#> 2026-07-09 09:09:55.86 Removed 286 peaks
+#> 2026-07-09 09:09:55.86 Fitting Lorentz curves (3 iterations)
+#> 2026-07-09 09:09:55.86 Finished deconvolution of sim_02
+#> 2026-07-09 09:09:55.86 Starting deconvolution of sim_03 using R backend
+#> 2026-07-09 09:09:55.86 Starting peak selection
+#> 2026-07-09 09:09:55.86 Detected 333 peaks
+#> 2026-07-09 09:09:55.86 Removing peaks with low scores
+#> 2026-07-09 09:09:55.86 Removed 308 peaks
+#> 2026-07-09 09:09:55.86 Fitting Lorentz curves (3 iterations)
+#> 2026-07-09 09:09:55.86 Finished deconvolution of sim_03
+#> 2026-07-09 09:09:55.86 Finished deconvolution 0.011 secs
 class(ds)              # c("decons2", "spectra")
 #> [1] "decons2" "spectra"
 as_spectra(s)
