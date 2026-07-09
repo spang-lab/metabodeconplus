@@ -67,7 +67,7 @@
       <img src="../logo.svg" class="logo" alt=""><h1>Contributing</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/spang-lab/metabodeconplus/blob/main/vignettes/Contributing.Rmd" class="external-link"><code>vignettes/Contributing.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/spang-lab/metabodeconplus/blob/v0.20.0/vignettes/Contributing.Rmd" class="external-link"><code>vignettes/Contributing.Rmd</code></a></small>
       <div class="d-none name"><code>Contributing.Rmd</code></div>
     </div>
 
@@ -108,7 +108,7 @@ commands to check that everything is still working as expected:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">document</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Build files in man folder</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/spell_check.html" class="external-link">spell_check</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Check spelling (add false positives to inst/WORDLIST)</span></span>
-<span><span class="fu">urlchecker</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/urlchecker/man/url_check.html" class="external-link">url_check</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Check URLs</span></span>
+<span><span class="fu">urlchecker</span><span class="fu">::</span><span class="fu"><a href="https://urlchecker.r-lib.org/reference/url_check.html" class="external-link">url_check</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Check URLs</span></span>
 <span><span class="fu">run_tests</span><span class="op">(</span>all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># Execute tests from tests folder inkl. slow tests</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/run_examples.html" class="external-link">run_examples</a></span><span class="op">(</span>run_donttest <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># Run all examples in the package</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/check.html" class="external-link">check</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Check package formalities</span></span>
@@ -134,7 +134,7 @@ release it to CRAN</li>
 <code class="sourceCode R"><span><span class="co"># Check spelling and URLs. False positive findings of spell check should be</span></span>
 <span><span class="co"># added to inst/WORDLIST.</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/spell_check.html" class="external-link">spell_check</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="fu">urlchecker</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/urlchecker/man/url_check.html" class="external-link">url_check</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu">urlchecker</span><span class="fu">::</span><span class="fu"><a href="https://urlchecker.r-lib.org/reference/url_check.html" class="external-link">url_check</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Slower, but more realistic tests than normal devtools::check()</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/check.html" class="external-link">check</a></span><span class="op">(</span></span>

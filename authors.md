@@ -13,7 +13,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/spang-lab/metabodeconplus/blob/main/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/spang-lab/metabodeconplus/blob/v0.20.0/DESCRIPTION)
 
 Schmidt T, Haeckl M, Gronwald W (2026). *metabodeconplus: Deconvolution
 and Alignment of 1d NMR Spectra*. R package version 0.20.0,

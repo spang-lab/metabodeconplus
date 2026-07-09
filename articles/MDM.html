@@ -67,7 +67,7 @@
       <img src="../logo.svg" class="logo" alt=""><h1>Metabodecon Models</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/spang-lab/metabodeconplus/blob/main/vignettes/MDM.Rmd" class="external-link"><code>vignettes/MDM.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/spang-lab/metabodeconplus/blob/v0.20.0/vignettes/MDM.Rmd" class="external-link"><code>vignettes/MDM.Rmd</code></a></small>
       <div class="d-none name"><code>MDM.Rmd</code></div>
     </div>
 
@@ -197,7 +197,7 @@ and B (bottom).</p>
 </h3>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">foldid</span> <span class="op">&lt;-</span> <span class="fu">metabodeconplus</span><span class="fu">:::</span><span class="fu">get_foldid</span><span class="op">(</span>y<span class="op">=</span><span class="va">y</span><span class="op">[</span><span class="va">tr</span><span class="op">]</span>, nfolds<span class="op">=</span><span class="fl">5</span>, seed<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
-<span><span class="va">cvfit</span> <span class="op">&lt;-</span> <span class="fu">glmnet</span><span class="fu">::</span><span class="fu"><a href="https://glmnet.stanford.edu/reference/cv.glmnet.html" class="external-link">cv.glmnet</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">y</span><span class="op">[</span><span class="va">tr</span><span class="op">]</span>, family<span class="op">=</span><span class="st">"binomial"</span>, alpha<span class="op">=</span><span class="fl">1</span>, foldid<span class="op">=</span><span class="va">foldid</span>, keep<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">cvfit</span> <span class="op">&lt;-</span> <span class="fu">glmnet</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/glmnet/man/cv.glmnet.html" class="external-link">cv.glmnet</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">y</span><span class="op">[</span><span class="va">tr</span><span class="op">]</span>, family<span class="op">=</span><span class="st">"binomial"</span>, alpha<span class="op">=</span><span class="fl">1</span>, foldid<span class="op">=</span><span class="va">foldid</span>, keep<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">cvfit</span><span class="op">)</span></span></code></pre></div>
 <p><img src="MDM_files/figure-html/fit-manually-glmnet-1.png" class="r-plt" alt="" width="50%"></p>
 <p>The non-zero coefficients at <code>lambda.min</code> are the
