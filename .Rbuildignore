@@ -33,11 +33,6 @@
 ^TODOS\.md$
 ^vdiffr\.Rout\.fail$
 ^vignettes/.gitignore$
-^vignettes/Classes\.html$
-^vignettes/Classes\.Rmd$
-^vignettes/Classes$
-^vignettes/Compatibility\.html$
-^vignettes/Compatibility\.Rmd$
 ^vignettes/Contributing\.html$
 ^vignettes/Contributing\.Rmd$
 ^vignettes/Datasets\.html$
@@ -47,9 +42,6 @@
 ^vignettes/FAQ\.Rmd$
 ^vignettes/FAQ$
 ^vignettes/Get_Started\.html$
-^vignettes/MetaboDecon1D\.html$
-^vignettes/MetaboDecon1D\.Rmd$
-^vignettes/MetaboDecon1D$
 ^vignettes/TODO$
 ^vignettes/TODO/.*\.Rmd$
 ^vignettes/articles/AKI_Original\.Rmd$

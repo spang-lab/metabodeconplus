@@ -110,7 +110,7 @@ Out of the 16 generated plots, the first two are shown as  examples  in  [Figure
    call to `deconvolute()`.
 2. That   the superposition of the lorentz curves is a good approximation of the
    smoothed SI. If major peaks are missed by the algorithm,  you  should  reduce
-   the threshold `delta` in the call to `generate_lorentz_curves()`.
+   the threshold `delta` in the call to `deconvolute()`.
 
 <a id="fig-plot-spectrum"></a>
 

@@ -323,7 +323,7 @@ get_data_dir <- function(dataset_name = c("", "blood", "test", "urine", "aki"), 
 #' @examples
 #' str(xds)
 xds <- list(
-    url = "https://github.com/spang-lab/metabodecon/releases/download/v1.6.3/example_datasets.zip",
+    url = "https://github.com/spang-lab/metabodeconplus/releases/download/example-datasets-v1.6.3/example_datasets.zip",
     zip_size = 75391701,
     dir_size = 113207749,
     n_files = 1336

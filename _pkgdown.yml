@@ -8,10 +8,8 @@ articles:
       - Get_Started
       - MDM
       - FAQ
-      - MetaboDecon1D
       - Datasets
       - Contributing
-      - Compatibility
 reference:
 - title: Deconvolution
   desc: Functions to read and deconvolute spectra into their individual peaks.

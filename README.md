@@ -1,6 +1,5 @@
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/spang-lab/metabodeconplus/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/spang-lab/metabodeconplus/actions/workflows/R-CMD-check.yaml)
-[![Install-Check](https://github.com/spang-lab/metabodeconplus/actions/workflows/test-install.yaml/badge.svg)](https://github.com/spang-lab/metabodeconplus/actions/workflows/test-install.yaml)
 [![Codecov test coverage](https://codecov.io/gh/spang-lab/metabodeconplus/branch/main/graph/badge.svg)](https://app.codecov.io/gh/spang-lab/metabodeconplus?branch=main)
 [![GitHub version](https://img.shields.io/github/v/release/spang-lab/metabodeconplus?label=GitHub&color=blue)](https://github.com/spang-lab/metabodeconplus/releases)
 [![CRAN version](https://img.shields.io/cran/v/metabodeconplus?label=CRAN&color=blue)](https://cran.r-project.org/package=metabodeconplus)
