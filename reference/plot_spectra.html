@@ -38,7 +38,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Plot Spectra</h1>
-      <small class="dont-index">Source: <a href="https://github.com/spang-lab/metabodeconplus/blob/main/R/plot.R" class="external-link"><code>R/plot.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/spang-lab/metabodeconplus/blob/example-datasets-v1.6.3/R/plot.R" class="external-link"><code>R/plot.R</code></a></small>
       <div class="d-none name"><code>plot_spectra.Rd</code></div>
     </div>
 
@@ -146,36 +146,36 @@ suitable for plotting a single spectrum.</p></div>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="deconvolute.html">deconvolute</a></span><span class="op">(</span><span class="va">sim</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, sfr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3.55</span>, <span class="fl">3.35</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 09:09:56.55 Starting deconvolution (spectra: 4, workers: 1)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 09:09:56.55 Starting deconvolution of sim_01 using R backend</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 09:09:56.55 Starting peak selection</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 09:09:56.55 Detected 312 peaks</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 09:09:56.55 Removing peaks with low scores</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 09:09:56.56 Removed 285 peaks</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 09:09:56.56 Fitting Lorentz curves (3 iterations)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 09:09:56.56 Finished deconvolution of sim_01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 09:09:56.56 Starting deconvolution of sim_02 using R backend</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 09:09:56.56 Starting peak selection</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 09:09:56.56 Detected 316 peaks</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 09:09:56.56 Removing peaks with low scores</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 09:09:56.56 Removed 286 peaks</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 09:09:56.56 Fitting Lorentz curves (3 iterations)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 09:09:56.56 Finished deconvolution of sim_02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 09:09:56.56 Starting deconvolution of sim_03 using R backend</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 09:09:56.56 Starting peak selection</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 09:09:56.56 Detected 333 peaks</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 09:09:56.56 Removing peaks with low scores</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 09:09:56.56 Removed 308 peaks</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 09:09:56.56 Fitting Lorentz curves (3 iterations)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 09:09:56.56 Finished deconvolution of sim_03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 09:09:56.56 Starting deconvolution of sim_04 using R backend</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 09:09:56.56 Starting peak selection</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 09:09:56.56 Detected 324 peaks</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 09:09:56.56 Removing peaks with low scores</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 09:09:56.57 Removed 298 peaks</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 09:09:56.57 Fitting Lorentz curves (3 iterations)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 09:09:56.57 Finished deconvolution of sim_04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 09:09:56.57 Finished deconvolution 0.014 secs</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 19:12:22.39 Starting deconvolution (spectra: 4, workers: 1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 19:12:22.39 Starting deconvolution of sim_01 using R backend</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 19:12:22.39 Starting peak selection</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 19:12:22.39 Detected 312 peaks</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 19:12:22.39 Removing peaks with low scores</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 19:12:22.40 Removed 285 peaks</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 19:12:22.40 Fitting Lorentz curves (3 iterations)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 19:12:22.40 Finished deconvolution of sim_01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 19:12:22.40 Starting deconvolution of sim_02 using R backend</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 19:12:22.40 Starting peak selection</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 19:12:22.40 Detected 316 peaks</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 19:12:22.40 Removing peaks with low scores</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 19:12:22.40 Removed 286 peaks</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 19:12:22.40 Fitting Lorentz curves (3 iterations)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 19:12:22.40 Finished deconvolution of sim_02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 19:12:22.40 Starting deconvolution of sim_03 using R backend</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 19:12:22.40 Starting peak selection</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 19:12:22.40 Detected 333 peaks</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 19:12:22.40 Removing peaks with low scores</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 19:12:22.40 Removed 308 peaks</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 19:12:22.40 Fitting Lorentz curves (3 iterations)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 19:12:22.40 Finished deconvolution of sim_03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 19:12:22.40 Starting deconvolution of sim_04 using R backend</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 19:12:22.40 Starting peak selection</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 19:12:22.40 Detected 324 peaks</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 19:12:22.40 Removing peaks with low scores</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 19:12:22.41 Removed 298 peaks</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 19:12:22.41 Fitting Lorentz curves (3 iterations)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 19:12:22.41 Finished deconvolution of sim_04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-09 19:12:22.41 Finished deconvolution 0.014 secs</span>
 <span class="r-in"><span><span class="fu">plot_spectra</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot_spectra-1.png" alt="" width="700" height="433"></span>
 </code></pre></div>
