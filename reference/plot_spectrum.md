@@ -172,15 +172,15 @@ via [`par()`](https://rdrr.io/r/graphics/par.html). Example:
 
 spec <- sim[[1]]
 decon <- deconvolute(sim[1], sfr = c(3.55, 3.35))
-#> 2026-07-09 07:30:28.54 Starting deconvolution (spectra: 1, workers: 1)
-#> 2026-07-09 07:30:28.54 Starting deconvolution of sim_01 using R backend
-#> 2026-07-09 07:30:28.54 Starting peak selection
-#> 2026-07-09 07:30:28.54 Detected 312 peaks
-#> 2026-07-09 07:30:28.55 Removing peaks with low scores
-#> 2026-07-09 07:30:28.55 Removed 285 peaks
-#> 2026-07-09 07:30:28.55 Fitting Lorentz curves (3 iterations)
-#> 2026-07-09 07:30:28.55 Finished deconvolution of sim_01
-#> 2026-07-09 07:30:28.55 Finished deconvolution 0.004 secs
+#> 2026-07-09 07:37:37.11 Starting deconvolution (spectra: 1, workers: 1)
+#> 2026-07-09 07:37:37.11 Starting deconvolution of sim_01 using R backend
+#> 2026-07-09 07:37:37.11 Starting peak selection
+#> 2026-07-09 07:37:37.11 Detected 312 peaks
+#> 2026-07-09 07:37:37.11 Removing peaks with low scores
+#> 2026-07-09 07:37:37.12 Removed 285 peaks
+#> 2026-07-09 07:37:37.12 Fitting Lorentz curves (3 iterations)
+#> 2026-07-09 07:37:37.12 Finished deconvolution of sim_01
+#> 2026-07-09 07:37:37.12 Finished deconvolution 0.004 secs
 
 ## 2.1. Plot the full (non-deconvoluted) spectrum
 ## 2.2. Remove connecting lines, and focus on a specific region specified in ppm
