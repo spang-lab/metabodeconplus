@@ -1,0 +1,50 @@
+name: Install-check
+permissions: read-all
+
+# This workflow verifies that end users can install the *published* package
+# (from CRAN / R-Universe / GitHub releases). metabodeconplus has not been
+# published yet, so it is manual-only for now. Re-enable the push/pull_request
+# triggers once the package is available from at least one of those sources.
+on: {
+  workflow_dispatch: {}
+}
+
+jobs:
+
+  test-install:
+    runs-on: ${{ matrix.config.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - {os: macos-latest,   r: 'release'}
+          - {os: windows-latest, r: 'release'}
+          - {os: ubuntu-latest,  r: 'release'}
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      R_KEEP_PKG_SOURCE: yes
+      RUN_SLOW_TESTS: "TRUE"
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: ${{ matrix.config.r }}
+          rtools-version: 'none'
+          http-user-agent: ${{ matrix.config.http-user-agent }}
+          use-public-rspm: true
+          extra-repositories: https://spang-lab.r-universe.dev
+
+      - name: Install Linux System Dependencies
+        if: runner.os == 'Linux'
+        run: sudo apt-get update -y && sudo apt-get install -y libgsl0-dev libcurl4-openssl-dev
+
+      - name: Test modern Installation from CRAN
+        run: Rscript scripts/test-install.R CRAN-Modern
+
+      - name: Test old-school Installation from CRAN
+        run: Rscript scripts/test-install.R CRAN-Old
+
+      - name: Test Installation from Github
+        run: Rscript scripts/test-install.R Github

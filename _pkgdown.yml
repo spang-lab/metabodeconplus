@@ -1,0 +1,80 @@
+url: https://spang-lab.github.io/metabodeconplus/
+template:
+  bootstrap: 5
+articles:
+  - title: Articles
+    navbar: ~
+    contents:
+      - Get_Started
+      - MDM
+      - FAQ
+      - MetaboDecon1D
+      - Datasets
+      - Contributing
+      - Compatibility
+reference:
+- title: Deconvolution
+  desc: Functions to read and deconvolute spectra into their individual peaks.
+  contents:
+  - read_spectrum
+  - read_spectra
+  - make_spectrum
+  - simulate_spectrum
+  - deconvolute
+- title: Alignment
+  desc: Functions to align multiple deconvoluted spectra.
+  contents:
+  - align
+  - alignment_funs
+  - harmonize_grid
+- title: Feature matrices and models
+  desc: Functions to turn aligned spectra into feature matrices and to fit and benchmark classification models.
+  contents:
+  - si_mat
+  - peak_mat
+  - bin
+  - bin700
+  - mdm
+  - mdm_methods
+- title: Plotting
+  desc: Functions to plot single and multiple spectra.
+  contents:
+  - plot_spectrum
+  - plot_spectra
+  - draw_spectrum
+  - heat_spectra
+- title: Classes
+  desc: The spectrum and spectra classes and their methods.
+  contents:
+  - metabodeconplus-classes
+- title: Datasets
+  desc: Bundled example datasets and functions to download and locate them.
+  contents:
+  - sim
+  - sim2
+  - sap
+  - datadir
+  - datadir_persistent
+  - datadir_temp
+  - tmpdir
+  - download_example_datasets
+  - metabodeconplus_file
+- title: Rust backend
+  desc: Functions to install and check the optional Rust backend.
+  contents:
+  - check_mdrb
+  - install_mdrb
+- title: Utility
+  desc: Utility functions, e.g. for converting between units or testing.
+  contents:
+  - convert_pos
+  - width
+  - transp
+  - tree
+  - headtail
+  - evalwith
+  - aaa_Get_Started
+- title: Deprecated
+  desc: Deprecated functions. They will be removed in a future release.
+  contents:
+  - get_data_dir # Superseded by `datadir()`

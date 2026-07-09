@@ -1,0 +1,2 @@
+# Compiler flags are intentionally left at R's portable defaults.
+# See src/Makevars for details.

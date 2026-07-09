@@ -1,0 +1,98 @@
+# Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
+# Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
+name: R-CMD-check
+permissions: read-all
+on: {
+  push: {branches: [main, master]},
+  pull_request: {branches: [main, master]}
+}
+jobs:
+  R-CMD-check:
+    runs-on: ${{ matrix.config.os }}
+    name: '${{ matrix.config.os }} (${{ matrix.config.r }}, ${{ matrix.config.test }})'
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - {os: ubuntu-latest,  r: 'release',  test: 'all'}
+          - {os: ubuntu-latest,  r: 'release',  test: 'nobioc'}
+          - {os: ubuntu-latest,  r: 'release',  test: 'fast'}
+          - {os: ubuntu-latest,  r: 'devel',    test: 'fast'}
+          - {os: ubuntu-latest,  r: 'oldrel-1', test: 'fast'}
+          - {os: ubuntu-latest,  r: 'oldrel-2', test: 'fast'}
+          - {os: ubuntu-latest,  r: 'oldrel-3', test: 'fast'}
+          - {os: ubuntu-latest,  r: 'oldrel-4', test: 'fast'}
+          - {os: macos-latest,   r: 'release',  test: 'fast'}
+          - {os: windows-latest, r: 'release',  test: 'fast'}
+          - {os: windows-latest, r: 'oldrel-4', test: 'fast'}
+    # NB: RUN_SLOW_TESTS is intentionally NOT set at the job level. The
+    # per-step configuration below enables it only for the `all` and `nobioc`
+    # runs, so the `fast` jobs (macOS/Windows/older R) skip the slow, network-
+    # dependent tests (75 MB example-datasets download, etc.).
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      R_KEEP_PKG_SOURCE: yes
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Pandoc
+        uses: r-lib/actions/setup-pandoc@v2
+
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: ${{ matrix.config.r }}
+          http-user-agent: ${{ matrix.config.http-user-agent }}
+          use-public-rspm: true
+          extra-repositories: https://spang-lab.r-universe.dev
+
+      - name: Set up R Dependencies
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::rcmdcheck
+          needs: check
+
+      # The Rust backend 'mdrb' is optional. R-Universe ships pre-built
+      # binaries only for the two most recent R releases; on older R or
+      # platforms without a binary (e.g. Windows) it is unavailable and the
+      # Rust-backend tests skip themselves. This step is best-effort so a
+      # failed/absent install never fails the job.
+      - name: Install optional Rust backend (mdrb, best-effort)
+        continue-on-error: true
+        run: Rscript -e 'if (getRversion() >= "4.2") try(install.packages("mdrb", repos = "https://spang-lab.r-universe.dev"))'
+
+      - name: Install MacOS System Dependencies
+        if: runner.os == 'macOS'
+        uses: r-hub/actions/setup-r-sysreqs@v1
+        with: { type: "minimal" }
+
+      - name: Install Linux System Dependencies
+        if: runner.os == 'Linux'
+        run: sudo apt-get update -y && sudo apt-get install -y libgsl0-dev
+
+      - name: Test package (fast tests only)
+        uses: r-lib/actions/check-r-package@v2
+        if: ${{ matrix.config.test == 'fast' }}
+        env:
+          _R_CHECK_FORCE_SUGGESTS_: FALSE
+
+      - name: Test package (incl. slow tests)
+        uses: r-lib/actions/check-r-package@v2
+        if: ${{ matrix.config.test == 'all' }}
+        env:
+          _R_CHECK_FORCE_SUGGESTS_: FALSE
+          RUN_SLOW_TESTS: TRUE
+
+      - name: Test package (with Bioconductor dependencies removed)
+        if: ${{ matrix.config.test == 'nobioc' }}
+        run: |
+          export _R_CHECK_FORCE_SUGGESTS_=FALSE
+          export RUN_SLOW_TESTS=TRUE
+          Rscript -e "remove.packages(c('MassSpecWavelet', 'impute'))"
+          cd ..
+          R CMD INSTALL --install-tests metabodeconplus
+          Rscript -e "testthat::test_package('metabodeconplus')"
+          R CMD build metabodeconplus
+          R CMD check --no-manual --as-cran metabodeconplus_*.tar.gz

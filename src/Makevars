@@ -1,0 +1,3 @@
+# Compiler flags are intentionally left at R's portable defaults
+# (typically -O2). CRAN policy forbids packages from overriding the
+# optimisation level in Makevars, so we do not set PKG_CFLAGS here.
