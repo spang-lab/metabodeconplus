@@ -422,7 +422,7 @@ readline <- function(...) {
 #'      y <- get_num_input("Enter a number between 1 and 10: ", min = 1, max = 10)
 #' }
 get_num_input <- function(prompt, min = -Inf, max = Inf, int = FALSE) {
-    pat <- if (int) "^[+-]?[ ]*[0-9]+$" else "^[+-]?[ ]*[0-9]*\\.?[0-9]+$"
+    pat <- if (int) "^[+-]?[0-9]+$" else "^[+-]?[0-9]*\\.?[0-9]+$"
     typ <- if (int) "number" else "value"
     if (!endsWith(prompt, " ")) prompt <- paste0(prompt, " ")
     x <- trimws(readline(prompt = prompt))
@@ -521,10 +521,6 @@ get_yn_input <- function(prompt) {
 
 #' @noRd
 #' @author 2024-2025 Tobias Schmidt: initial version.
-`%notin` <- function(x, y) {
-    !(x %in% y)
-}
-
 
 # Print Functions (Private) #####
 
@@ -822,11 +818,11 @@ human_readable <- function(x, unit, fmt = "%.1f") {
     if      (m >= 1e+9) { prefix <- "G"; x <- x / 1e+9 }
     else if (m >= 1e+6) { prefix <- "M"; x <- x / 1e+6 }
     else if (m >= 1e+3) { prefix <- "k"; x <- x / 1e+3 }
-    else if (m <= 1e-3) { prefix <- "m"; x <- x / 1e-3 }
-    else if (m <= 1e-6) { prefix <- "u"; x <- x / 1e-6 }
     else if (m <= 1e-9) { prefix <- "n"; x <- x / 1e-9 }
+    else if (m <= 1e-6) { prefix <- "u"; x <- x / 1e-6 }
+    else if (m <= 1e-3) { prefix <- "m"; x <- x / 1e-3 }
     else                { prefix <- "";  x <- x / 1e+0 }
-    # styler: off
+    # styler: on
     fmtstr <- paste0(fmt, " %s%s")
     sprintf(fmtstr, x, prefix, unit)
 }
@@ -1037,14 +1033,6 @@ is_list_of_nums <- function(x, nl = NULL, nv = NULL) {
 }
 
 # Misc (Private) ##############################################################
-
-cut2 <- function(x, breaks) {
-    if (breaks == 1) {
-        rep(1L, length(x))
-    } else {
-        cut(x, breaks, labels = FALSE)
-    }
-}
 
 rbindlist <- function(x) {
     do.call(rbind, x)

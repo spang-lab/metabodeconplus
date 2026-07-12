@@ -306,6 +306,10 @@ fit_mdm_internal <- function(
     verbosity=1, seed=1, check=TRUE
 ) {
 
+    if (check) check_mdm_args(
+        x=x, y=y, sfr=sfr, igrs=igrs, use_rust=use_rust,
+        nworkers=nworkers, verbosity=verbosity, seed=seed
+    )
     lvs <- levels(y)
     verbose <- verbosity >= 2L
     x <- grid_deconvolute_spectra(x, deg, sfr, igrs, verbose, nworkers, use_rust)
@@ -391,7 +395,7 @@ fit_mdm_internal <- function(
 #' @noRd
 benchmark_internal <- function(
     x, y,
-    decon_fun=deconvolute,  align_fun=clupa,    snap_fun=snap_to_ref,
+    decon_fun=deconvolute_spectra, align_fun=clupa, snap_fun=snap_to_ref,
     feat_fun=peak_mat,      fit_fun=fit_lasso,  predict_fun=predict_lasso,
     npmax=-1L,              maxShift=-1L,       maxCombine=10L,
     deg=NULL,               sfr=NULL,           igrs=list(),
@@ -402,7 +406,7 @@ benchmark_internal <- function(
         is.function(decon_fun), is.function(align_fun),
         is.function(snap_fun),  is.function(feat_fun),
         is.function(fit_fun),   is.function(predict_fun),
-        is_int(k, 1), k >= 2, k <= length(y),
+        is_int(k, 1), k >= 2, k <= min(table(y)),
         is_int(npmax),    all(npmax    >= -2L),
         is_int(maxShift), all(maxShift >= -1L),
         is_int(maxCombine), all(maxCombine >= 0L)
@@ -585,14 +589,13 @@ fit_lasso <- function(X, y, seed=1, nworkers=1L, nreps=5L) {
     }
     mean_acc <- colMeans(acc_mat, na.rm=TRUE)
     mean_auc <- colMeans(auc_mat, na.rm=TRUE)
-    # Pick lambda* by averaged accuracy with AUC as tiebreaker. Search
-    # from the largest-lambda end (cv.glmnet's path is decreasing, so
-    # `rev()` puts the largest lambda first; `which.max` then breaks
-    # remaining ties toward the more-regularized end, matching
-    # cv.glmnet's lambda.1se sensibility).
+    # Pick lambda* by averaged accuracy with AUC as tiebreaker. cv.glmnet's
+    # lambda path is decreasing (index 1 = largest/most-regularized), and
+    # which.max() returns the FIRST maximum, so ties break toward the
+    # more-regularized end (matching cv.glmnet's lambda.1se sensibility).
+    # For a unique maximum this is identical to any other search order.
     score <- mean_acc * 1e6 + mean_auc
-    j_star <- which.max(rev(score))
-    j_star <- nl - j_star + 1L
+    j_star <- which.max(score)
     chosen_lambda <- lambda_path[j_star]
     final_model <- cvs[[nreps]]
     final_model$lambda.min <- chosen_lambda
@@ -797,7 +800,11 @@ get_foldid <- function(y, nfolds=5, seed=1) {
 #' @param yhat Numeric prediction scores.
 #' @return Numeric scalar AUC or `NA_real_` if one class is missing.
 AUC <- function(y, yhat) {
-    y <- as_binary01(y)
+    # Return NA (rather than error) when a single class is present, e.g. a
+    # degenerate CV fold — callers treat NA as "undefined for this fold".
+    lvs <- sort(unique(y))
+    if (length(lvs) != 2) return(NA_real_)
+    y <- as.integer(y == lvs[2])
     pos <- y == 1
     n1 <- sum(pos); n0 <- sum(!pos)
     if (n1 == 0 || n0 == 0) return(NA_real_)

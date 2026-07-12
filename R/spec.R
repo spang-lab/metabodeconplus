@@ -176,7 +176,7 @@ read_spectra <- function(data_path = pkg_file("example_datasets/bruker/urine"),
 #' fq_ref <- 600.25 * 1e6
 #' fq_width <- 12005
 #' spectrum <- make_spectrum(si, cs_max, cs_width, fq_ref, fq_width)
-#' spectrum2 <- make_spectrum(si, cs_max, cs_width, fq_ref, fq_width = 12010, force = FALSE)
+#' spectrum2 <- make_spectrum(si, cs_max, cs_width, fq_ref, fq_width = 12010, force = TRUE)
 make_spectrum <- function(si,
                           cs_max,
                           cs_width,
@@ -193,7 +193,7 @@ make_spectrum <- function(si,
     fq <- in_hz(cs, fq_ref)
     fq_width_calc <- max(fq) - min(fq)
     if (!is.null(fq_width) && !is_equal(fq_width_calc, fq_width)) {
-        if (force) {
+        if (!force) {
             msg <- paste(
                 "Calculated spectrum width in Hz (%s) does not match the",
                 "provided value (%s). Please read in the data manually or set",

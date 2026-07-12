@@ -90,9 +90,9 @@ check_mdrb_deps <- function(verbose = FALSE) {
     # Add $HOME/.cargo/bin to PATH before checking cargo and rustc
     win <- .Platform$OS.type == "windows"
     home_cargo_bin <- paste(home(), ".cargo", "bin", sep = .Platform$file.sep)
-    PATH <- Sys.getenv("PATH")
-    PATH <- paste(PATH, home_cargo_bin, sep = if (win) ";" else ":")
-    Sys.setenv(PATH = PATH)
+    old_path <- Sys.getenv("PATH")
+    on.exit(Sys.setenv(PATH = old_path), add = TRUE) # don't leak PATH into the session
+    Sys.setenv(PATH = paste(old_path, home_cargo_bin, sep = if (win) ";" else ":"))
 
     # Check cargo version
     if (verbose) logf("Checking cargo version...")

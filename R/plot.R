@@ -92,7 +92,9 @@ plot_spectra <- function(
     # alignment asserts grid equality). Aligned reconstructions live
     # on the same grid, so $cs covers both raw and aligned paths.
     css <- lapply(x, function(s) s$cs)
-    sis <- lapply(x, function(s) switch(what, supal=s$sit$supal, sup=s$sit$sup, si=s$si))
+    # supal is cleared by snap_to_ref (post-RefPA), so fall back to sup/si.
+    get_sit <- function(s) switch(what, supal=s$sit$supal %||% s$sit$sup, sup=s$sit$sup, si=s$si)
+    sis <- lapply(x, get_sit)
     if (!is.null(foc_rgn)) {
         lo <- min(foc_rgn); hi <- max(foc_rgn)
         for (i in seq_len(n)) {

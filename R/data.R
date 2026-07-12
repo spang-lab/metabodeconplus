@@ -105,7 +105,7 @@ metabodeconplus_file <- function(name = "sim_01") {
         recursive = TRUE,
         include.dirs = TRUE
     )
-    paths[grepl(paste0(name, "$"), paths)]
+    paths[endsWith(paths, name)]
 }
 
 #' @export
@@ -695,6 +695,11 @@ creatinine_normalize <- function(spectra, cr = c(3.053, 3.011)) {
         s <- spectra[[i]]
         idx <- which(s$cs >= cr[2] & s$cs <= cr[1])
         ci <- sum(s$si[idx]) / 1e6 # scaled creatinine intensity
+        if (ci == 0) {
+            warning("Creatinine window intensity is zero for spectrum ",
+                    i, "; leaving it unnormalized.", call. = FALSE)
+            next
+        }
         spectra_normed[[i]]$si <- (s$si / ci)
     }
     spectra_normed
