@@ -6,10 +6,10 @@ deconvolution part uses the algorithm described in [Koh et
 al. (2009)](https://doi.org/10.1016/j.jmr.2009.09.003). The alignment
 part is based on functions from the ‘speaq’ package, described in
 [Beirnaert et al. (2018)](https://doi.org/10.1371/journal.pcbi.1006018)
-and [Vu et al. (2011)](https://doi.org/doi:10.1186/1471-2105-12-405). A
+and [Vu et al. (2011)](https://doi.org/10.1186/1471-2105-12-405). A
 detailed description and evaluation of an early version of the package,
 ‘MetaboDecon1D v0.2.2’, can be found in [Haeckl et
-al. (2021)](https://doi.org/doi:10.3390/metabo11070452).
+al. (2021)](https://doi.org/10.3390/metabo11070452).
 
 ## Installation
 
