@@ -36,8 +36,8 @@ read_spectra(
   The experiment/processing number for the file. E.g. `"10"`. Only
   relevant if `file_format` equals `"bruker"`. For details see section
   [File
-  Structure](https://spang-lab.github.io/metabodeconplus/articles/FAQ.html#file-structure)
-  in the metabodeconplus FAQ.
+  structure](https://spang-lab.github.io/metabodeconplus/articles/Get_Started.html#file-structure)
+  in the Get Started article.
 
 - raw:
 

@@ -16,6 +16,42 @@ For an overview of the S3 classes used to represent spectra throughout
 the package (`spectrum`, `decon2`, `align`, and their collections), see
 [`?metabodeconplus-classes`](https://spang-lab.github.io/metabodeconplus/reference/metabodeconplus-classes.html).
 
+## Read spectra
+
+Spectra are read from disk with
+[`read_spectrum()`](https://spang-lab.github.io/metabodeconplus/reference/read_spectrum.md)
+(single spectrum) or
+[`read_spectra()`](https://spang-lab.github.io/metabodeconplus/reference/read_spectra.md)
+(a whole directory of spectra). Both support the Bruker and JCAMP-DX
+formats.
+
+### File structure
+
+[`read_spectra()`](https://spang-lab.github.io/metabodeconplus/reference/read_spectra.md)
+expects one of the two directory layouts shown below. For Bruker data,
+point `data_path` at the folder that *contains* the individual sample
+folders; each sample folder holds an experiment number (`expno`, e.g.
+`10`) and, under `pdata/`, a processing number (`procno`, e.g. `10`).
+For JCAMP-DX data, point `data_path` at the folder containing the `.dx`
+files.
+
+``` txt
+C:/bruker/urine              # data_path (user input)
+├── urine_1/                 # sample name (user input)
+│   └── 10/                  # expno (called spectroscopy_value here)
+│       ├── acqus            # acquisition parameters (constant)
+│       └── pdata/
+│           └── 10/          # procno (called processing_value here)
+│               ├── 1r       # real part of the processed spectrum (constant)
+│               └── procs    # processing parameters (constant)
+├── urine_2/...
+└── ...
+C:/jcampdx/urine             # data_path (user input)
+├── urine_1.dx               # one .dx file per sample (user input)
+├── urine_2.dx
+└── ...
+```
+
 ## Deconvolute spectra
 
 To find the path to the Sim dataset, you can use the

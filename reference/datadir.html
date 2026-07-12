@@ -29,8 +29,7 @@ instead."><meta property="og:image" content="https://spang-lab.github.io/metabod
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/Get_Started.html">Get Started</a></li>
-    <li><a class="dropdown-item" href="../articles/MDM.html">Metabodecon Models</a></li>
-    <li><a class="dropdown-item" href="../articles/FAQ.html">FAQ</a></li>
+    <li><a class="dropdown-item" href="../articles/MDM.html">Model Fitting</a></li>
     <li><a class="dropdown-item" href="../articles/Datasets.html">Datasets</a></li>
     <li><a class="dropdown-item" href="../articles/Contributing.html">Contributing</a></li>
   </ul></li>
@@ -116,19 +115,19 @@ that:</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Get temporary datadir and persistent datadir</span></span></span>
 <span class="r-in"><span><span class="fu">datadir</span><span class="op">(</span>persistent <span class="op">=</span> <span class="cn">FALSE</span>, warn <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpsrHUGs/metabodeconplus/data"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpPwMwdf/metabodeconplus/data"</span>
 <span class="r-in"><span><span class="fu">datadir</span><span class="op">(</span>persistent <span class="op">=</span> <span class="cn">TRUE</span>,  warn <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/home/runner/.local/share/R/metabodeconplus"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Get persistent datadir if existing else temp datadir. Set `warn = TRUE`</span></span></span>
 <span class="r-in"><span><span class="co"># to raise a warning if none of the directories exist yet.</span></span></span>
 <span class="r-in"><span><span class="fu">datadir</span><span class="op">(</span>warn <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpsrHUGs/metabodeconplus/data"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpPwMwdf/metabodeconplus/data"</span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="fu">datadir</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Get PERSISTENT_DATADIR/bruker if existing else TEMP_DATADIR/bruker</span></span></span>
 <span class="r-in"><span><span class="fu">datadir</span><span class="op">(</span>file <span class="op">=</span> <span class="st">"bruker/urine"</span>, warn <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpsrHUGs/metabodeconplus/data/bruker/urine"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpPwMwdf/metabodeconplus/data/bruker/urine"</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
