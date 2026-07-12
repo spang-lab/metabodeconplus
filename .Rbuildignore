@@ -38,9 +38,6 @@
 ^vignettes/Datasets\.html$
 ^vignettes/Datasets\.Rmd$
 ^vignettes/Datasets$
-^vignettes/FAQ\.html$
-^vignettes/FAQ\.Rmd$
-^vignettes/FAQ$
 ^vignettes/Get_Started\.html$
 ^vignettes/TODO$
 ^vignettes/TODO/.*\.Rmd$

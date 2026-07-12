@@ -22,8 +22,8 @@ read_spectra(
 \item{file_format}{The file_format of the spectrum file. E.g. \code{"bruker"} or \code{"jcampdx"}.}
 
 \item{expno, procno}{The experiment/processing number for the file. E.g. \code{"10"}. Only relevant if
-\code{file_format} equals \code{"bruker"}. For details see section \href{https://spang-lab.github.io/metabodeconplus/articles/FAQ.html#file-structure}{File Structure} in
-the metabodeconplus FAQ.}
+\code{file_format} equals \code{"bruker"}. For details see section \href{https://spang-lab.github.io/metabodeconplus/articles/Get_Started.html#file-structure}{File structure}
+in the Get Started article.}
 
 \item{raw}{If \code{FALSE}, scales the returned signal intensities based on information
 available in the spectrum metadata, in particular \code{NC_proc}. For details see

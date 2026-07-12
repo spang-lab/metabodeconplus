@@ -191,13 +191,12 @@ Ever.
 
 ## Vignettes
 
-- `Classes.Rmd`: Documentation for the `Classes` module.
-- `Compatibility.Rmd`: Details on compatibility with other tools.
-- `Contributing.Rmd`: Guidelines for contributing to the project.
+- `Get_Started.Rmd`: A guide to getting started with the package (reading
+  spectra incl. the Bruker/JCAMP-DX file layout, deconvolution, alignment).
+- `MDM.Rmd`: "Model Fitting" — the deconvolute → clupa → snap_to_ref → ranger
+  classification pipeline, plus the one-shot `fit_mdm()` / `benchmark()` calls.
 - `Datasets.Rmd`: Information about the datasets included in the package.
-- `FAQ.Rmd`: Frequently asked questions.
-- `Get_Started.Rmd`: A guide to getting started with the package.
-- `MetaboDecon1D.Rmd`: Documentation for the `MetaboDecon1D` module.
+- `Contributing.Rmd`: Guidelines for contributing to the project.
 
 ## Modules
 
