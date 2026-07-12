@@ -67,7 +67,7 @@
       <img src="../logo.svg" class="logo" alt=""><h1>Metabodecon Models</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/spang-lab/metabodeconplus/blob/v0.20.0/vignettes/MDM.Rmd" class="external-link"><code>vignettes/MDM.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/spang-lab/metabodeconplus/blob/main/vignettes/MDM.Rmd" class="external-link"><code>vignettes/MDM.Rmd</code></a></small>
       <div class="d-none name"><code>MDM.Rmd</code></div>
     </div>
 
@@ -89,6 +89,12 @@ attached as an attribute. For details on how the dataset was
 constructed, see <code><a href="../reference/sim2.html">?sim2</a></code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/spang-lab/metabodeconplus/" class="external-link">metabodeconplus</a></span><span class="op">)</span></span>
+<span><span class="co"># Small rank-based AUC helper (positive class = second factor level).</span></span>
+<span><span class="va">auc</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">prob</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">pos</span> <span class="op">&lt;-</span> <span class="va">y</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>; <span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rank.html" class="external-link">rank</a></span><span class="op">(</span><span class="va">prob</span><span class="op">)</span></span>
+<span>    <span class="va">n1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">pos</span><span class="op">)</span>; <span class="va">n0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="op">!</span><span class="va">pos</span><span class="op">)</span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="va">n1</span> <span class="op">==</span> <span class="fl">0</span> <span class="op">||</span> <span class="va">n0</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="cn">NA_real_</span> <span class="kw">else</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">r</span><span class="op">[</span><span class="va">pos</span><span class="op">]</span><span class="op">)</span> <span class="op">-</span> <span class="va">n1</span> <span class="op">*</span> <span class="op">(</span><span class="va">n1</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="va">n1</span> <span class="op">*</span> <span class="va">n0</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">sim2</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">sim2</span>, <span class="st">"group"</span><span class="op">)</span></span>
 <span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
@@ -158,13 +164,13 @@ plotting; the model itself is trained on all of <code>x[tr]</code>.</p>
 <div class="section level3">
 <h3 id="step-2-align">Step 2: Align<a class="anchor" aria-label="anchor" href="#step-2-align"></a>
 </h3>
-<p><code><a href="../reference/alignment_funs.html">clupa()</a></code> calls an internal <code>find_ref()</code> to
-pick the spectrum whose peaks are closest to all others. We extract that
-reference now – we need it later to align the <em>test</em> spectra to
-the same coordinate system.</p>
+<p><code><a href="../reference/alignment_funs.html">clupa()</a></code> picks a reference spectrum (the one whose peaks
+are closest to all others) and attaches it. We extract that reference
+now, since we need it later to align the <em>test</em> spectra to the
+same coordinate system.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">aligns</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/alignment_funs.html">clupa</a></span><span class="op">(</span><span class="va">decons</span>, maxShift<span class="op">=</span><span class="fl">50</span>, verbose<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="va">ref</span> <span class="op">&lt;-</span> <span class="fu">metabodeconplus</span><span class="fu">:::</span><span class="fu">find_ref</span><span class="op">(</span><span class="va">decons</span><span class="op">)</span></span>
+<span><span class="va">ref</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">aligns</span>, <span class="st">"ref"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/plot_spectra.html">plot_spectra</a></span><span class="op">(</span><span class="va">aligns</span><span class="op">[</span><span class="va">abtr</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/heat_spectra.html">heat_spectra</a></span><span class="op">(</span><span class="va">aligns</span><span class="op">[</span><span class="va">abtr</span><span class="op">]</span>, y<span class="op">=</span><span class="va">yab</span><span class="op">)</span></span></code></pre></div>
 <p><img src="MDM_files/figure-html/fit-manually-align-1.png" class="r-plt" alt="" width="50%"><img src="MDM_files/figure-html/fit-manually-align-2.png" class="r-plt" alt="" width="50%"></p>
@@ -196,8 +202,8 @@ and B (bottom).</p>
 <h3 id="step-4-fit-the-lasso">Step 4: Fit the lasso<a class="anchor" aria-label="anchor" href="#step-4-fit-the-lasso"></a>
 </h3>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">foldid</span> <span class="op">&lt;-</span> <span class="fu">metabodeconplus</span><span class="fu">:::</span><span class="fu">get_foldid</span><span class="op">(</span>y<span class="op">=</span><span class="va">y</span><span class="op">[</span><span class="va">tr</span><span class="op">]</span>, nfolds<span class="op">=</span><span class="fl">5</span>, seed<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
-<span><span class="va">cvfit</span> <span class="op">&lt;-</span> <span class="fu">glmnet</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/glmnet/man/cv.glmnet.html" class="external-link">cv.glmnet</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">y</span><span class="op">[</span><span class="va">tr</span><span class="op">]</span>, family<span class="op">=</span><span class="st">"binomial"</span>, alpha<span class="op">=</span><span class="fl">1</span>, foldid<span class="op">=</span><span class="va">foldid</span>, keep<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">cvfit</span> <span class="op">&lt;-</span> <span class="fu">glmnet</span><span class="fu">::</span><span class="fu"><a href="https://glmnet.stanford.edu/reference/cv.glmnet.html" class="external-link">cv.glmnet</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">y</span><span class="op">[</span><span class="va">tr</span><span class="op">]</span>, family<span class="op">=</span><span class="st">"binomial"</span>, alpha<span class="op">=</span><span class="fl">1</span>, keep<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">cvfit</span><span class="op">)</span></span></code></pre></div>
 <p><img src="MDM_files/figure-html/fit-manually-glmnet-1.png" class="r-plt" alt="" width="50%"></p>
 <p>The non-zero coefficients at <code>lambda.min</code> are the
@@ -273,9 +279,9 @@ then restrict it to the training-time <code>peakPos</code> columns so
 <span><span class="va">pred_te</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">prob_te</span> <span class="op">&gt;</span> <span class="fl">0.5</span>, <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>,</span>
 <span>                  levels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">acc_manual</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">pred_te</span> <span class="op">==</span> <span class="va">y</span><span class="op">[</span><span class="va">te</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="va">auc_manual</span> <span class="op">&lt;-</span> <span class="fu">metabodeconplus</span><span class="fu">:::</span><span class="fu">AUC</span><span class="op">(</span><span class="va">y</span><span class="op">[</span><span class="va">te</span><span class="op">]</span>, <span class="va">prob_te</span><span class="op">)</span></span>
+<span><span class="va">auc_manual</span> <span class="op">&lt;-</span> <span class="fu">auc</span><span class="op">(</span><span class="va">y</span><span class="op">[</span><span class="va">te</span><span class="op">]</span>, <span class="va">prob_te</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span><span class="st">"Manual test acc: %.1f%%, AUC: %.3f\n"</span>, <span class="va">acc_manual</span> <span class="op">*</span> <span class="fl">100</span>, <span class="va">auc_manual</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Manual test acc: 82.0%, AUC: 0.851</span></span></code></pre>
+<pre><code><span><span class="co">## Manual test acc: 82.0%, AUC: 0.822</span></span></code></pre>
 </div>
 </div>
 <div class="section level2">
@@ -295,7 +301,7 @@ ensembling, so they need almost no tuning.</p>
 <span><span class="va">prob_rf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">rf</span>, data<span class="op">=</span><span class="va">Xte</span><span class="op">)</span><span class="op">$</span><span class="va">predictions</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="va">pred_rf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">prob_rf</span> <span class="op">&gt;</span> <span class="fl">0.5</span>, <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>, levels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">acc_rf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">pred_rf</span> <span class="op">==</span> <span class="va">y</span><span class="op">[</span><span class="va">te</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="va">auc_rf</span> <span class="op">&lt;-</span> <span class="fu">metabodeconplus</span><span class="fu">:::</span><span class="fu">AUC</span><span class="op">(</span><span class="va">y</span><span class="op">[</span><span class="va">te</span><span class="op">]</span>, <span class="va">prob_rf</span><span class="op">)</span></span>
+<span><span class="va">auc_rf</span> <span class="op">&lt;-</span> <span class="fu">auc</span><span class="op">(</span><span class="va">y</span><span class="op">[</span><span class="va">te</span><span class="op">]</span>, <span class="va">prob_rf</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span><span class="st">"RF test acc: %.1f%%, AUC: %.3f\n"</span>, <span class="va">acc_rf</span> <span class="op">*</span> <span class="fl">100</span>, <span class="va">auc_rf</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## RF test acc: 84.0%, AUC: 0.800</span></span></code></pre>
 <p>The equivalent one-shot call uses <code><a href="../reference/mdm.html">fit_mdm()</a></code> with
@@ -306,13 +312,13 @@ OOB AUC:</p>
 <span>                 maxCombine<span class="op">=</span><span class="fl">5L</span>, verbosity<span class="op">=</span><span class="fl">0</span>, nworkers<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">preds_rf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">md_rf</span>, <span class="va">x</span><span class="op">[</span><span class="va">te</span><span class="op">]</span>, type<span class="op">=</span><span class="st">"all"</span>, verbosity<span class="op">=</span><span class="fl">0</span><span class="op">)</span></span>
 <span><span class="va">acc_rf2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">preds_rf</span><span class="op">$</span><span class="va">class</span> <span class="op">==</span> <span class="va">y</span><span class="op">[</span><span class="va">te</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="va">auc_rf2</span> <span class="op">&lt;-</span> <span class="fu">metabodeconplus</span><span class="fu">:::</span><span class="fu">AUC</span><span class="op">(</span><span class="va">y</span><span class="op">[</span><span class="va">te</span><span class="op">]</span>, <span class="va">preds_rf</span><span class="op">$</span><span class="va">prob</span><span class="op">)</span></span>
+<span><span class="va">auc_rf2</span> <span class="op">&lt;-</span> <span class="fu">auc</span><span class="op">(</span><span class="va">y</span><span class="op">[</span><span class="va">te</span><span class="op">]</span>, <span class="va">preds_rf</span><span class="op">$</span><span class="va">prob</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span><span class="st">"RF (fit_mdm) test acc: %.1f%%, AUC: %.3f\n"</span>, <span class="va">acc_rf2</span><span class="op">*</span><span class="fl">100</span>, <span class="va">auc_rf2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## RF (fit_mdm) test acc: 84.0%, AUC: 0.825</span></span></code></pre>
 <p>The individual pipeline stages remain fully pluggable through the
-internal engine <code>metabodeconplus:::fit_mdm_internal()</code>, which
-accepts <code>decon_fun</code> / <code>align_fun</code> /
-<code>snap_fun</code> / <code>feat_fun</code> / <code>fit_fun</code> /
+internal engine (available to power users), which accepts
+<code>decon_fun</code> / <code>align_fun</code> / <code>snap_fun</code>
+/ <code>feat_fun</code> / <code>fit_fun</code> /
 <code>predict_fun</code> arguments for experimentation.</p>
 </div>
 <div class="section level2">
@@ -391,7 +397,7 @@ sharing the same <code>(npmax, maxShift)</code>.</p>
 <td align="right">0.928</td>
 <td align="right">0.9282051</td>
 <td align="right">0.0149666</td>
-<td align="right">0.0201273</td>
+<td align="right">0.0203809</td>
 </tr>
 <tr class="even">
 <td align="right">50</td>
@@ -400,7 +406,7 @@ sharing the same <code>(npmax, maxShift)</code>.</p>
 <td align="right">0.928</td>
 <td align="right">0.9282051</td>
 <td align="right">0.0149666</td>
-<td align="right">0.0201273</td>
+<td align="right">0.0203809</td>
 </tr>
 <tr class="odd">
 <td align="right">0</td>
@@ -515,7 +521,7 @@ reference spectrum stored in the model:</p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cap</span> <span class="op">&lt;-</span> <span class="st">"Confusion matrix on test set."</span></span>
 <span><span class="va">acc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">preds</span><span class="op">$</span><span class="va">class</span> <span class="op">==</span> <span class="va">y</span><span class="op">[</span><span class="va">te</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="va">auc</span> <span class="op">&lt;-</span> <span class="fu">metabodeconplus</span><span class="fu">:::</span><span class="fu">AUC</span><span class="op">(</span><span class="va">y</span><span class="op">[</span><span class="va">te</span><span class="op">]</span>, <span class="va">preds</span><span class="op">$</span><span class="va">prob</span><span class="op">)</span></span>
+<span><span class="va">auc</span> <span class="op">&lt;-</span> <span class="fu">auc</span><span class="op">(</span><span class="va">y</span><span class="op">[</span><span class="va">te</span><span class="op">]</span>, <span class="va">preds</span><span class="op">$</span><span class="va">prob</span><span class="op">)</span></span>
 <span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span>True<span class="op">=</span><span class="va">y</span><span class="op">[</span><span class="va">te</span><span class="op">]</span>, Pred<span class="op">=</span><span class="va">preds</span><span class="op">$</span><span class="va">class</span><span class="op">)</span>, caption<span class="op">=</span><span class="va">cap</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <caption>Confusion matrix on test set.</caption>

@@ -67,7 +67,7 @@
       <img src="../logo.svg" class="logo" alt=""><h1>FAQ</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/spang-lab/metabodeconplus/blob/v0.20.0/vignettes/FAQ.Rmd" class="external-link"><code>vignettes/FAQ.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/spang-lab/metabodeconplus/blob/main/vignettes/FAQ.Rmd" class="external-link"><code>vignettes/FAQ.Rmd</code></a></small>
       <div class="d-none name"><code>FAQ.Rmd</code></div>
     </div>
 
@@ -76,31 +76,6 @@
 <div class="section level2">
 <h2 id="faq">FAQ<a class="anchor" aria-label="anchor" href="#faq"></a>
 </h2>
-<div class="section level3">
-<h3 id="water-artifact">Water Artifact<a class="anchor" aria-label="anchor" href="#water-artifact"></a>
-</h3>
-<p><strong>Question:</strong> When I choose <code>n</code> for
-<code>Water artefact fully inside red vertical lines? (y/n)</code>,
-metabodeconplus asks me to
-<code>Choose another half width range (in ppm) for the water artefact</code>,
-instead of left and right borders. Why is that and what should I enter
-here?</p>
-<p><img src="FAQ/water_artefact_n.png" alt="Water Artefact"></p>
-<p><strong>Answer:</strong> the water signal is always centered by
-Bruker, so you only have to specify the half width range to make the
-water area around the midpoint wider or narrower.</p>
-</div>
-<div class="section level3">
-<h3 id="parameter-optimization">Parameter Optimization<a class="anchor" aria-label="anchor" href="#parameter-optimization"></a>
-</h3>
-<p><strong>Question:</strong> Why do you do exactly 10 iterations of
-parameter optimization?</p>
-<p><strong>Answer:</strong> This value was determined empirically. We
-found that 10 iterations are enough to get a good fit and more
-iterations would not improve the fit significantly, but would take
-longer. Obviously, a more objective stopping criterion would be better
-and will likely be implemented in a future version.</p>
-</div>
 <div class="section level3">
 <h3 id="file-structure">File Structure<a class="anchor" aria-label="anchor" href="#file-structure"></a>
 </h3>

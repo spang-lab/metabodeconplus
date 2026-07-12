@@ -20,6 +20,12 @@ on how the dataset was constructed, see
 ``` r
 
 library(metabodeconplus)
+# Small rank-based AUC helper (positive class = second factor level).
+auc <- function(y, prob) {
+    pos <- y == levels(y)[2]; r <- rank(prob)
+    n1 <- sum(pos); n0 <- sum(!pos)
+    if (n1 == 0 || n0 == 0) NA_real_ else (sum(r[pos]) - n1 * (n1 + 1) / 2) / (n1 * n0)
+}
 x <- sim2
 y <- attr(sim2, "group")
 n <- length(x)
@@ -98,14 +104,14 @@ heat_spectra(decons[abtr], y=yab)
 ### Step 2: Align
 
 [`clupa()`](https://spang-lab.github.io/metabodeconplus/reference/alignment_funs.md)
-calls an internal `find_ref()` to pick the spectrum whose peaks are
-closest to all others. We extract that reference now – we need it later
-to align the *test* spectra to the same coordinate system.
+picks a reference spectrum (the one whose peaks are closest to all
+others) and attaches it. We extract that reference now, since we need it
+later to align the *test* spectra to the same coordinate system.
 
 ``` r
 
 aligns <- clupa(decons, maxShift=50, verbose=FALSE)
-ref <- metabodeconplus:::find_ref(decons)
+ref <- attr(aligns, "ref")
 plot_spectra(aligns[abtr])
 heat_spectra(aligns[abtr], y=yab)
 ```
@@ -146,8 +152,8 @@ consistent sign differences between A (top) and B (bottom).
 
 ``` r
 
-foldid <- metabodeconplus:::get_foldid(y=y[tr], nfolds=5, seed=1)
-cvfit <- glmnet::cv.glmnet(X, y[tr], family="binomial", alpha=1, foldid=foldid, keep=TRUE)
+set.seed(1)
+cvfit <- glmnet::cv.glmnet(X, y[tr], family="binomial", alpha=1, keep=TRUE)
 plot(cvfit)
 ```
 
@@ -236,11 +242,11 @@ prob_te <- as.numeric(predict(cvfit, newx=Xte, s="lambda.min", type="response"))
 pred_te <- factor(ifelse(prob_te > 0.5, levels(y)[2], levels(y)[1]),
                   levels=levels(y))
 acc_manual <- mean(pred_te == y[te])
-auc_manual <- metabodeconplus:::AUC(y[te], prob_te)
+auc_manual <- auc(y[te], prob_te)
 cat(sprintf("Manual test acc: %.1f%%, AUC: %.3f\n", acc_manual * 100, auc_manual))
 ```
 
-    ## Manual test acc: 82.0%, AUC: 0.851
+    ## Manual test acc: 82.0%, AUC: 0.822
 
 ## Compare with a random forest
 
@@ -261,7 +267,7 @@ rf <- ranger::ranger(x=X, y=y[tr], probability=TRUE, num.trees=500, seed=1)
 prob_rf <- predict(rf, data=Xte)$predictions[, levels(y)[2]]
 pred_rf <- factor(ifelse(prob_rf > 0.5, levels(y)[2], levels(y)[1]), levels=levels(y))
 acc_rf <- mean(pred_rf == y[te])
-auc_rf <- metabodeconplus:::AUC(y[te], prob_rf)
+auc_rf <- auc(y[te], prob_rf)
 cat(sprintf("RF test acc: %.1f%%, AUC: %.3f\n", acc_rf * 100, auc_rf))
 ```
 
@@ -277,16 +283,16 @@ md_rf <- fit_mdm(x[tr], y[tr], model="ranger", npmax=0L, maxShift=50L,
                  maxCombine=5L, verbosity=0, nworkers=1)
 preds_rf <- predict(md_rf, x[te], type="all", verbosity=0)
 acc_rf2 <- mean(preds_rf$class == y[te])
-auc_rf2 <- metabodeconplus:::AUC(y[te], preds_rf$prob)
+auc_rf2 <- auc(y[te], preds_rf$prob)
 cat(sprintf("RF (fit_mdm) test acc: %.1f%%, AUC: %.3f\n", acc_rf2*100, auc_rf2))
 ```
 
     ## RF (fit_mdm) test acc: 84.0%, AUC: 0.825
 
 The individual pipeline stages remain fully pluggable through the
-internal engine `metabodeconplus:::fit_mdm_internal()`, which accepts
-`decon_fun` / `align_fun` / `snap_fun` / `feat_fun` / `fit_fun` /
-`predict_fun` arguments for experimentation.
+internal engine (available to power users), which accepts `decon_fun` /
+`align_fun` / `snap_fun` / `feat_fun` / `fit_fun` / `predict_fun`
+arguments for experimentation.
 
 ## Tune preprocessing via grid search
 
@@ -321,8 +327,8 @@ knitr::kable(x=head(G,10), row.names=FALSE, caption=cap)
 |    50 |       50 |         10 | 0.936 | 0.9477564 | 0.0097980 | 0.0112477 |
 |     0 |       20 |         10 | 0.920 | 0.9386218 | 0.0109545 | 0.0088924 |
 |     0 |       50 |         10 | 0.920 | 0.9386218 | 0.0109545 | 0.0088924 |
-|    50 |       20 |          5 | 0.928 | 0.9282051 | 0.0149666 | 0.0201273 |
-|    50 |       50 |          5 | 0.928 | 0.9282051 | 0.0149666 | 0.0201273 |
+|    50 |       20 |          5 | 0.928 | 0.9282051 | 0.0149666 | 0.0203809 |
+|    50 |       50 |          5 | 0.928 | 0.9282051 | 0.0149666 | 0.0203809 |
 |     0 |       20 |          5 | 0.920 | 0.9211538 | 0.0167332 | 0.0214612 |
 |     0 |       50 |          5 | 0.920 | 0.9211538 | 0.0167332 | 0.0214612 |
 
@@ -398,7 +404,7 @@ results <- data.frame(
 
 cap <- "Confusion matrix on test set."
 acc <- mean(preds$class == y[te])
-auc <- metabodeconplus:::AUC(y[te], preds$prob)
+auc <- auc(y[te], preds$prob)
 knitr::kable(table(True=y[te], Pred=preds$class), caption=cap)
 ```
 

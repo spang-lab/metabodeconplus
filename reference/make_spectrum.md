@@ -98,6 +98,6 @@ cs_width <- 20.0
 fq_ref <- 600.25 * 1e6
 fq_width <- 12005
 spectrum <- make_spectrum(si, cs_max, cs_width, fq_ref, fq_width)
-spectrum2 <- make_spectrum(si, cs_max, cs_width, fq_ref, fq_width = 12010, force = FALSE)
-#> 2026-07-09 19:35:41.60 Calculated spectrum width in Hz (12005) does not match the provided value (12010). Continuing anyways, because `force` equals `TRUE`. Please note that all downstream calculations using frequencies might be wrong, so be sure to double check the results.
+spectrum2 <- make_spectrum(si, cs_max, cs_width, fq_ref, fq_width = 12010, force = TRUE)
+#> 2026-07-12 15:55:07.25 Calculated spectrum width in Hz (12005) does not match the provided value (12010). Continuing anyways, because `force` equals `TRUE`. Please note that all downstream calculations using frequencies might be wrong, so be sure to double check the results.
 ```
