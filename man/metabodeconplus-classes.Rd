@@ -118,7 +118,7 @@ A \code{decon2} object additionally has:
 \code{pcide} (integer column index into \code{cs} for \code{x0}). After
 \code{\link[=clupa]{clupa()}} also \code{x0al} / \code{pcial} (post-CluPA center
 and cs index). After \code{\link[=snap_to_ref]{snap_to_ref()}} also \code{x0sn}
-/ \code{pcisn} (post-RefPA center and cs index, with \code{NA} for peaks
+/ \code{pcisn} (post-snap center and cs index, with \code{NA} for peaks
 snapped beyond \code{maxCombine}). \code{A} and \code{lambda} are preserved
 through every stage.
 }
@@ -132,8 +132,8 @@ slots populated:
 \itemize{
 \item \code{lcpar$x0al}: Peak Centers after CluPA alignment in ppm
 \item \code{lcpar$pcial}: Peak Centers after CluPA alignment as \code{cs} indices
-\item \code{lcpar$x0sn}: Peak Centers after RefPA snap in ppm (NA when snapped out)
-\item \code{lcpar$pcisn}: Peak Centers after RefPA snap as \code{cs} indices (NA when snapped out)
+\item \code{lcpar$x0sn}: Peak Centers after reference snapping in ppm (NA when snapped out)
+\item \code{lcpar$pcisn}: Peak Centers after reference snapping as \code{cs} indices (NA when snapped out)
 \item \code{sit$supal}: Signal Intensities of the superposition of aligned Lorentz curves
 }
 }

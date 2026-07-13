@@ -29,8 +29,8 @@ default pipeline; accepted for signature compatibility.}
 \item{maxShift}{Maximum number of datapoints a peak center may be
 shifted by CluPA. \code{maxShift = 0L} skips CluPA (sets \code{x0al = x0}).}
 
-\item{maxCombine}{Maximum snap distance for RefPA in chemical-shift
-columns. \code{maxCombine = 0L} skips RefPA (no snapping). A negative
+\item{maxCombine}{Maximum snap distance for reference snapping in chemical-shift
+columns. \code{maxCombine = 0L} skips snapping. A negative
 value is treated as \code{maxShift}.}
 
 \item{verbose}{Print progress messages?}
@@ -38,7 +38,7 @@ value is treated as \code{maxShift}.}
 \item{nworkers}{Number of parallel workers.}
 
 \item{full}{If \code{TRUE} also recompute the aligned superposition during
-CluPA. RefPA always drops \code{sit$supal} (the post-snap peak list is
+CluPA. Reference snapping always drops \code{sit$supal} (the post-snap peak list is
 no longer Lorentz-compatible).}
 
 \item{use_speaq}{Use \code{speaq::hClustAlign} instead of the bundled CluPA
@@ -46,7 +46,7 @@ implementation. Defaults to \code{FALSE}; the bundled implementation is
 byte-equivalent to the speaq one (see \code{tests/testthat/test-speaq.R}).}
 
 \item{gap_tol}{Optional gap tolerance in ppm. \code{NULL} (default) uses the standard
-CluPA + RefPA pipeline; only consulted by experimental snap backends.}
+CluPA + snapping pipeline; only consulted by experimental snap backends.}
 }
 \value{
 An object of class \code{aligns}.
@@ -60,7 +60,7 @@ continuously toward a reference using hierarchical-clustering FFT
 segment shifts (Beirnaert et al. 2018, Vu et al. 2011). Adds
 \code{x0al} and \code{pcial} (post-CluPA center and column index) to each
 peak; original \code{x0}, \code{A}, \code{lambda}, \code{pcide} are preserved.
-\item \strong{RefPA} (\code{\link[=snap_to_ref]{snap_to_ref()}}) records, for each peak,
+\item \strong{Reference snapping} (\code{\link[=snap_to_ref]{snap_to_ref()}}) records, for each peak,
 the nearest reference column within \code{maxCombine} as \code{pcisn} /
 \code{x0sn}. Peaks farther than \code{maxCombine} from every reference
 column get \code{pcisn = NA} / \code{x0sn = NA}. No peaks are dropped and

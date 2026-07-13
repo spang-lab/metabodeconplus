@@ -42,7 +42,7 @@ pipeline; accepted for signature compatibility.}
 \item{gap_tol}{Optional gap tolerance in ppm; only consulted by
 experimental snap backends.}
 
-\item{maxCombine}{Maximum RefPA snap distance in datapoints.}
+\item{maxCombine}{Maximum reference-snapping distance in datapoints.}
 
 \item{...}{Ignored.}
 }
@@ -58,22 +58,21 @@ Pluggable alignment stages used by \code{\link[=align]{align()}} and the
 alignment (recursive FFT segment shifts, Beirnaert et al. 2018, Vu
 et al. 2011). Operates on the Lorentz reconstruction \code{sit$sup}
 already attached to each spectrum by deconvolution.
-\item \code{\link[=snap_to_ref]{snap_to_ref()}}: \strong{RefPA} — reference-based peak
-alignment: snap each peak to the nearest reference column within
-\code{maxCombine}.
+\item \code{\link[=snap_to_ref]{snap_to_ref()}}: \strong{Reference snapping} — snap
+each peak to the nearest reference column within \code{maxCombine}.
 }
 
 All these functions require every input spectrum to share the same
 \verb{$cs} grid; an explicit \code{stop()} is raised otherwise. Call
 \code{\link[=harmonize_grid]{harmonize_grid()}} upstream to enforce that invariant.
 
-\code{\link[=snap_to_ref]{snap_to_ref()}} applies the RefPA step on its own: for
+\code{\link[=snap_to_ref]{snap_to_ref()}} applies the snapping step on its own: for
 each peak in each spectrum, finds the nearest reference column on
 the shared \code{cs} grid and records that column as \code{pcisn} (and its
 ppm value as \code{x0sn}). Peaks farther than \code{maxCombine} columns from
 every reference column get \code{pcisn = NA} / \code{x0sn = NA}. Original
 \code{x0}, \code{x0al}, \code{A}, \code{lambda}, \code{pcide} and \code{pcial} are preserved —
-RefPA only \emph{adds} the snapped fields. Collisions on the same
+snapping only \emph{adds} the snapped fields. Collisions on the same
 \code{pcisn} column are not merged here; \code{\link[=si_mat]{si_mat()}} sums
 their areas when rasterising the feature matrix. \code{sit$supal} is
 cleared because the post-snap superposition would need recomputing.

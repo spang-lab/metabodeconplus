@@ -98,7 +98,7 @@
 #'    `pcide` (integer column index into `cs` for `x0`). After
 #'    [metabodeconplus::clupa()] also `x0al` / `pcial` (post-CluPA center
 #'    and cs index). After [metabodeconplus::snap_to_ref()] also `x0sn`
-#'    / `pcisn` (post-RefPA center and cs index, with `NA` for peaks
+#'    / `pcisn` (post-snap center and cs index, with `NA` for peaks
 #'    snapped beyond `maxCombine`). `A` and `lambda` are preserved
 #'    through every stage.
 #'
@@ -109,8 +109,8 @@
 #'
 #' - `lcpar$x0al`: Peak Centers after CluPA alignment in ppm
 #' - `lcpar$pcial`: Peak Centers after CluPA alignment as `cs` indices
-#' - `lcpar$x0sn`: Peak Centers after RefPA snap in ppm (NA when snapped out)
-#' - `lcpar$pcisn`: Peak Centers after RefPA snap as `cs` indices (NA when snapped out)
+#' - `lcpar$x0sn`: Peak Centers after reference snapping in ppm (NA when snapped out)
+#' - `lcpar$pcisn`: Peak Centers after reference snapping as `cs` indices (NA when snapped out)
 #' - `sit$supal`: Signal Intensities of the superposition of aligned Lorentz curves
 #'
 #' @section Predicates:

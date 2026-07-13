@@ -50,7 +50,7 @@ Kneedle elbow; \code{-2} selects each spectrum's own elbow.}
 vector. \code{-1} (default) means auto (sweep to the alignment-correlation
 dip).}
 
-\item{maxCombine}{RefPA snap window in datapoints. Integer, scalar or
+\item{maxCombine}{Reference-snapping window in datapoints. Integer, scalar or
 vector. Default 10.}
 
 \item{nworkers}{Number of workers for deconvolution, alignment and the

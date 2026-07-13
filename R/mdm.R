@@ -39,7 +39,7 @@
 #' @param maxShift Max CluPA shift in datapoints. Integer >= -1, scalar or
 #'   vector. `-1` (default) means auto (sweep to the alignment-correlation
 #'   dip).
-#' @param maxCombine RefPA snap window in datapoints. Integer, scalar or
+#' @param maxCombine Reference-snapping window in datapoints. Integer, scalar or
 #'   vector. Default 10.
 #' @param nworkers Number of workers for deconvolution, alignment and the
 #'   inner fitter.
@@ -179,7 +179,7 @@ benchmark <- function(
 #'   cache. See *Automatic selection sentinels*.
 #' @param maxShift Max CluPA shift in datapoints. Integer >= -1, scalar
 #'   or vector. `-1` means auto. Default `-1`.
-#' @param maxCombine RefPA snap window in datapoints. Integer, scalar
+#' @param maxCombine Reference-snapping window in datapoints. Integer, scalar
 #'   or vector. Default 10.
 #' @param deg Deconvolution-parameter grid forwarded to
 #'   [metabodeconplus::grid_deconvolute_spectra()]. When `NULL` (default),
@@ -277,7 +277,7 @@ benchmark <- function(
 #'       maxCombine=c(5L, 10L, 20L, 40L), k=5L, nworkers=4L
 #'   )
 #'
-#'   # (b) Full metabodeconplus pipeline (deconvolute -> CluPA -> RefPA
+#'   # (b) Full metabodeconplus pipeline (deconvolute -> CluPA -> snap
 #'   # -> peak_mat -> ranger), sweeping (maxShift, maxCombine).
 #'   bm_mdm <- benchmark(
 #'       x, y,

@@ -13,7 +13,7 @@
 #' Collisions on the same column have their `A * pi` summed.
 #'
 #' `si_mat()` is intentionally a dumb peak-list rasterizer: all
-#' alignment (continuous shift via CluPA) and snapping (RefPA) must
+#' alignment (continuous shift via CluPA) and reference snapping must
 #' have happened upstream — typically inside [metabodeconplus::align()].
 #' To build a feature matrix where every spectrum shares the same
 #' column grid, run `align(x, maxShift, maxCombine)` first.
@@ -81,7 +81,7 @@ si_mat <- function(x, drop_zero=FALSE, igrs=list(), peakPos=NULL, ...) {
 # Pick the most-aligned peak-column index for each peak in `lcpar`.
 # Returns integer indices into the shared `cs` grid, with NA for peaks
 # that were snapped out (beyond `maxCombine`). Priority: `pcisn`
-# (post-RefPA) > `pcial` (post-CluPA) > `pcide` (post-decon). Falls
+# (post-snap) > `pcial` (post-CluPA) > `pcide` (post-decon). Falls
 # back to deriving the index from `x0al`/`x0` for legacy objects that
 # pre-date the pci* fields.
 lcpar_idx <- function(lcpar, cs) {
@@ -105,7 +105,7 @@ lcpar_idx <- function(lcpar, cs) {
 #' Thin wrapper around [metabodeconplus::si_mat()] suitable as the
 #' `feat_fun` argument of [metabodeconplus::fit_mdm()]. Equivalent to
 #' `si_mat(x, igrs=igrs)`; the snapping that used to live here has
-#' moved into [metabodeconplus::align()] (RefPA stage).
+#' moved into [metabodeconplus::align()] (reference-snapping stage).
 #'
 #' @param x An `aligns` object (or `decons2`).
 #' @param igrs List of two-element ppm intervals to ignore.

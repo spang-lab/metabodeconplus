@@ -14,7 +14,7 @@
 #'    segment shifts (Beirnaert et al. 2018, Vu et al. 2011). Adds
 #'    `x0al` and `pcial` (post-CluPA center and column index) to each
 #'    peak; original `x0`, `A`, `lambda`, `pcide` are preserved.
-#' 2. **RefPA** ([metabodeconplus::snap_to_ref()]) records, for each peak,
+#' 2. **Reference snapping** ([metabodeconplus::snap_to_ref()]) records, for each peak,
 #'    the nearest reference column within `maxCombine` as `pcisn` /
 #'    `x0sn`. Peaks farther than `maxCombine` from every reference
 #'    column get `pcisn = NA` / `x0sn = NA`. No peaks are dropped and
@@ -37,8 +37,8 @@
 #' Maximum number of datapoints a peak center may be
 #' shifted by CluPA. `maxShift = 0L` skips CluPA (sets `x0al = x0`).
 #' @param maxCombine
-#' Maximum snap distance for RefPA in chemical-shift
-#' columns. `maxCombine = 0L` skips RefPA (no snapping). A negative
+#' Maximum snap distance for reference snapping in chemical-shift
+#' columns. `maxCombine = 0L` skips snapping. A negative
 #' value is treated as `maxShift`.
 #' @param verbose
 #' Print progress messages?
@@ -46,7 +46,7 @@
 #' Number of parallel workers.
 #' @param full
 #' If `TRUE` also recompute the aligned superposition during
-#' CluPA. RefPA always drops `sit$supal` (the post-snap peak list is
+#' CluPA. Reference snapping always drops `sit$supal` (the post-snap peak list is
 #' no longer Lorentz-compatible).
 #' @param use_speaq
 #' Use `speaq::hClustAlign` instead of the bundled CluPA
@@ -54,7 +54,7 @@
 #' byte-equivalent to the speaq one (see `tests/testthat/test-speaq.R`).
 #' @param gap_tol
 #' Optional gap tolerance in ppm. `NULL` (default) uses the standard
-#' CluPA + RefPA pipeline; only consulted by experimental snap backends.
+#' CluPA + snapping pipeline; only consulted by experimental snap backends.
 #'
 #' @return An object of class `aligns`.
 #'
@@ -101,9 +101,8 @@ align <- function(x, y=NULL, ref=NULL, maxShift=50, maxCombine=0,
 #'   alignment (recursive FFT segment shifts, Beirnaert et al. 2018, Vu
 #'   et al. 2011). Operates on the Lorentz reconstruction `sit$sup`
 #'   already attached to each spectrum by deconvolution.
-#' - [metabodeconplus::snap_to_ref()]: **RefPA** — reference-based peak
-#'   alignment: snap each peak to the nearest reference column within
-#'   `maxCombine`.
+#' - [metabodeconplus::snap_to_ref()]: **Reference snapping** — snap
+#'   each peak to the nearest reference column within `maxCombine`.
 #'
 #' All these functions require every input spectrum to share the same
 #' `$cs` grid; an explicit `stop()` is raised otherwise. Call
@@ -115,7 +114,7 @@ align <- function(x, y=NULL, ref=NULL, maxShift=50, maxCombine=0,
 #' @param ref Optional reference spectrum (`align` or `decon2`). When
 #'   `NULL`, chosen internally.
 #' @param maxShift Maximum CluPA shift in datapoints.
-#' @param maxCombine Maximum RefPA snap distance in datapoints.
+#' @param maxCombine Maximum reference-snapping distance in datapoints.
 #' @param verbose Print progress messages?
 #' @param nworkers Number of parallel workers.
 #' @param full If `TRUE` also recompute the aligned superposition.
@@ -265,13 +264,13 @@ identity_align <- function(x, ...) x
 #' @rdname alignment_funs
 #'
 #' @description
-#' [metabodeconplus::snap_to_ref()] applies the RefPA step on its own: for
+#' [metabodeconplus::snap_to_ref()] applies the snapping step on its own: for
 #' each peak in each spectrum, finds the nearest reference column on
 #' the shared `cs` grid and records that column as `pcisn` (and its
 #' ppm value as `x0sn`). Peaks farther than `maxCombine` columns from
 #' every reference column get `pcisn = NA` / `x0sn = NA`. Original
 #' `x0`, `x0al`, `A`, `lambda`, `pcide` and `pcial` are preserved —
-#' RefPA only *adds* the snapped fields. Collisions on the same
+#' snapping only *adds* the snapped fields. Collisions on the same
 #' `pcisn` column are not merged here; [metabodeconplus::si_mat()] sums
 #' their areas when rasterising the feature matrix. `sit$supal` is
 #' cleared because the post-snap superposition would need recomputing.

@@ -159,7 +159,7 @@ test_that("maxShift = 0 short-circuits to a no-shift alignment", {
     }
 })
 
-test_that("align() chains CluPA and RefPA when maxCombine > 0", {
+test_that("align() chains CluPA and reference snapping when maxCombine > 0", {
     skip_if_speaq_deps_missing()
     a0  <- align(decons, maxShift = 50, maxCombine = 0,  verbose = FALSE)
     a20 <- align(decons, maxShift = 50, maxCombine = 20, verbose = FALSE)
@@ -171,7 +171,7 @@ test_that("align() chains CluPA and RefPA when maxCombine > 0", {
         ok <- !is.na(pcisn)
         expect_true(all(pcisn[ok] %in% pp))
     }
-    # RefPA never drops rows; it only annotates with pcisn / x0sn.
+    # Reference snapping never drops rows; it only annotates with pcisn / x0sn.
     expect_equal(
         vapply(a20, function(s) nrow(s$lcpar), integer(1)),
         vapply(a0,  function(s) nrow(s$lcpar), integer(1))

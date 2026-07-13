@@ -27,7 +27,7 @@ colnames.
 Thin wrapper around \code{\link[=si_mat]{si_mat()}} suitable as the
 \code{feat_fun} argument of \code{\link[=fit_mdm]{fit_mdm()}}. Equivalent to
 \code{si_mat(x, igrs=igrs)}; the snapping that used to live here has
-moved into \code{\link[=align]{align()}} (RefPA stage).
+moved into \code{\link[=align]{align()}} (reference-snapping stage).
 }
 \author{
 2024-2026 Tobias Schmidt: initial version.

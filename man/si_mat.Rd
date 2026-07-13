@@ -35,7 +35,7 @@ with \code{pcisn = NA} (snapped beyond \code{maxCombine}) are skipped.
 Collisions on the same column have their \code{A * pi} summed.
 
 \code{si_mat()} is intentionally a dumb peak-list rasterizer: all
-alignment (continuous shift via CluPA) and snapping (RefPA) must
+alignment (continuous shift via CluPA) and reference snapping must
 have happened upstream — typically inside \code{\link[=align]{align()}}.
 To build a feature matrix where every spectrum shares the same
 column grid, run \code{align(x, maxShift, maxCombine)} first.
