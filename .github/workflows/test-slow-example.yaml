@@ -3,7 +3,8 @@
 name: Slow-Example-Check
 permissions: read-all
 on: {
-  push: {branches: [main, master]}
+  push: {branches: [main, master]},
+  pull_request: {branches: [main, master]}
 }
 jobs:
   Slow-Example-Check:

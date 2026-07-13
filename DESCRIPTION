@@ -1,6 +1,6 @@
 Package: metabodeconplus
 Title: Deconvolution and Alignment of 1d NMR Spectra
-Version: 0.20.0
+Version: 0.20.1
 Authors@R: c(
     person(given = "Tobias",
            family = "Schmidt",

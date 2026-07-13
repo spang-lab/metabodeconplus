@@ -554,73 +554,6 @@ identity_snap <- function(x, ref=NULL, maxCombine=0L, ...) x
 fit_lasso <- function(X, y, seed=1, nworkers=1L, nreps=5L) {
     requireNamespace("glmnet", quietly=TRUE)
     stopifnot(is_int(nreps, 1), nreps >= 1L)
-    # DIAGNOSTIC toggle (branch only, remove before merge): MDM_NOFIX=1 runs the
-    # old cv.glmnet(keep=TRUE) path for the CI A/B crash comparison.
-    if (identical(Sys.getenv("MDM_NOFIX"), "1")) {
-        return(fit_lasso_cvglmnet(
-            X, y, seed=seed, nworkers=nworkers, nreps=nreps
-        ))
-    }
-    lvs <- levels(y)
-    y01 <- as.integer(y == lvs[2])
-    # Manual stratified k-fold CV in place of cv.glmnet(): fit glmnet() on each
-    # training fold and predict the held-out fold for out-of-fold (OOF)
-    # probabilities per lambda, then pick lambda* by mean accuracy (AUC as
-    # tiebreaker). This avoids cv.glmnet(family="binomial", keep=TRUE), whose
-    # prevalidation path reads uninitialized memory on tiny binomial data and
-    # intermittently segfaults (0xC0000005) on Windows. Folds are stratified
-    # and capped at the minority-class size so no fold is single-class.
-    # DIAGNOSTIC toggle (branch only): MDM_FAM=gaussian uses glmnet's Gaussian
-    # (elnet) path instead of binomial (lognet), to A/B whether the segfault is
-    # inside lognet. Remove before merge.
-    fam <- Sys.getenv("MDM_FAM", "binomial")
-    clamp <- function(p) if (fam == "gaussian") pmin(pmax(p, 0), 1) else p
-    full_fit <- glmnet::glmnet(X, y01, family=fam, alpha=1)
-    lambda_path <- full_fit$lambda
-    nl <- length(lambda_path)
-    nf <- max(3L, min(10L, min(table(y))))
-    acc_mat <- matrix(NA_real_, nrow=nreps, ncol=nl)
-    auc_mat <- matrix(NA_real_, nrow=nreps, ncol=nl)
-    for (r in seq_len(nreps)) {
-        fid <- get_foldid(y, nfolds=nf, seed=seed + r - 1L)
-        preval <- matrix(NA_real_, nrow=length(y), ncol=nl)
-        for (k in seq_len(nf)) {
-            te <- which(fid == k)
-            tr <- which(fid != k)
-            f <- glmnet::glmnet(
-                X[tr, , drop=FALSE], y01[tr],
-                family=fam, alpha=1, lambda=lambda_path
-            )
-            preval[te, ] <- clamp(stats::predict(
-                f, newx=X[te, , drop=FALSE], s=lambda_path, type="response"
-            ))
-        }
-        for (j in seq_len(nl)) {
-            prob <- preval[, j]
-            cls  <- factor(ifelse(prob > 0.5, lvs[2], lvs[1]), levels=lvs)
-            acc_mat[r, j] <- mean(cls == y, na.rm=TRUE)
-            auc_mat[r, j] <- AUC(y, prob)
-        }
-    }
-    mean_acc <- colMeans(acc_mat, na.rm=TRUE)
-    mean_auc <- colMeans(auc_mat, na.rm=TRUE)
-    # lambda path is decreasing (index 1 = most-regularized); which.max returns
-    # the first maximum, so ties break toward the more-regularized end.
-    score <- mean_acc * 1e6 + mean_auc
-    j_star <- which.max(score)
-    full_fit$lambda.min <- lambda_path[j_star]
-    list(
-        model = full_fit,
-        acc = mean_acc[j_star],
-        auc = mean_auc[j_star],
-        acc_se = if (nreps >= 2L) stats::sd(acc_mat[, j_star], na.rm=TRUE) / sqrt(nreps) else NA_real_,
-        auc_se = if (nreps >= 2L) stats::sd(auc_mat[, j_star], na.rm=TRUE) / sqrt(nreps) else NA_real_
-    )
-}
-
-# DIAGNOSTIC (branch only, remove before merge): the original cv.glmnet-based
-# fit_lasso, kept solely for the CI A/B crash comparison via MDM_NOFIX=1.
-fit_lasso_cvglmnet <- function(X, y, seed=1, nworkers=1L, nreps=5L) {
     lvs <- levels(y)
     par_ok <- nworkers > 1L && requireNamespace("doParallel", quietly=TRUE)
     if (par_ok) {
@@ -628,6 +561,8 @@ fit_lasso_cvglmnet <- function(X, y, seed=1, nworkers=1L, nreps=5L) {
         doParallel::registerDoParallel(cl)
         on.exit(parallel::stopCluster(cl), add=TRUE)
     }
+    # Rep 1 discovers the lambda path from the data; subsequent reps
+    # reuse it so per-lambda OOF arrays line up across reps.
     cvs <- vector("list", nreps)
     set.seed(seed)
     cvs[[1]] <- glmnet::cv.glmnet(X, y, family="binomial", alpha=1,
@@ -654,10 +589,16 @@ fit_lasso_cvglmnet <- function(X, y, seed=1, nworkers=1L, nreps=5L) {
     }
     mean_acc <- colMeans(acc_mat, na.rm=TRUE)
     mean_auc <- colMeans(auc_mat, na.rm=TRUE)
+    # Pick lambda* by averaged accuracy with AUC as tiebreaker. cv.glmnet's
+    # lambda path is decreasing (index 1 = largest/most-regularized), and
+    # which.max() returns the FIRST maximum, so ties break toward the
+    # more-regularized end (matching cv.glmnet's lambda.1se sensibility).
+    # For a unique maximum this is identical to any other search order.
     score <- mean_acc * 1e6 + mean_auc
     j_star <- which.max(score)
+    chosen_lambda <- lambda_path[j_star]
     final_model <- cvs[[nreps]]
-    final_model$lambda.min <- lambda_path[j_star]
+    final_model$lambda.min <- chosen_lambda
     list(
         model = final_model,
         acc = mean_acc[j_star],
@@ -678,7 +619,7 @@ fit_lasso_cvglmnet <- function(X, y, seed=1, nworkers=1L, nreps=5L) {
 #' @return Numeric vector of length `nrow(newx)`.
 predict_lasso <- function(model, newx) {
     requireNamespace("glmnet", quietly=TRUE)
-    as.numeric(stats::predict(model, newx=newx, s=model$lambda.min, type="response"))
+    as.numeric(stats::predict(model, newx=newx, s="lambda.min", type="response"))
 }
 
 #' @noRd
@@ -1061,7 +1002,7 @@ coef.mdm <- function(object, ...) {
     if (inherits(object$model, "ranger")) {
         return(object$model$variable.importance)
     }
-    stats::coef(object$model, s=object$model$lambda.min, ...)
+    stats::coef(object$model, s="lambda.min", ...)
 }
 
 #' @export

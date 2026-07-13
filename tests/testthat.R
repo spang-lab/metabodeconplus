@@ -9,8 +9,4 @@
 library(testthat)
 library(metabodeconplus)
 
-# DIAGNOSTIC (branch fix/test-mdm-windows-crash): filter is env-driven so the
-# CI matrix can run the full suite (MDM_FILTER="") or just test-mdm.R
-# (MDM_FILTER="mdm"). Revert before merge.
-.flt <- Sys.getenv("MDM_FILTER", "mdm")
-test_check("metabodeconplus", filter = if (nzchar(.flt)) .flt else NULL)
+test_check("metabodeconplus")
