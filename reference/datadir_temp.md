@@ -2,7 +2,7 @@
 
 Returns the path to the temporary data directory where metabodeconplus's
 data sets are stored. This directory equals subdirectory 'data' of
-metabodeconpluss temporary session directory
+metabodeconplus's temporary session directory
 [`tmpdir()`](https://spang-lab.github.io/metabodeconplus/reference/tmpdir.md)
 plus additional path normalization.
 
@@ -30,5 +30,5 @@ Returns the path to the temporary data directory.
 
 ``` r
 datadir_temp()
-#> [1] "/tmp/RtmpTqFuNG/metabodeconplus/data"
+#> [1] "/tmp/RtmpmpiPmY/metabodeconplus/data"
 ```
