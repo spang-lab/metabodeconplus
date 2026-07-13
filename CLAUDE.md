@@ -1,4 +1,4 @@
-# Instructions for MetaboDecon
+# Instructions for metabodeconplus
 
 ## IMPORTANT
 
@@ -13,17 +13,24 @@
 
 ## Versioning
 
-- The v2.0.0 release of metabodeconplus has **not** yet shipped. The
-  `tobi` branch prepares the v2.0.1 release.
-- During this preparation phase the version in `DESCRIPTION` may be
-  bumped in increments of `2.0.0.x` (e.g. `2.0.0.1`, `2.0.0.2`, …) for
-  intermediate working revisions. Bump the version whenever a
-  user-visible change ships, and add a one-line entry to `NEWS.md`.
-- Because v2 has not yet been released, **no backwards-compatibility
-  shims, deprecation warnings, or migration paths are required** while
-  working on any `2.0.0.x` revision or the `tobi` branch. Break
-  signatures, defaults, and behavior as needed and just update the call
-  sites.
+- **Origin.** This package began as the `tobi` branch of
+  `spang-lab/metabodecon` (branched around metabodecon v1.7.0). The
+  breaking changes grew large enough that it was split out into its own
+  package, **metabodeconplus**, with its own repository:
+  `github.com/spang-lab/metabodeconplus`. Development now happens on
+  `main` there — the old `tobi` branch and the `2.0.x` version scheme it
+  prepared are historical and no longer apply.
+- **Current line.** metabodeconplus is an early **`0.x`** package
+  (`DESCRIPTION` version is currently `0.20.0`). The classic
+  *metabodecon* (1.6.x) continues to live separately at
+  `github.com/spang-lab/metabodecon`, so existing workflows keep working
+  while metabodeconplus evolves.
+- Bump the `DESCRIPTION` version whenever a user-visible change ships,
+  and add a one-line entry to `NEWS.md`.
+- Because this is a fresh `0.x` package with **no
+  backwards-compatibility promises yet**, no compat shims, deprecation
+  warnings, or migration paths are required. Break signatures, defaults,
+  and behavior as needed and just update the call sites.
 
 ## Workspace Conventions
 
