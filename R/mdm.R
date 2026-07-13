@@ -570,7 +570,12 @@ fit_lasso <- function(X, y, seed=1, nworkers=1L, nreps=5L) {
     # prevalidation path reads uninitialized memory on tiny binomial data and
     # intermittently segfaults (0xC0000005) on Windows. Folds are stratified
     # and capped at the minority-class size so no fold is single-class.
-    full_fit <- glmnet::glmnet(X, y01, family="binomial", alpha=1)
+    # DIAGNOSTIC toggle (branch only): MDM_FAM=gaussian uses glmnet's Gaussian
+    # (elnet) path instead of binomial (lognet), to A/B whether the segfault is
+    # inside lognet. Remove before merge.
+    fam <- Sys.getenv("MDM_FAM", "binomial")
+    clamp <- function(p) if (fam == "gaussian") pmin(pmax(p, 0), 1) else p
+    full_fit <- glmnet::glmnet(X, y01, family=fam, alpha=1)
     lambda_path <- full_fit$lambda
     nl <- length(lambda_path)
     nf <- max(3L, min(10L, min(table(y))))
@@ -584,11 +589,11 @@ fit_lasso <- function(X, y, seed=1, nworkers=1L, nreps=5L) {
             tr <- which(fid != k)
             f <- glmnet::glmnet(
                 X[tr, , drop=FALSE], y01[tr],
-                family="binomial", alpha=1, lambda=lambda_path
+                family=fam, alpha=1, lambda=lambda_path
             )
-            preval[te, ] <- stats::predict(
+            preval[te, ] <- clamp(stats::predict(
                 f, newx=X[te, , drop=FALSE], s=lambda_path, type="response"
-            )
+            ))
         }
         for (j in seq_len(nl)) {
             prob <- preval[, j]

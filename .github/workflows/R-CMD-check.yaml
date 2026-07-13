@@ -13,32 +13,38 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # DIAGNOSTIC (branch fix/test-mdm-windows-crash): A/B test of the
-        # fit_lasso stratified-folds fix under faithful conditions (parallel +
-        # full suite). CTRL restores the old random-fold behavior via
-        # MDM_NOFIX=1 and should still crash ~1/6; FIX should not crash.
-        # Revert before merge.
+        # DIAGNOSTIC (branch fix/test-mdm-windows-crash): 3-way crash A/B under
+        # faithful conditions (parallel + full suite). Revert before merge.
+        #   CTRL  = old cv.glmnet(keep=TRUE) binomial   (MDM_NOFIX=1)
+        #   FIXB  = manual stratified CV, binomial      (still uses lognet)
+        #   FIXG  = manual stratified CV, gaussian      (avoids lognet)
         config:
-          - {os: windows-latest, r: 'release', test: 'fast', par: 'true', filter: '', nofix: '1', grp: 'CTRL', try: 1}
-          - {os: windows-latest, r: 'release', test: 'fast', par: 'true', filter: '', nofix: '1', grp: 'CTRL', try: 2}
-          - {os: windows-latest, r: 'release', test: 'fast', par: 'true', filter: '', nofix: '1', grp: 'CTRL', try: 3}
-          - {os: windows-latest, r: 'release', test: 'fast', par: 'true', filter: '', nofix: '1', grp: 'CTRL', try: 4}
-          - {os: windows-latest, r: 'release', test: 'fast', par: 'true', filter: '', nofix: '1', grp: 'CTRL', try: 5}
-          - {os: windows-latest, r: 'release', test: 'fast', par: 'true', filter: '', nofix: '1', grp: 'CTRL', try: 6}
-          - {os: windows-latest, r: 'release', test: 'fast', par: 'true', filter: '', nofix: '1', grp: 'CTRL', try: 7}
-          - {os: windows-latest, r: 'release', test: 'fast', par: 'true', filter: '', nofix: '1', grp: 'CTRL', try: 8}
-          - {os: windows-latest, r: 'release', test: 'fast', par: 'true', filter: '', nofix: '0', grp: 'FIX',  try: 1}
-          - {os: windows-latest, r: 'release', test: 'fast', par: 'true', filter: '', nofix: '0', grp: 'FIX',  try: 2}
-          - {os: windows-latest, r: 'release', test: 'fast', par: 'true', filter: '', nofix: '0', grp: 'FIX',  try: 3}
-          - {os: windows-latest, r: 'release', test: 'fast', par: 'true', filter: '', nofix: '0', grp: 'FIX',  try: 4}
-          - {os: windows-latest, r: 'release', test: 'fast', par: 'true', filter: '', nofix: '0', grp: 'FIX',  try: 5}
-          - {os: windows-latest, r: 'release', test: 'fast', par: 'true', filter: '', nofix: '0', grp: 'FIX',  try: 6}
-          - {os: windows-latest, r: 'release', test: 'fast', par: 'true', filter: '', nofix: '0', grp: 'FIX',  try: 7}
-          - {os: windows-latest, r: 'release', test: 'fast', par: 'true', filter: '', nofix: '0', grp: 'FIX',  try: 8}
-          - {os: windows-latest, r: 'release', test: 'fast', par: 'true', filter: '', nofix: '0', grp: 'FIX',  try: 9}
-          - {os: windows-latest, r: 'release', test: 'fast', par: 'true', filter: '', nofix: '0', grp: 'FIX',  try: 10}
-          - {os: windows-latest, r: 'release', test: 'fast', par: 'true', filter: '', nofix: '0', grp: 'FIX',  try: 11}
-          - {os: windows-latest, r: 'release', test: 'fast', par: 'true', filter: '', nofix: '0', grp: 'FIX',  try: 12}
+          - {os: windows-latest, r: 'release', test: 'fast', nofix: '1', fam: 'binomial', grp: 'CTRL', try: 1}
+          - {os: windows-latest, r: 'release', test: 'fast', nofix: '1', fam: 'binomial', grp: 'CTRL', try: 2}
+          - {os: windows-latest, r: 'release', test: 'fast', nofix: '1', fam: 'binomial', grp: 'CTRL', try: 3}
+          - {os: windows-latest, r: 'release', test: 'fast', nofix: '1', fam: 'binomial', grp: 'CTRL', try: 4}
+          - {os: windows-latest, r: 'release', test: 'fast', nofix: '1', fam: 'binomial', grp: 'CTRL', try: 5}
+          - {os: windows-latest, r: 'release', test: 'fast', nofix: '1', fam: 'binomial', grp: 'CTRL', try: 6}
+          - {os: windows-latest, r: 'release', test: 'fast', nofix: '0', fam: 'binomial', grp: 'FIXB', try: 1}
+          - {os: windows-latest, r: 'release', test: 'fast', nofix: '0', fam: 'binomial', grp: 'FIXB', try: 2}
+          - {os: windows-latest, r: 'release', test: 'fast', nofix: '0', fam: 'binomial', grp: 'FIXB', try: 3}
+          - {os: windows-latest, r: 'release', test: 'fast', nofix: '0', fam: 'binomial', grp: 'FIXB', try: 4}
+          - {os: windows-latest, r: 'release', test: 'fast', nofix: '0', fam: 'binomial', grp: 'FIXB', try: 5}
+          - {os: windows-latest, r: 'release', test: 'fast', nofix: '0', fam: 'binomial', grp: 'FIXB', try: 6}
+          - {os: windows-latest, r: 'release', test: 'fast', nofix: '0', fam: 'binomial', grp: 'FIXB', try: 7}
+          - {os: windows-latest, r: 'release', test: 'fast', nofix: '0', fam: 'binomial', grp: 'FIXB', try: 8}
+          - {os: windows-latest, r: 'release', test: 'fast', nofix: '0', fam: 'binomial', grp: 'FIXB', try: 9}
+          - {os: windows-latest, r: 'release', test: 'fast', nofix: '0', fam: 'binomial', grp: 'FIXB', try: 10}
+          - {os: windows-latest, r: 'release', test: 'fast', nofix: '0', fam: 'gaussian', grp: 'FIXG', try: 1}
+          - {os: windows-latest, r: 'release', test: 'fast', nofix: '0', fam: 'gaussian', grp: 'FIXG', try: 2}
+          - {os: windows-latest, r: 'release', test: 'fast', nofix: '0', fam: 'gaussian', grp: 'FIXG', try: 3}
+          - {os: windows-latest, r: 'release', test: 'fast', nofix: '0', fam: 'gaussian', grp: 'FIXG', try: 4}
+          - {os: windows-latest, r: 'release', test: 'fast', nofix: '0', fam: 'gaussian', grp: 'FIXG', try: 5}
+          - {os: windows-latest, r: 'release', test: 'fast', nofix: '0', fam: 'gaussian', grp: 'FIXG', try: 6}
+          - {os: windows-latest, r: 'release', test: 'fast', nofix: '0', fam: 'gaussian', grp: 'FIXG', try: 7}
+          - {os: windows-latest, r: 'release', test: 'fast', nofix: '0', fam: 'gaussian', grp: 'FIXG', try: 8}
+          - {os: windows-latest, r: 'release', test: 'fast', nofix: '0', fam: 'gaussian', grp: 'FIXG', try: 9}
+          - {os: windows-latest, r: 'release', test: 'fast', nofix: '0', fam: 'gaussian', grp: 'FIXG', try: 10}
     # NB: RUN_SLOW_TESTS is intentionally NOT set at the job level. The
     # per-step configuration below enables it only for the `all` and `nobioc`
     # runs, so the `fast` jobs (macOS/Windows/older R) skip the slow, network-
@@ -46,19 +52,19 @@ jobs:
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
-      MDM_FILTER: ${{ matrix.config.filter }}
+      MDM_FILTER: ''
       MDM_NOFIX: ${{ matrix.config.nofix }}
+      MDM_FAM: ${{ matrix.config.fam }}
     steps:
 
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # DIAGNOSTIC: set Config/testthat/parallel per-job so the matrix can
-      # cross parallel(true/false). Revert before merge.
-      - name: Configure testthat parallel (${{ matrix.config.par }})
+      # DIAGNOSTIC: faithful conditions use parallel testthat. Revert before merge.
+      - name: Configure testthat parallel (true)
         shell: bash
         run: |
-          sed -i "s#^Config/testthat/parallel:.*#Config/testthat/parallel: ${{ matrix.config.par }}#" DESCRIPTION
+          sed -i "s#^Config/testthat/parallel:.*#Config/testthat/parallel: true#" DESCRIPTION
           echo "DESCRIPTION parallel setting:"; grep "Config/testthat/parallel" DESCRIPTION
 
       - name: Setup Pandoc
