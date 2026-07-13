@@ -4,9 +4,9 @@
 name: lint-docs
 permissions: read-all
 on:
+  # DIAGNOSTIC (fix/test-mdm-windows-crash): pull_request trigger disabled to
+  # keep the crash-hunt PR fast. Revert before merge.
   push:
-    branches: [main, master]
-  pull_request:
     branches: [main, master]
 
 jobs:

@@ -9,22 +9,21 @@ on: {
 jobs:
   R-CMD-check:
     runs-on: ${{ matrix.config.os }}
-    name: '${{ matrix.config.os }} (${{ matrix.config.r }}, ${{ matrix.config.test }})'
+    name: '${{ matrix.config.os }} (${{ matrix.config.r }}, ${{ matrix.config.test }}) try-${{ matrix.config.try }}'
     strategy:
       fail-fast: false
       matrix:
+        # DIAGNOSTIC (branch fix/test-mdm-windows-crash): trimmed to the
+        # crashing job (windows-latest / release / fast) and fanned out to
+        # several identical attempts to beat the flaky 0xC0000005 crash. To be
+        # reverted before merge.
         config:
-          - {os: ubuntu-latest,  r: 'release',  test: 'all'}
-          - {os: ubuntu-latest,  r: 'release',  test: 'nobioc'}
-          - {os: ubuntu-latest,  r: 'release',  test: 'fast'}
-          - {os: ubuntu-latest,  r: 'devel',    test: 'fast'}
-          - {os: ubuntu-latest,  r: 'oldrel-1', test: 'fast'}
-          - {os: ubuntu-latest,  r: 'oldrel-2', test: 'fast'}
-          - {os: ubuntu-latest,  r: 'oldrel-3', test: 'fast'}
-          - {os: ubuntu-latest,  r: 'oldrel-4', test: 'fast'}
-          - {os: macos-latest,   r: 'release',  test: 'fast'}
-          - {os: windows-latest, r: 'release',  test: 'fast'}
-          - {os: windows-latest, r: 'oldrel-4', test: 'fast'}
+          - {os: windows-latest, r: 'release', test: 'fast', try: 1}
+          - {os: windows-latest, r: 'release', test: 'fast', try: 2}
+          - {os: windows-latest, r: 'release', test: 'fast', try: 3}
+          - {os: windows-latest, r: 'release', test: 'fast', try: 4}
+          - {os: windows-latest, r: 'release', test: 'fast', try: 5}
+          - {os: windows-latest, r: 'release', test: 'fast', try: 6}
     # NB: RUN_SLOW_TESTS is intentionally NOT set at the job level. The
     # per-step configuration below enables it only for the `all` and `nobioc`
     # runs, so the `fast` jobs (macOS/Windows/older R) skip the slow, network-

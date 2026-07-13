@@ -9,4 +9,6 @@
 library(testthat)
 library(metabodeconplus)
 
-test_check("metabodeconplus")
+# DIAGNOSTIC (branch fix/test-mdm-windows-crash): restrict to test-mdm.R to
+# reproduce and localize the Windows 0xC0000005 crash. Revert before merge.
+test_check("metabodeconplus", filter = "mdm")

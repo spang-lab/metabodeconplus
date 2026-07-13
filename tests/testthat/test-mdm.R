@@ -23,7 +23,17 @@ for (i in seq_len(n)) {
 }
 class(sp) <- "spectra"
 
+# DIAGNOSTIC (branch fix/test-mdm-windows-crash): flushed breadcrumbs to stderr
+# so the last one printed before a 0xC0000005 segfault names the faulting op.
+# Revert before merge.
+bc <- function(...) {
+    cat(sprintf("[MDM-BC] %s\n", paste0(...)), file = stderr())
+    flush(stderr())
+}
+bc("data built; starting ops")
+
 testthat::test_that("fit_mdm returns mdm with scalar perf and resolved params", {
+    bc("op1 BEGIN fit_mdm (lasso)")
     m <- fit_mdm(
         sp, y,
         npmax=0L, maxShift=50L, maxCombine=20L,
@@ -37,6 +47,7 @@ testthat::test_that("fit_mdm returns mdm with scalar perf and resolved params", 
 })
 
 testthat::test_that("benchmark returns predictions and performance", {
+    bc("op2 BEGIN benchmark (lasso)")
     res <- benchmark(
         sp, y,
         npmax=0L, maxShift=50L, maxCombine=20L, k = 4,
@@ -50,6 +61,7 @@ testthat::test_that("benchmark returns predictions and performance", {
 })
 
 testthat::test_that("fit_mdm_internal with bin/identity2 returns mdm object", {
+    bc("op3 BEGIN fit_mdm_internal bin/identity2 (lasso)")
     m <- metabodeconplus:::fit_mdm_internal(
         sp, y,
         feat_fun = bin, decon_fun = metabodeconplus:::identity2,
@@ -65,6 +77,7 @@ testthat::test_that("fit_mdm_internal with bin/identity2 returns mdm object", {
 
 testthat::test_that("fit_mdm with model='ranger' returns mdm with OOB scores", {
     testthat::skip_if_not_installed("ranger")
+    bc("op4 BEGIN fit_mdm model=ranger + predict")
     m <- fit_mdm(
         sp, y, model = "ranger",
         npmax=0L, maxShift=50L, maxCombine=20L,
@@ -80,6 +93,7 @@ testthat::test_that("fit_mdm with model='ranger' returns mdm with OOB scores", {
 
 testthat::test_that("fit_mdm_internal with snap_nw_blind predicts on held-out spectra", {
     testthat::skip_if_not_installed("ranger")
+    bc("op5 BEGIN fit_mdm_internal snap_nw_blind + ranger + predict (align_dp_c)")
     snap_nw_blind <- metabodeconplus:::snap_nw_blind
     m <- metabodeconplus:::fit_mdm_internal(
         sp, y,
@@ -96,3 +110,5 @@ testthat::test_that("fit_mdm_internal with snap_nw_blind predicts on held-out sp
     testthat::expect_length(p, 4L)
     testthat::expect_true(all(is.finite(p)))
 })
+
+bc("ALL OPS COMPLETED (no crash)")
