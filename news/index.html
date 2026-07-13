@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">metabodeconplus</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.20.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.20.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,6 +38,10 @@
       <small>Source: <a href="https://github.com/spang-lab/metabodeconplus/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.20.2" id="metabodeconplus-0202">metabodeconplus 0.20.2<a class="anchor" aria-label="anchor" href="#metabodeconplus-0202"></a></h2>
+<ul><li>Gave metabodeconplus a distinct <code>Title</code> and <code>Description</code> in <code>DESCRIPTION</code> so they no longer duplicate the CRAN <em>metabodecon</em> package. The title now mentions model fitting, and the description highlights the end-to-end model-fitting workflow (<code><a href="../reference/mdm.html">fit_mdm()</a></code> / <code><a href="../reference/mdm.html">benchmark()</a></code>) and states that metabodeconplus is the backwards-incompatible successor to <em>metabodecon</em>.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.20.1" id="metabodeconplus-0201">metabodeconplus 0.20.1<a class="anchor" aria-label="anchor" href="#metabodeconplus-0201"></a></h2>
 <ul><li>Fixed a flaky Windows <code>R CMD check</code> failure in the <code>glmnet</code>/lasso <code><a href="../reference/mdm.html">fit_mdm()</a></code> and <code><a href="../reference/mdm.html">benchmark()</a></code> smoke tests. <code>glmnet</code>’s compiled code intermittently triggers a Windows access violation (exit code <code>0xC0000005</code>) when run inside a <code>testthat</code> parallel worker, crashing the test subprocess. The fault is upstream and independent of how <code>fit_lasso()</code> drives <code>glmnet</code> — it reproduces identically with random folds, stratified folds, a manual cross-validation loop, and even the Gaussian family — and it does not occur outside the parallel-worker context. The lasso backend is an optional/secondary path (the default published model, <code>ranger</code>, is unaffected). These lasso smoke tests are therefore skipped on Windows only in automated check environments — CI and CRAN / <code>R CMD check</code>, including win-builder — while still running during local interactive development on Windows and on Linux/macOS everywhere. The <code>ranger</code> tests run on all platforms.</li>
