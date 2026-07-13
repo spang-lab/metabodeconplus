@@ -23,14 +23,26 @@ for (i in seq_len(n)) {
 }
 class(sp) <- "spectra"
 
+# glmnet's compiled code intermittently triggers a Windows access violation
+# (0xC0000005) when the lasso path runs inside a testthat *parallel worker* (as
+# under R CMD check). glmnet is the optional/secondary backend (ranger is the
+# default published model), so we skip these lasso smoke tests on Windows in
+# automated check environments only -- CI (e.g. GitHub Actions) and CRAN /
+# `R CMD check`, which includes win-builder (win-builder does NOT set `CI`, so
+# it is detected via `NOT_CRAN` instead). They still run on Linux/macOS
+# everywhere, and during local interactive development on Windows. The ranger
+# tests below run on all platforms. See NEWS for details.
+skip_lasso_on_windows_check <- function() {
+    if (.Platform$OS.type != "windows") return(invisible())
+    on_ci <- isTRUE(as.logical(Sys.getenv("CI", "false")))
+    on_check <- !identical(Sys.getenv("NOT_CRAN"), "true")
+    if (on_ci || on_check) {
+        testthat::skip("glmnet segfaults in a testthat parallel worker on Windows CI/CRAN")
+    }
+}
+
 testthat::test_that("fit_mdm returns mdm with scalar perf and resolved params", {
-    # glmnet's compiled code intermittently segfaults (Windows access
-    # violation, 0xC0000005) when run inside a testthat parallel worker on
-    # Windows. The lasso backend is an optional/secondary path (ranger is the
-    # default published model), so these lasso smoke tests are skipped on
-    # Windows only; they still run on Linux/macOS, and the ranger tests below
-    # run everywhere. See NEWS for details.
-    testthat::skip_on_os("windows")
+    skip_lasso_on_windows_check()
     m <- fit_mdm(
         sp, y,
         npmax=0L, maxShift=50L, maxCombine=20L,
@@ -44,8 +56,7 @@ testthat::test_that("fit_mdm returns mdm with scalar perf and resolved params", 
 })
 
 testthat::test_that("benchmark returns predictions and performance", {
-    # See note above: glmnet segfaults in a testthat parallel worker on Windows.
-    testthat::skip_on_os("windows")
+    skip_lasso_on_windows_check()
     res <- benchmark(
         sp, y,
         npmax=0L, maxShift=50L, maxCombine=20L, k = 4,
@@ -59,8 +70,7 @@ testthat::test_that("benchmark returns predictions and performance", {
 })
 
 testthat::test_that("fit_mdm_internal with bin/identity2 returns mdm object", {
-    # See note above: glmnet segfaults in a testthat parallel worker on Windows.
-    testthat::skip_on_os("windows")
+    skip_lasso_on_windows_check()
     m <- metabodeconplus:::fit_mdm_internal(
         sp, y,
         feat_fun = bin, decon_fun = metabodeconplus:::identity2,
