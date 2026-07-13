@@ -554,6 +554,68 @@ identity_snap <- function(x, ref=NULL, maxCombine=0L, ...) x
 fit_lasso <- function(X, y, seed=1, nworkers=1L, nreps=5L) {
     requireNamespace("glmnet", quietly=TRUE)
     stopifnot(is_int(nreps, 1), nreps >= 1L)
+    # DIAGNOSTIC toggle (branch only, remove before merge): MDM_NOFIX=1 runs the
+    # old cv.glmnet(keep=TRUE) path for the CI A/B crash comparison.
+    if (identical(Sys.getenv("MDM_NOFIX"), "1")) {
+        return(fit_lasso_cvglmnet(
+            X, y, seed=seed, nworkers=nworkers, nreps=nreps
+        ))
+    }
+    lvs <- levels(y)
+    y01 <- as.integer(y == lvs[2])
+    # Manual stratified k-fold CV in place of cv.glmnet(): fit glmnet() on each
+    # training fold and predict the held-out fold for out-of-fold (OOF)
+    # probabilities per lambda, then pick lambda* by mean accuracy (AUC as
+    # tiebreaker). This avoids cv.glmnet(family="binomial", keep=TRUE), whose
+    # prevalidation path reads uninitialized memory on tiny binomial data and
+    # intermittently segfaults (0xC0000005) on Windows. Folds are stratified
+    # and capped at the minority-class size so no fold is single-class.
+    full_fit <- glmnet::glmnet(X, y01, family="binomial", alpha=1)
+    lambda_path <- full_fit$lambda
+    nl <- length(lambda_path)
+    nf <- max(3L, min(10L, min(table(y))))
+    acc_mat <- matrix(NA_real_, nrow=nreps, ncol=nl)
+    auc_mat <- matrix(NA_real_, nrow=nreps, ncol=nl)
+    for (r in seq_len(nreps)) {
+        fid <- get_foldid(y, nfolds=nf, seed=seed + r - 1L)
+        preval <- matrix(NA_real_, nrow=length(y), ncol=nl)
+        for (k in seq_len(nf)) {
+            te <- which(fid == k)
+            tr <- which(fid != k)
+            f <- glmnet::glmnet(
+                X[tr, , drop=FALSE], y01[tr],
+                family="binomial", alpha=1, lambda=lambda_path
+            )
+            preval[te, ] <- stats::predict(
+                f, newx=X[te, , drop=FALSE], s=lambda_path, type="response"
+            )
+        }
+        for (j in seq_len(nl)) {
+            prob <- preval[, j]
+            cls  <- factor(ifelse(prob > 0.5, lvs[2], lvs[1]), levels=lvs)
+            acc_mat[r, j] <- mean(cls == y, na.rm=TRUE)
+            auc_mat[r, j] <- AUC(y, prob)
+        }
+    }
+    mean_acc <- colMeans(acc_mat, na.rm=TRUE)
+    mean_auc <- colMeans(auc_mat, na.rm=TRUE)
+    # lambda path is decreasing (index 1 = most-regularized); which.max returns
+    # the first maximum, so ties break toward the more-regularized end.
+    score <- mean_acc * 1e6 + mean_auc
+    j_star <- which.max(score)
+    full_fit$lambda.min <- lambda_path[j_star]
+    list(
+        model = full_fit,
+        acc = mean_acc[j_star],
+        auc = mean_auc[j_star],
+        acc_se = if (nreps >= 2L) stats::sd(acc_mat[, j_star], na.rm=TRUE) / sqrt(nreps) else NA_real_,
+        auc_se = if (nreps >= 2L) stats::sd(auc_mat[, j_star], na.rm=TRUE) / sqrt(nreps) else NA_real_
+    )
+}
+
+# DIAGNOSTIC (branch only, remove before merge): the original cv.glmnet-based
+# fit_lasso, kept solely for the CI A/B crash comparison via MDM_NOFIX=1.
+fit_lasso_cvglmnet <- function(X, y, seed=1, nworkers=1L, nreps=5L) {
     lvs <- levels(y)
     par_ok <- nworkers > 1L && requireNamespace("doParallel", quietly=TRUE)
     if (par_ok) {
@@ -561,32 +623,16 @@ fit_lasso <- function(X, y, seed=1, nworkers=1L, nreps=5L) {
         doParallel::registerDoParallel(cl)
         on.exit(parallel::stopCluster(cl), add=TRUE)
     }
-    # Stratified CV folds, capped at the minority-class size, so that no fold
-    # degenerates to a single class. Random folds (glmnet's default) hit
-    # single-class folds on small binomial data, which makes glmnet's Fortran
-    # numerically unstable and, on Windows, prone to a 0xC0000005 crash.
-    # Rep 1 discovers the lambda path; subsequent reps reuse it so per-lambda
-    # OOF arrays line up across reps.
-    # DIAGNOSTIC toggle (branch only): MDM_NOFIX=1 restores the old random
-    # nfolds=10 behavior for an A/B crash comparison on CI. Remove before merge.
-    nf <- max(3L, min(10L, min(table(y))))
-    use_strat <- !identical(Sys.getenv("MDM_NOFIX"), "1")
     cvs <- vector("list", nreps)
-    lambda_path <- NULL
-    for (r in seq_len(nreps)) {
-        cv_args <- list(
-            x=X, y=y, family="binomial", alpha=1,
-            parallel=par_ok, keep=TRUE
-        )
-        if (use_strat) {
-            cv_args$foldid <- get_foldid(y, nfolds=nf, seed=seed + r - 1L)
-        } else {
-            set.seed(seed + r - 1L)
-            cv_args$nfolds <- 10
-        }
-        if (!is.null(lambda_path)) cv_args$lambda <- lambda_path
-        cvs[[r]] <- do.call(glmnet::cv.glmnet, cv_args)
-        if (is.null(lambda_path)) lambda_path <- cvs[[r]]$lambda
+    set.seed(seed)
+    cvs[[1]] <- glmnet::cv.glmnet(X, y, family="binomial", alpha=1,
+                                   nfolds=10, parallel=par_ok, keep=TRUE)
+    lambda_path <- cvs[[1]]$lambda
+    for (r in seq_len(nreps - 1L) + 1L) {
+        set.seed(seed + r - 1L)
+        cvs[[r]] <- glmnet::cv.glmnet(X, y, family="binomial", alpha=1,
+                                       nfolds=10, parallel=par_ok, keep=TRUE,
+                                       lambda=lambda_path)
     }
     nl <- length(lambda_path)
     acc_mat <- matrix(NA_real_, nrow=nreps, ncol=nl)
@@ -603,16 +649,10 @@ fit_lasso <- function(X, y, seed=1, nworkers=1L, nreps=5L) {
     }
     mean_acc <- colMeans(acc_mat, na.rm=TRUE)
     mean_auc <- colMeans(auc_mat, na.rm=TRUE)
-    # Pick lambda* by averaged accuracy with AUC as tiebreaker. cv.glmnet's
-    # lambda path is decreasing (index 1 = largest/most-regularized), and
-    # which.max() returns the FIRST maximum, so ties break toward the
-    # more-regularized end (matching cv.glmnet's lambda.1se sensibility).
-    # For a unique maximum this is identical to any other search order.
     score <- mean_acc * 1e6 + mean_auc
     j_star <- which.max(score)
-    chosen_lambda <- lambda_path[j_star]
     final_model <- cvs[[nreps]]
-    final_model$lambda.min <- chosen_lambda
+    final_model$lambda.min <- lambda_path[j_star]
     list(
         model = final_model,
         acc = mean_acc[j_star],
@@ -633,7 +673,7 @@ fit_lasso <- function(X, y, seed=1, nworkers=1L, nreps=5L) {
 #' @return Numeric vector of length `nrow(newx)`.
 predict_lasso <- function(model, newx) {
     requireNamespace("glmnet", quietly=TRUE)
-    as.numeric(stats::predict(model, newx=newx, s="lambda.min", type="response"))
+    as.numeric(stats::predict(model, newx=newx, s=model$lambda.min, type="response"))
 }
 
 #' @noRd
@@ -1016,7 +1056,7 @@ coef.mdm <- function(object, ...) {
     if (inherits(object$model, "ranger")) {
         return(object$model$variable.importance)
     }
-    stats::coef(object$model, s="lambda.min", ...)
+    stats::coef(object$model, s=object$model$lambda.min, ...)
 }
 
 #' @export
