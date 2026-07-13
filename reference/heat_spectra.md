@@ -194,36 +194,36 @@ NULL. Called for side effect of plotting.
 
 ``` r
 obj <- deconvolute(sim[1:4], sfr = c(3.55, 3.35))
-#> 2026-07-13 07:14:32.01 Starting deconvolution (spectra: 4, workers: 1)
-#> 2026-07-13 07:14:32.01 Starting deconvolution of sim_01 using R backend
-#> 2026-07-13 07:14:32.01 Starting peak selection
-#> 2026-07-13 07:14:32.01 Detected 312 peaks
-#> 2026-07-13 07:14:32.01 Removing peaks with low scores
-#> 2026-07-13 07:14:32.01 Removed 285 peaks
-#> 2026-07-13 07:14:32.01 Fitting Lorentz curves (3 iterations)
-#> 2026-07-13 07:14:32.01 Finished deconvolution of sim_01
-#> 2026-07-13 07:14:32.01 Starting deconvolution of sim_02 using R backend
-#> 2026-07-13 07:14:32.01 Starting peak selection
-#> 2026-07-13 07:14:32.01 Detected 316 peaks
-#> 2026-07-13 07:14:32.01 Removing peaks with low scores
-#> 2026-07-13 07:14:32.02 Removed 286 peaks
-#> 2026-07-13 07:14:32.02 Fitting Lorentz curves (3 iterations)
-#> 2026-07-13 07:14:32.02 Finished deconvolution of sim_02
-#> 2026-07-13 07:14:32.02 Starting deconvolution of sim_03 using R backend
-#> 2026-07-13 07:14:32.02 Starting peak selection
-#> 2026-07-13 07:14:32.02 Detected 333 peaks
-#> 2026-07-13 07:14:32.02 Removing peaks with low scores
-#> 2026-07-13 07:14:32.02 Removed 308 peaks
-#> 2026-07-13 07:14:32.02 Fitting Lorentz curves (3 iterations)
-#> 2026-07-13 07:14:32.02 Finished deconvolution of sim_03
-#> 2026-07-13 07:14:32.02 Starting deconvolution of sim_04 using R backend
-#> 2026-07-13 07:14:32.02 Starting peak selection
-#> 2026-07-13 07:14:32.02 Detected 324 peaks
-#> 2026-07-13 07:14:32.02 Removing peaks with low scores
-#> 2026-07-13 07:14:32.02 Removed 298 peaks
-#> 2026-07-13 07:14:32.02 Fitting Lorentz curves (3 iterations)
-#> 2026-07-13 07:14:32.02 Finished deconvolution of sim_04
-#> 2026-07-13 07:14:32.02 Finished deconvolution 0.014 secs
+#> 2026-07-13 15:07:35.07 Starting deconvolution (spectra: 4, workers: 1)
+#> 2026-07-13 15:07:35.07 Starting deconvolution of sim_01 using R backend
+#> 2026-07-13 15:07:35.07 Starting peak selection
+#> 2026-07-13 15:07:35.07 Detected 312 peaks
+#> 2026-07-13 15:07:35.07 Removing peaks with low scores
+#> 2026-07-13 15:07:35.07 Removed 285 peaks
+#> 2026-07-13 15:07:35.07 Fitting Lorentz curves (3 iterations)
+#> 2026-07-13 15:07:35.07 Finished deconvolution of sim_01
+#> 2026-07-13 15:07:35.07 Starting deconvolution of sim_02 using R backend
+#> 2026-07-13 15:07:35.07 Starting peak selection
+#> 2026-07-13 15:07:35.07 Detected 316 peaks
+#> 2026-07-13 15:07:35.07 Removing peaks with low scores
+#> 2026-07-13 15:07:35.07 Removed 286 peaks
+#> 2026-07-13 15:07:35.07 Fitting Lorentz curves (3 iterations)
+#> 2026-07-13 15:07:35.07 Finished deconvolution of sim_02
+#> 2026-07-13 15:07:35.07 Starting deconvolution of sim_03 using R backend
+#> 2026-07-13 15:07:35.07 Starting peak selection
+#> 2026-07-13 15:07:35.07 Detected 333 peaks
+#> 2026-07-13 15:07:35.07 Removing peaks with low scores
+#> 2026-07-13 15:07:35.07 Removed 308 peaks
+#> 2026-07-13 15:07:35.07 Fitting Lorentz curves (3 iterations)
+#> 2026-07-13 15:07:35.08 Finished deconvolution of sim_03
+#> 2026-07-13 15:07:35.08 Starting deconvolution of sim_04 using R backend
+#> 2026-07-13 15:07:35.08 Starting peak selection
+#> 2026-07-13 15:07:35.08 Detected 324 peaks
+#> 2026-07-13 15:07:35.08 Removing peaks with low scores
+#> 2026-07-13 15:07:35.08 Removed 298 peaks
+#> 2026-07-13 15:07:35.08 Fitting Lorentz curves (3 iterations)
+#> 2026-07-13 15:07:35.08 Finished deconvolution of sim_04
+#> 2026-07-13 15:07:35.08 Finished deconvolution 0.012 secs
 heat_spectra(obj)
 
 heat_spectra(obj, foc_rgn = c(3.55, 3.35))

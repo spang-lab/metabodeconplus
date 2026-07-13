@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">metabodeconplus</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.20.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.20.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,11 +39,16 @@
     </div>
 
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.20.1" id="metabodeconplus-0201">metabodeconplus 0.20.1<a class="anchor" aria-label="anchor" href="#metabodeconplus-0201"></a></h2>
+<ul><li>Fixed a flaky Windows <code>R CMD check</code> failure in the <code>glmnet</code>/lasso <code><a href="../reference/mdm.html">fit_mdm()</a></code> and <code><a href="../reference/mdm.html">benchmark()</a></code> smoke tests. <code>glmnet</code>’s compiled code intermittently triggers a Windows access violation (exit code <code>0xC0000005</code>) when run inside a <code>testthat</code> parallel worker, crashing the test subprocess. The fault is upstream and independent of how <code>fit_lasso()</code> drives <code>glmnet</code> — it reproduces identically with random folds, stratified folds, a manual cross-validation loop, and even the Gaussian family — and it does not occur outside the parallel-worker context. The lasso backend is an optional/secondary path (the default published model, <code>ranger</code>, is unaffected). These lasso smoke tests are therefore skipped on Windows only in automated check environments — CI and CRAN / <code>R CMD check</code>, including win-builder — while still running during local interactive development on Windows and on Linux/macOS everywhere. The <code>ranger</code> tests run on all platforms.</li>
+</ul></div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.20.0" id="metabodeconplus-0200">metabodeconplus 0.20.0<a class="anchor" aria-label="anchor" href="#metabodeconplus-0200"></a></h2>
 <ul><li>First release of <strong>metabodeconplus</strong>, the continuation of the <em>metabodecon</em> package under a new name. It provides an integrated workflow for 1D NMR spectra: deconvolution, alignment, feature-matrix construction and classification models (<code><a href="../reference/mdm.html">fit_mdm()</a></code> / <code><a href="../reference/mdm.html">benchmark()</a></code>), with an optional Rust backend (<code>mdrb</code>).</li>
 <li>The classic <em>metabodecon</em> (1.6.3) remains available separately, so existing workflows keep working while metabodeconplus evolves. As a fresh <code>0.x</code> package, metabodeconplus does not yet make backwards-compatibility promises.</li>
 </ul></div>
-  </main></div>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">
