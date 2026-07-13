@@ -208,7 +208,7 @@ datadir_persistent <- function() {
 #'
 #' @description Returns the path to the temporary data directory where
 #' metabodeconplus's data sets are stored. This directory equals subdirectory 'data'
-#' of metabodeconpluss temporary session directory [metabodeconplus::tmpdir()] plus additional path
+#' of metabodeconplus's temporary session directory [metabodeconplus::tmpdir()] plus additional path
 #' normalization.
 #'
 #' @return Returns the path to the temporary data directory.

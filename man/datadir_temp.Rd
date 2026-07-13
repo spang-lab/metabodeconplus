@@ -12,7 +12,7 @@ Returns the path to the temporary data directory.
 \description{
 Returns the path to the temporary data directory where
 metabodeconplus's data sets are stored. This directory equals subdirectory 'data'
-of metabodeconpluss temporary session directory \code{\link[=tmpdir]{tmpdir()}} plus additional path
+of metabodeconplus's temporary session directory \code{\link[=tmpdir]{tmpdir()}} plus additional path
 normalization.
 }
 \examples{
