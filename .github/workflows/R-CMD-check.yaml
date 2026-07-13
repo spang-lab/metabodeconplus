@@ -13,26 +13,32 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # DIAGNOSTIC (branch fix/test-mdm-windows-crash): windows-only, crossing
-        # parallel(true/false) x suite(full/mdm-only) to isolate what triggers
-        # the flaky 0xC0000005 crash. par/filter are applied per-job below.
+        # DIAGNOSTIC (branch fix/test-mdm-windows-crash): A/B test of the
+        # fit_lasso stratified-folds fix under faithful conditions (parallel +
+        # full suite). CTRL restores the old random-fold behavior via
+        # MDM_NOFIX=1 and should still crash ~1/6; FIX should not crash.
         # Revert before merge.
-        #   A = faithful (parallel + full suite)
-        #   B = serial + full suite      (is parallel:false the fix?)
-        #   C = parallel + mdm-only      (do concurrent workers matter?)
         config:
-          - {os: windows-latest, r: 'release', test: 'fast', par: 'true',  filter: '',    grp: 'A-faithful', try: 1}
-          - {os: windows-latest, r: 'release', test: 'fast', par: 'true',  filter: '',    grp: 'A-faithful', try: 2}
-          - {os: windows-latest, r: 'release', test: 'fast', par: 'true',  filter: '',    grp: 'A-faithful', try: 3}
-          - {os: windows-latest, r: 'release', test: 'fast', par: 'true',  filter: '',    grp: 'A-faithful', try: 4}
-          - {os: windows-latest, r: 'release', test: 'fast', par: 'true',  filter: '',    grp: 'A-faithful', try: 5}
-          - {os: windows-latest, r: 'release', test: 'fast', par: 'true',  filter: '',    grp: 'A-faithful', try: 6}
-          - {os: windows-latest, r: 'release', test: 'fast', par: 'false', filter: '',    grp: 'B-serial',   try: 1}
-          - {os: windows-latest, r: 'release', test: 'fast', par: 'false', filter: '',    grp: 'B-serial',   try: 2}
-          - {os: windows-latest, r: 'release', test: 'fast', par: 'false', filter: '',    grp: 'B-serial',   try: 3}
-          - {os: windows-latest, r: 'release', test: 'fast', par: 'true',  filter: 'mdm', grp: 'C-mdm-only', try: 1}
-          - {os: windows-latest, r: 'release', test: 'fast', par: 'true',  filter: 'mdm', grp: 'C-mdm-only', try: 2}
-          - {os: windows-latest, r: 'release', test: 'fast', par: 'true',  filter: 'mdm', grp: 'C-mdm-only', try: 3}
+          - {os: windows-latest, r: 'release', test: 'fast', par: 'true', filter: '', nofix: '1', grp: 'CTRL', try: 1}
+          - {os: windows-latest, r: 'release', test: 'fast', par: 'true', filter: '', nofix: '1', grp: 'CTRL', try: 2}
+          - {os: windows-latest, r: 'release', test: 'fast', par: 'true', filter: '', nofix: '1', grp: 'CTRL', try: 3}
+          - {os: windows-latest, r: 'release', test: 'fast', par: 'true', filter: '', nofix: '1', grp: 'CTRL', try: 4}
+          - {os: windows-latest, r: 'release', test: 'fast', par: 'true', filter: '', nofix: '1', grp: 'CTRL', try: 5}
+          - {os: windows-latest, r: 'release', test: 'fast', par: 'true', filter: '', nofix: '1', grp: 'CTRL', try: 6}
+          - {os: windows-latest, r: 'release', test: 'fast', par: 'true', filter: '', nofix: '1', grp: 'CTRL', try: 7}
+          - {os: windows-latest, r: 'release', test: 'fast', par: 'true', filter: '', nofix: '1', grp: 'CTRL', try: 8}
+          - {os: windows-latest, r: 'release', test: 'fast', par: 'true', filter: '', nofix: '0', grp: 'FIX',  try: 1}
+          - {os: windows-latest, r: 'release', test: 'fast', par: 'true', filter: '', nofix: '0', grp: 'FIX',  try: 2}
+          - {os: windows-latest, r: 'release', test: 'fast', par: 'true', filter: '', nofix: '0', grp: 'FIX',  try: 3}
+          - {os: windows-latest, r: 'release', test: 'fast', par: 'true', filter: '', nofix: '0', grp: 'FIX',  try: 4}
+          - {os: windows-latest, r: 'release', test: 'fast', par: 'true', filter: '', nofix: '0', grp: 'FIX',  try: 5}
+          - {os: windows-latest, r: 'release', test: 'fast', par: 'true', filter: '', nofix: '0', grp: 'FIX',  try: 6}
+          - {os: windows-latest, r: 'release', test: 'fast', par: 'true', filter: '', nofix: '0', grp: 'FIX',  try: 7}
+          - {os: windows-latest, r: 'release', test: 'fast', par: 'true', filter: '', nofix: '0', grp: 'FIX',  try: 8}
+          - {os: windows-latest, r: 'release', test: 'fast', par: 'true', filter: '', nofix: '0', grp: 'FIX',  try: 9}
+          - {os: windows-latest, r: 'release', test: 'fast', par: 'true', filter: '', nofix: '0', grp: 'FIX',  try: 10}
+          - {os: windows-latest, r: 'release', test: 'fast', par: 'true', filter: '', nofix: '0', grp: 'FIX',  try: 11}
+          - {os: windows-latest, r: 'release', test: 'fast', par: 'true', filter: '', nofix: '0', grp: 'FIX',  try: 12}
     # NB: RUN_SLOW_TESTS is intentionally NOT set at the job level. The
     # per-step configuration below enables it only for the `all` and `nobioc`
     # runs, so the `fast` jobs (macOS/Windows/older R) skip the slow, network-
@@ -41,6 +47,7 @@ jobs:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
       MDM_FILTER: ${{ matrix.config.filter }}
+      MDM_NOFIX: ${{ matrix.config.nofix }}
     steps:
 
       - name: Checkout repository

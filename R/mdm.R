@@ -561,18 +561,32 @@ fit_lasso <- function(X, y, seed=1, nworkers=1L, nreps=5L) {
         doParallel::registerDoParallel(cl)
         on.exit(parallel::stopCluster(cl), add=TRUE)
     }
-    # Rep 1 discovers the lambda path from the data; subsequent reps
-    # reuse it so per-lambda OOF arrays line up across reps.
+    # Stratified CV folds, capped at the minority-class size, so that no fold
+    # degenerates to a single class. Random folds (glmnet's default) hit
+    # single-class folds on small binomial data, which makes glmnet's Fortran
+    # numerically unstable and, on Windows, prone to a 0xC0000005 crash.
+    # Rep 1 discovers the lambda path; subsequent reps reuse it so per-lambda
+    # OOF arrays line up across reps.
+    # DIAGNOSTIC toggle (branch only): MDM_NOFIX=1 restores the old random
+    # nfolds=10 behavior for an A/B crash comparison on CI. Remove before merge.
+    nf <- max(3L, min(10L, min(table(y))))
+    use_strat <- !identical(Sys.getenv("MDM_NOFIX"), "1")
     cvs <- vector("list", nreps)
-    set.seed(seed)
-    cvs[[1]] <- glmnet::cv.glmnet(X, y, family="binomial", alpha=1,
-                                   nfolds=10, parallel=par_ok, keep=TRUE)
-    lambda_path <- cvs[[1]]$lambda
-    for (r in seq_len(nreps - 1L) + 1L) {
-        set.seed(seed + r - 1L)
-        cvs[[r]] <- glmnet::cv.glmnet(X, y, family="binomial", alpha=1,
-                                       nfolds=10, parallel=par_ok, keep=TRUE,
-                                       lambda=lambda_path)
+    lambda_path <- NULL
+    for (r in seq_len(nreps)) {
+        cv_args <- list(
+            x=X, y=y, family="binomial", alpha=1,
+            parallel=par_ok, keep=TRUE
+        )
+        if (use_strat) {
+            cv_args$foldid <- get_foldid(y, nfolds=nf, seed=seed + r - 1L)
+        } else {
+            set.seed(seed + r - 1L)
+            cv_args$nfolds <- 10
+        }
+        if (!is.null(lambda_path)) cv_args$lambda <- lambda_path
+        cvs[[r]] <- do.call(glmnet::cv.glmnet, cv_args)
+        if (is.null(lambda_path)) lambda_path <- cvs[[r]]$lambda
     }
     nl <- length(lambda_path)
     acc_mat <- matrix(NA_real_, nrow=nreps, ncol=nl)
