@@ -9,21 +9,30 @@ on: {
 jobs:
   R-CMD-check:
     runs-on: ${{ matrix.config.os }}
-    name: '${{ matrix.config.os }} (${{ matrix.config.r }}, ${{ matrix.config.test }}) try-${{ matrix.config.try }}'
+    name: '${{ matrix.config.grp }} try-${{ matrix.config.try }}'
     strategy:
       fail-fast: false
       matrix:
-        # DIAGNOSTIC (branch fix/test-mdm-windows-crash): trimmed to the
-        # crashing job (windows-latest / release / fast) and fanned out to
-        # several identical attempts to beat the flaky 0xC0000005 crash. To be
-        # reverted before merge.
+        # DIAGNOSTIC (branch fix/test-mdm-windows-crash): windows-only, crossing
+        # parallel(true/false) x suite(full/mdm-only) to isolate what triggers
+        # the flaky 0xC0000005 crash. par/filter are applied per-job below.
+        # Revert before merge.
+        #   A = faithful (parallel + full suite)
+        #   B = serial + full suite      (is parallel:false the fix?)
+        #   C = parallel + mdm-only      (do concurrent workers matter?)
         config:
-          - {os: windows-latest, r: 'release', test: 'fast', try: 1}
-          - {os: windows-latest, r: 'release', test: 'fast', try: 2}
-          - {os: windows-latest, r: 'release', test: 'fast', try: 3}
-          - {os: windows-latest, r: 'release', test: 'fast', try: 4}
-          - {os: windows-latest, r: 'release', test: 'fast', try: 5}
-          - {os: windows-latest, r: 'release', test: 'fast', try: 6}
+          - {os: windows-latest, r: 'release', test: 'fast', par: 'true',  filter: '',    grp: 'A-faithful', try: 1}
+          - {os: windows-latest, r: 'release', test: 'fast', par: 'true',  filter: '',    grp: 'A-faithful', try: 2}
+          - {os: windows-latest, r: 'release', test: 'fast', par: 'true',  filter: '',    grp: 'A-faithful', try: 3}
+          - {os: windows-latest, r: 'release', test: 'fast', par: 'true',  filter: '',    grp: 'A-faithful', try: 4}
+          - {os: windows-latest, r: 'release', test: 'fast', par: 'true',  filter: '',    grp: 'A-faithful', try: 5}
+          - {os: windows-latest, r: 'release', test: 'fast', par: 'true',  filter: '',    grp: 'A-faithful', try: 6}
+          - {os: windows-latest, r: 'release', test: 'fast', par: 'false', filter: '',    grp: 'B-serial',   try: 1}
+          - {os: windows-latest, r: 'release', test: 'fast', par: 'false', filter: '',    grp: 'B-serial',   try: 2}
+          - {os: windows-latest, r: 'release', test: 'fast', par: 'false', filter: '',    grp: 'B-serial',   try: 3}
+          - {os: windows-latest, r: 'release', test: 'fast', par: 'true',  filter: 'mdm', grp: 'C-mdm-only', try: 1}
+          - {os: windows-latest, r: 'release', test: 'fast', par: 'true',  filter: 'mdm', grp: 'C-mdm-only', try: 2}
+          - {os: windows-latest, r: 'release', test: 'fast', par: 'true',  filter: 'mdm', grp: 'C-mdm-only', try: 3}
     # NB: RUN_SLOW_TESTS is intentionally NOT set at the job level. The
     # per-step configuration below enables it only for the `all` and `nobioc`
     # runs, so the `fast` jobs (macOS/Windows/older R) skip the slow, network-
@@ -31,10 +40,19 @@ jobs:
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
+      MDM_FILTER: ${{ matrix.config.filter }}
     steps:
 
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      # DIAGNOSTIC: set Config/testthat/parallel per-job so the matrix can
+      # cross parallel(true/false). Revert before merge.
+      - name: Configure testthat parallel (${{ matrix.config.par }})
+        shell: bash
+        run: |
+          sed -i "s#^Config/testthat/parallel:.*#Config/testthat/parallel: ${{ matrix.config.par }}#" DESCRIPTION
+          echo "DESCRIPTION parallel setting:"; grep "Config/testthat/parallel" DESCRIPTION
 
       - name: Setup Pandoc
         uses: r-lib/actions/setup-pandoc@v2

@@ -9,6 +9,8 @@
 library(testthat)
 library(metabodeconplus)
 
-# DIAGNOSTIC (branch fix/test-mdm-windows-crash): restrict to test-mdm.R to
-# reproduce and localize the Windows 0xC0000005 crash. Revert before merge.
-test_check("metabodeconplus", filter = "mdm")
+# DIAGNOSTIC (branch fix/test-mdm-windows-crash): filter is env-driven so the
+# CI matrix can run the full suite (MDM_FILTER="") or just test-mdm.R
+# (MDM_FILTER="mdm"). Revert before merge.
+.flt <- Sys.getenv("MDM_FILTER", "mdm")
+test_check("metabodeconplus", filter = if (nzchar(.flt)) .flt else NULL)
