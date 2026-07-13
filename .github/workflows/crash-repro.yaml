@@ -1,0 +1,60 @@
+# DIAGNOSTIC (branch fix/test-mdm-windows-crash): high-power crash reproduction.
+# Runs the lasso ops (op1->op2->op3) in a stress loop many times per job so a
+# buggy build crashes with high probability. Groups: CTRL (old cv.glmnet),
+# FIXB (manual CV binomial), FIXG (manual CV gaussian). Remove before merge.
+name: crash-repro
+permissions: read-all
+on: {
+  push: {branches: [fix/test-mdm-windows-crash]},
+  workflow_dispatch: {}
+}
+jobs:
+  repro:
+    runs-on: windows-latest
+    name: '${{ matrix.g.grp }} try-${{ matrix.g.try }}'
+    strategy:
+      fail-fast: false
+      matrix:
+        g:
+          - {grp: 'CTRL', nofix: '1', fam: 'binomial', try: 1}
+          - {grp: 'CTRL', nofix: '1', fam: 'binomial', try: 2}
+          - {grp: 'CTRL', nofix: '1', fam: 'binomial', try: 3}
+          - {grp: 'FIXB', nofix: '0', fam: 'binomial', try: 1}
+          - {grp: 'FIXB', nofix: '0', fam: 'binomial', try: 2}
+          - {grp: 'FIXB', nofix: '0', fam: 'binomial', try: 3}
+          - {grp: 'FIXB', nofix: '0', fam: 'binomial', try: 4}
+          - {grp: 'FIXG', nofix: '0', fam: 'gaussian', try: 1}
+          - {grp: 'FIXG', nofix: '0', fam: 'gaussian', try: 2}
+          - {grp: 'FIXG', nofix: '0', fam: 'gaussian', try: 3}
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      R_KEEP_PKG_SOURCE: yes
+      MDM_NOFIX: ${{ matrix.g.nofix }}
+      MDM_FAM: ${{ matrix.g.fam }}
+      REPS: '30'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: release
+          use-public-rspm: true
+          extra-repositories: https://spang-lab.r-universe.dev
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::rcmdcheck
+          needs: check
+      - name: Install package
+        shell: bash
+        run: R CMD INSTALL --no-multiarch .
+      - name: Stress-loop lasso ops (${{ matrix.g.grp }})
+        shell: bash
+        run: |
+          set +e
+          Rscript .github/diag/seq_crash.R "$REPS"
+          code=$?
+          echo "=== seq_crash.R exit code: $code ==="
+          if [ "$code" -ne 0 ]; then
+            echo "CRASH DETECTED (non-zero exit $code) for group ${{ matrix.g.grp }}"
+            exit 1
+          fi
+          echo "CLEAN: ${{ matrix.g.grp }} survived $REPS reps"

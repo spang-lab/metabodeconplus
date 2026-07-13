@@ -3,8 +3,11 @@
 name: R-CMD-check
 permissions: read-all
 on: {
+  # DIAGNOSTIC (fix/test-mdm-windows-crash): pull_request trigger paused while
+  # the crash-repro stress workflow runs, to avoid 26 slow jobs per push.
+  # Restore before merge.
   push: {branches: [main, master]},
-  pull_request: {branches: [main, master]}
+  workflow_dispatch: {}
 }
 jobs:
   R-CMD-check:
