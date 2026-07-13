@@ -1,3 +1,11 @@
+# metabodeconplus 0.20.2
+
+* Gave metabodeconplus a distinct `Title` and `Description` in `DESCRIPTION`
+  so they no longer duplicate the CRAN *metabodecon* package. The title now
+  mentions model fitting, and the description highlights the end-to-end
+  model-fitting workflow (`fit_mdm()` / `benchmark()`) and states that
+  metabodeconplus is the backwards-incompatible successor to *metabodecon*.
+
 # metabodeconplus 0.20.1
 
 * Fixed a flaky Windows `R CMD check` failure in the `glmnet`/lasso
