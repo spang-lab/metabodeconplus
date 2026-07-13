@@ -8,7 +8,7 @@ picked from `lcpar$pcisn` (post-snap) when available, else `lcpar$pcial`
 have their `A * pi` summed.
 
 `si_mat()` is intentionally a dumb peak-list rasterizer: all alignment
-(continuous shift via CluPA) and snapping (RefPA) must have happened
+(continuous shift via CluPA) and reference snapping must have happened
 upstream — typically inside
 [`align()`](https://spang-lab.github.io/metabodeconplus/reference/align.md).
 To build a feature matrix where every spectrum shares the same column

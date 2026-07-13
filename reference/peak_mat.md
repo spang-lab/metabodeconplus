@@ -7,7 +7,7 @@ suitable as the `feat_fun` argument of
 Equivalent to `si_mat(x, igrs=igrs)`; the snapping that used to live
 here has moved into
 [`align()`](https://spang-lab.github.io/metabodeconplus/reference/align.md)
-(RefPA stage).
+(reference-snapping stage).
 
 ## Usage
 

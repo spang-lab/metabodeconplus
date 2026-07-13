@@ -8,7 +8,7 @@ described in the paper:
     peaks.
 2.  **Alignment (CluPA)** – shift peaks so corresponding peaks across
     spectra share the same chemical-shift index.
-3.  **Peak snapping (RefPA)** – snap each aligned peak onto the nearest
+3.  **Reference snapping** – snap each aligned peak onto the nearest
     reference-grid column, so all spectra share one common set of
     feature columns.
 4.  **Feature matrix** – collapse the snapped peak lists into one row
@@ -32,12 +32,6 @@ for details.
 ``` r
 
 library(metabodeconplus)
-# Small rank-based AUC helper (positive class = second factor level).
-auc <- function(y, prob) {
-    pos <- y == levels(y)[2]; r <- rank(prob)
-    n1 <- sum(pos); n0 <- sum(!pos)
-    if (n1 == 0 || n0 == 0) NA_real_ else (sum(r[pos]) - n1 * (n1 + 1) / 2) / (n1 * n0)
-}
 x <- sim2
 y <- attr(sim2, "group")
 n <- length(x)
@@ -95,7 +89,7 @@ plot_spectra(aligns[abtr])
 
 ![](MDM_files/figure-html/align-1.png)
 
-### Step 3: Snap peaks to the reference (RefPA)
+### Step 3: Snap peaks to the reference
 
 CluPA aligns peaks continuously;
 [`snap_to_ref()`](https://spang-lab.github.io/metabodeconplus/reference/alignment_funs.md)
@@ -182,6 +176,12 @@ and feature columns.
 
 ``` r
 
+# Small rank-based AUC helper (positive class = second factor level).
+auc <- function(y, prob) {
+    pos <- y == levels(y)[2]; r <- rank(prob)
+    n1 <- sum(pos); n0 <- sum(!pos)
+    if (n1 == 0 || n0 == 0) NA_real_ else (sum(r[pos]) - n1 * (n1 + 1) / 2) / (n1 * n0)
+}
 preds <- predict(md, x[te], type="all", verbosity=0)
 acc <- mean(preds$class == y[te])
 au  <- auc(y[te], preds$prob)

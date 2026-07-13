@@ -11,7 +11,7 @@ stages:
     column index) to each peak; original `x0`, `A`, `lambda`, `pcide`
     are preserved.
 
-2.  **RefPA**
+2.  **Reference snapping**
     ([`snap_to_ref()`](https://spang-lab.github.io/metabodeconplus/reference/alignment_funs.md))
     records, for each peak, the nearest reference column within
     `maxCombine` as `pcisn` / `x0sn`. Peaks farther than `maxCombine`
@@ -66,9 +66,9 @@ align(
 
 - maxCombine:
 
-  Maximum snap distance for RefPA in chemical-shift columns.
-  `maxCombine = 0L` skips RefPA (no snapping). A negative value is
-  treated as `maxShift`.
+  Maximum snap distance for reference snapping in chemical-shift
+  columns. `maxCombine = 0L` skips snapping. A negative value is treated
+  as `maxShift`.
 
 - verbose:
 
@@ -80,9 +80,9 @@ align(
 
 - full:
 
-  If `TRUE` also recompute the aligned superposition during CluPA. RefPA
-  always drops `sit$supal` (the post-snap peak list is no longer
-  Lorentz-compatible).
+  If `TRUE` also recompute the aligned superposition during CluPA.
+  Reference snapping always drops `sit$supal` (the post-snap peak list
+  is no longer Lorentz-compatible).
 
 - use_speaq:
 
@@ -95,7 +95,8 @@ align(
 - gap_tol:
 
   Optional gap tolerance in ppm. `NULL` (default) uses the standard
-  CluPA + RefPA pipeline; only consulted by experimental snap backends.
+  CluPA + snapping pipeline; only consulted by experimental snap
+  backends.
 
 ## Value
 

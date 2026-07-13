@@ -12,8 +12,8 @@ and the `align_fun` argument of
   Operates on the Lorentz reconstruction `sit$sup` already attached to
   each spectrum by deconvolution.
 
-- `snap_to_ref()`: **RefPA** — reference-based peak alignment: snap each
-  peak to the nearest reference column within `maxCombine`.
+- `snap_to_ref()`: **Reference snapping** — snap each peak to the
+  nearest reference column within `maxCombine`.
 
 All these functions require every input spectrum to share the same `$cs`
 grid; an explicit [`stop()`](https://rdrr.io/r/base/stop.html) is raised
@@ -21,12 +21,12 @@ otherwise. Call
 [`harmonize_grid()`](https://spang-lab.github.io/metabodeconplus/reference/harmonize_grid.md)
 upstream to enforce that invariant.
 
-`snap_to_ref()` applies the RefPA step on its own: for each peak in each
-spectrum, finds the nearest reference column on the shared `cs` grid and
-records that column as `pcisn` (and its ppm value as `x0sn`). Peaks
-farther than `maxCombine` columns from every reference column get
+`snap_to_ref()` applies the snapping step on its own: for each peak in
+each spectrum, finds the nearest reference column on the shared `cs`
+grid and records that column as `pcisn` (and its ppm value as `x0sn`).
+Peaks farther than `maxCombine` columns from every reference column get
 `pcisn = NA` / `x0sn = NA`. Original `x0`, `x0al`, `A`, `lambda`,
-`pcide` and `pcial` are preserved — RefPA only *adds* the snapped
+`pcide` and `pcial` are preserved — snapping only *adds* the snapped
 fields. Collisions on the same `pcisn` column are not merged here;
 [`si_mat()`](https://spang-lab.github.io/metabodeconplus/reference/si_mat.md)
 sums their areas when rasterising the feature matrix. `sit$supal` is
@@ -95,7 +95,7 @@ snap_to_ref(x, ref = NULL, maxCombine = 20, ...)
 
 - maxCombine:
 
-  Maximum RefPA snap distance in datapoints.
+  Maximum reference-snapping distance in datapoints.
 
 - ...:
 

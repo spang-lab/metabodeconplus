@@ -131,7 +131,7 @@ A `decon2` object additionally has:
     [`clupa()`](https://spang-lab.github.io/metabodeconplus/reference/alignment_funs.md)
     also `x0al` / `pcial` (post-CluPA center and cs index). After
     [`snap_to_ref()`](https://spang-lab.github.io/metabodeconplus/reference/alignment_funs.md)
-    also `x0sn` / `pcisn` (post-RefPA center and cs index, with `NA` for
+    also `x0sn` / `pcisn` (post-snap center and cs index, with `NA` for
     peaks snapped beyond `maxCombine`). `A` and `lambda` are preserved
     through every stage.
 
@@ -144,11 +144,11 @@ alignment slots populated:
 
 - `lcpar$pcial`: Peak Centers after CluPA alignment as `cs` indices
 
-- `lcpar$x0sn`: Peak Centers after RefPA snap in ppm (NA when snapped
-  out)
-
-- `lcpar$pcisn`: Peak Centers after RefPA snap as `cs` indices (NA when
+- `lcpar$x0sn`: Peak Centers after reference snapping in ppm (NA when
   snapped out)
+
+- `lcpar$pcisn`: Peak Centers after reference snapping as `cs` indices
+  (NA when snapped out)
 
 - `sit$supal`: Signal Intensities of the superposition of aligned
   Lorentz curves
@@ -188,44 +188,44 @@ is_spectrum(s)
 #> [1] TRUE
 
 d <- deconvolute(s, sfr = c(3.55, 3.35))
-#> 2026-07-12 16:22:13.96 Starting deconvolution (spectra: 1, workers: 1)
-#> 2026-07-12 16:22:13.96 Starting deconvolution of sim_01 using R backend
-#> 2026-07-12 16:22:13.96 Starting peak selection
-#> 2026-07-12 16:22:13.96 Detected 312 peaks
-#> 2026-07-12 16:22:13.96 Removing peaks with low scores
-#> 2026-07-12 16:22:13.96 Removed 285 peaks
-#> 2026-07-12 16:22:13.96 Fitting Lorentz curves (3 iterations)
-#> 2026-07-12 16:22:13.96 Finished deconvolution of sim_01
-#> 2026-07-12 16:22:13.96 Finished deconvolution 0.004 secs
+#> 2026-07-13 07:00:17.38 Starting deconvolution (spectra: 1, workers: 1)
+#> 2026-07-13 07:00:17.38 Starting deconvolution of sim_01 using R backend
+#> 2026-07-13 07:00:17.38 Starting peak selection
+#> 2026-07-13 07:00:17.38 Detected 312 peaks
+#> 2026-07-13 07:00:17.38 Removing peaks with low scores
+#> 2026-07-13 07:00:17.38 Removed 285 peaks
+#> 2026-07-13 07:00:17.38 Fitting Lorentz curves (3 iterations)
+#> 2026-07-13 07:00:17.38 Finished deconvolution of sim_01
+#> 2026-07-13 07:00:17.38 Finished deconvolution 0.004 secs
 class(d) # c("decon2", "spectrum")
 #> [1] "decon2"   "spectrum"
 inherits(d, "spectrum") # TRUE
 #> [1] TRUE
 
 ds <- deconvolute(sim[1:3], sfr = c(3.55, 3.35))
-#> 2026-07-12 16:22:13.97 Starting deconvolution (spectra: 3, workers: 1)
-#> 2026-07-12 16:22:13.97 Starting deconvolution of sim_01 using R backend
-#> 2026-07-12 16:22:13.97 Starting peak selection
-#> 2026-07-12 16:22:13.97 Detected 312 peaks
-#> 2026-07-12 16:22:13.97 Removing peaks with low scores
-#> 2026-07-12 16:22:13.97 Removed 285 peaks
-#> 2026-07-12 16:22:13.97 Fitting Lorentz curves (3 iterations)
-#> 2026-07-12 16:22:13.97 Finished deconvolution of sim_01
-#> 2026-07-12 16:22:13.97 Starting deconvolution of sim_02 using R backend
-#> 2026-07-12 16:22:13.97 Starting peak selection
-#> 2026-07-12 16:22:13.97 Detected 316 peaks
-#> 2026-07-12 16:22:13.97 Removing peaks with low scores
-#> 2026-07-12 16:22:13.97 Removed 286 peaks
-#> 2026-07-12 16:22:13.97 Fitting Lorentz curves (3 iterations)
-#> 2026-07-12 16:22:13.98 Finished deconvolution of sim_02
-#> 2026-07-12 16:22:13.98 Starting deconvolution of sim_03 using R backend
-#> 2026-07-12 16:22:13.98 Starting peak selection
-#> 2026-07-12 16:22:13.98 Detected 333 peaks
-#> 2026-07-12 16:22:13.98 Removing peaks with low scores
-#> 2026-07-12 16:22:13.98 Removed 308 peaks
-#> 2026-07-12 16:22:13.98 Fitting Lorentz curves (3 iterations)
-#> 2026-07-12 16:22:13.98 Finished deconvolution of sim_03
-#> 2026-07-12 16:22:13.98 Finished deconvolution 0.011 secs
+#> 2026-07-13 07:00:17.39 Starting deconvolution (spectra: 3, workers: 1)
+#> 2026-07-13 07:00:17.39 Starting deconvolution of sim_01 using R backend
+#> 2026-07-13 07:00:17.39 Starting peak selection
+#> 2026-07-13 07:00:17.39 Detected 312 peaks
+#> 2026-07-13 07:00:17.39 Removing peaks with low scores
+#> 2026-07-13 07:00:17.39 Removed 285 peaks
+#> 2026-07-13 07:00:17.39 Fitting Lorentz curves (3 iterations)
+#> 2026-07-13 07:00:17.39 Finished deconvolution of sim_01
+#> 2026-07-13 07:00:17.39 Starting deconvolution of sim_02 using R backend
+#> 2026-07-13 07:00:17.39 Starting peak selection
+#> 2026-07-13 07:00:17.39 Detected 316 peaks
+#> 2026-07-13 07:00:17.39 Removing peaks with low scores
+#> 2026-07-13 07:00:17.39 Removed 286 peaks
+#> 2026-07-13 07:00:17.39 Fitting Lorentz curves (3 iterations)
+#> 2026-07-13 07:00:17.39 Finished deconvolution of sim_02
+#> 2026-07-13 07:00:17.39 Starting deconvolution of sim_03 using R backend
+#> 2026-07-13 07:00:17.39 Starting peak selection
+#> 2026-07-13 07:00:17.39 Detected 333 peaks
+#> 2026-07-13 07:00:17.39 Removing peaks with low scores
+#> 2026-07-13 07:00:17.40 Removed 308 peaks
+#> 2026-07-13 07:00:17.40 Fitting Lorentz curves (3 iterations)
+#> 2026-07-13 07:00:17.40 Finished deconvolution of sim_03
+#> 2026-07-13 07:00:17.40 Finished deconvolution 0.011 secs
 class(ds)              # c("decons2", "spectra")
 #> [1] "decons2" "spectra"
 as_spectra(s)

@@ -79,8 +79,8 @@ benchmark(
 
 - maxCombine:
 
-  RefPA snap window in datapoints. Integer, scalar or vector. Default
-  10.
+  Reference-snapping window in datapoints. Integer, scalar or vector.
+  Default 10.
 
 - nworkers:
 

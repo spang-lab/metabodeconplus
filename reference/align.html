@@ -6,7 +6,7 @@ continuously toward a reference using hierarchical-clustering FFT
 segment shifts (Beirnaert et al. 2018, Vu et al. 2011). Adds
 x0al and pcial (post-CluPA center and column index) to each
 peak; original x0, A, lambda, pcide are preserved.
-RefPA (snap_to_ref()) records, for each peak,
+Reference snapping (snap_to_ref()) records, for each peak,
 the nearest reference column within maxCombine as pcisn /
 x0sn. Peaks farther than maxCombine from every reference
 column get pcisn = NA / x0sn = NA. No peaks are dropped and
@@ -24,7 +24,7 @@ continuously toward a reference using hierarchical-clustering FFT
 segment shifts (Beirnaert et al. 2018, Vu et al. 2011). Adds
 x0al and pcial (post-CluPA center and column index) to each
 peak; original x0, A, lambda, pcide are preserved.
-RefPA (snap_to_ref()) records, for each peak,
+Reference snapping (snap_to_ref()) records, for each peak,
 the nearest reference column within maxCombine as pcisn /
 x0sn. Peaks farther than maxCombine from every reference
 column get pcisn = NA / x0sn = NA. No peaks are dropped and
@@ -82,7 +82,7 @@ continuously toward a reference using hierarchical-clustering FFT
 segment shifts (Beirnaert et al. 2018, Vu et al. 2011). Adds
 <code>x0al</code> and <code>pcial</code> (post-CluPA center and column index) to each
 peak; original <code>x0</code>, <code>A</code>, <code>lambda</code>, <code>pcide</code> are preserved.</p></li>
-<li><p><strong>RefPA</strong> (<code><a href="alignment_funs.html">snap_to_ref()</a></code>) records, for each peak,
+<li><p><strong>Reference snapping</strong> (<code><a href="alignment_funs.html">snap_to_ref()</a></code>) records, for each peak,
 the nearest reference column within <code>maxCombine</code> as <code>pcisn</code> /
 <code>x0sn</code>. Peaks farther than <code>maxCombine</code> from every reference
 column get <code>pcisn = NA</code> / <code>x0sn = NA</code>. No peaks are dropped and
@@ -134,8 +134,8 @@ shifted by CluPA. <code>maxShift = 0L</code> skips CluPA (sets <code>x0al = x0</
 
 
 <dt id="arg-maxcombine">maxCombine<a class="anchor" aria-label="anchor" href="#arg-maxcombine"></a></dt>
-<dd><p>Maximum snap distance for RefPA in chemical-shift
-columns. <code>maxCombine = 0L</code> skips RefPA (no snapping). A negative
+<dd><p>Maximum snap distance for reference snapping in chemical-shift
+columns. <code>maxCombine = 0L</code> skips snapping. A negative
 value is treated as <code>maxShift</code>.</p></dd>
 
 
@@ -149,7 +149,7 @@ value is treated as <code>maxShift</code>.</p></dd>
 
 <dt id="arg-full">full<a class="anchor" aria-label="anchor" href="#arg-full"></a></dt>
 <dd><p>If <code>TRUE</code> also recompute the aligned superposition during
-CluPA. RefPA always drops <code>sit$supal</code> (the post-snap peak list is
+CluPA. Reference snapping always drops <code>sit$supal</code> (the post-snap peak list is
 no longer Lorentz-compatible).</p></dd>
 
 
@@ -161,7 +161,7 @@ byte-equivalent to the speaq one (see <code>tests/testthat/test-speaq.R</code>).
 
 <dt id="arg-gap-tol">gap_tol<a class="anchor" aria-label="anchor" href="#arg-gap-tol"></a></dt>
 <dd><p>Optional gap tolerance in ppm. <code>NULL</code> (default) uses the standard
-CluPA + RefPA pipeline; only consulted by experimental snap backends.</p></dd>
+CluPA + snapping pipeline; only consulted by experimental snap backends.</p></dd>
 
 </dl></div>
     <div class="section level2">

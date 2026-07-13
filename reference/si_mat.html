@@ -6,7 +6,7 @@ lcpar$pcial (post-CluPA), else lcpar$pcide (post-decon). Peaks
 with pcisn = NA (snapped beyond maxCombine) are skipped.
 Collisions on the same column have their A * pi summed.
 si_mat() is intentionally a dumb peak-list rasterizer: all
-alignment (continuous shift via CluPA) and snapping (RefPA) must
+alignment (continuous shift via CluPA) and reference snapping must
 have happened upstream — typically inside align().
 To build a feature matrix where every spectrum shares the same
 column grid, run align(x, maxShift, maxCombine) first."><meta property="og:description" content="Builds a per-spectrum peak-area matrix. Each row is a spectrum, each
@@ -16,7 +16,7 @@ lcpar$pcial (post-CluPA), else lcpar$pcide (post-decon). Peaks
 with pcisn = NA (snapped beyond maxCombine) are skipped.
 Collisions on the same column have their A * pi summed.
 si_mat() is intentionally a dumb peak-list rasterizer: all
-alignment (continuous shift via CluPA) and snapping (RefPA) must
+alignment (continuous shift via CluPA) and reference snapping must
 have happened upstream — typically inside align().
 To build a feature matrix where every spectrum shares the same
 column grid, run align(x, maxShift, maxCombine) first."><meta property="og:image" content="https://spang-lab.github.io/metabodeconplus/logo.svg"></head><body>
@@ -67,7 +67,7 @@ picked from <code>lcpar$pcisn</code> (post-snap) when available, else
 with <code>pcisn = NA</code> (snapped beyond <code>maxCombine</code>) are skipped.
 Collisions on the same column have their <code>A * pi</code> summed.</p>
 <p><code>si_mat()</code> is intentionally a dumb peak-list rasterizer: all
-alignment (continuous shift via CluPA) and snapping (RefPA) must
+alignment (continuous shift via CluPA) and reference snapping must
 have happened upstream — typically inside <code><a href="align.html">align()</a></code>.
 To build a feature matrix where every spectrum shares the same
 column grid, run <code>align(x, maxShift, maxCombine)</code> first.</p>

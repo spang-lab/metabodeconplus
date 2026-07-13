@@ -222,9 +222,9 @@ Ever.
 ### align.R
 
 Functions for aligning deconvoluted spectra. The public alignment
-pipeline chains two stages — **CluPA** (continuous shifts) and **RefPA**
-(discrete snap to reference) — and \[metabodeconplus::align()\] runs
-both in one call.
+pipeline chains two stages — **CluPA** (continuous shifts) and
+**reference snapping** (discrete snap to reference) — and
+\[metabodeconplus::align()\] runs both in one call.
 
 - (exported) `align(x, maxShift, maxCombine, ref=NULL, ...)`: chains
   [`clupa()`](https://spang-lab.github.io/metabodeconplus/reference/alignment_funs.md)
@@ -241,13 +241,13 @@ both in one call.
   `harmonize_grid(x)` upstream if your corpus is from different
   acquisitions. Adds `x0al`, `pcial` to `lcpar`; keeps original peak
   count.
-- (exported) `snap_to_ref(x, maxCombine, ref=NULL)`: **RefPA** — for
-  every peak, records the nearest reference column on the shared `cs`
-  grid (within `maxCombine`) as `pcisn` / `x0sn`. Peaks farther than
-  `maxCombine` get `pcisn = NA` / `x0sn = NA`. Original `x0`, `x0al`,
-  `A`, `lambda`, `pcide`, `pcial` are all preserved — `snap_to_ref` only
-  *adds* fields. No peaks are dropped here and amplitudes are not
-  summed; \[metabodeconplus::si_mat()\] /
+- (exported) `snap_to_ref(x, maxCombine, ref=NULL)`: **reference
+  snapping** — for every peak, records the nearest reference column on
+  the shared `cs` grid (within `maxCombine`) as `pcisn` / `x0sn`. Peaks
+  farther than `maxCombine` get `pcisn = NA` / `x0sn = NA`. Original
+  `x0`, `x0al`, `A`, `lambda`, `pcide`, `pcial` are all preserved —
+  `snap_to_ref` only *adds* fields. No peaks are dropped here and
+  amplitudes are not summed; \[metabodeconplus::si_mat()\] /
   \[metabodeconplus::peak_mat()\] skip `pcisn = NA` peaks and sum
   collisions on the same `pcisn` column at rasterisation time. Clears
   `sit$supal` (the post-snap peak list is no longer Lorentz-compatible).
@@ -263,7 +263,7 @@ both in one call.
 - (private) `align_decon`: CluPA per-spectrum kernel (FFT shift +
   speaq-equivalent hclust). Reads `x$cs` and `x$sit$sup`; writes
   `x0al = cs[pcial]` and `pcial` as integer indices into `x$cs`.
-- (private) `snap_lcpar`: RefPA per-spectrum kernel.
+- (private) `snap_lcpar`: reference-snapping per-spectrum kernel.
 - (private) `find_ref`, `find_ref_ind`: pick the reference spectrum by
   minimising the sum, over every target peak in every other spectrum, of
   the ppm distance to the nearest peak in the candidate reference.
