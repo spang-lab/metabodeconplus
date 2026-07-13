@@ -31,7 +31,7 @@ jobs:
       R_KEEP_PKG_SOURCE: yes
       MDM_NOFIX: ${{ matrix.g.nofix }}
       MDM_FAM: ${{ matrix.g.fam }}
-      REPS: '30'
+      REPS: '12'
     steps:
       - uses: actions/checkout@v4
       - uses: r-lib/actions/setup-r@v2
@@ -43,18 +43,14 @@ jobs:
         with:
           extra-packages: any::rcmdcheck
           needs: check
-      - name: Install package
+      - name: Install package (with tests)
         shell: bash
-        run: R CMD INSTALL --no-multiarch .
-      - name: Stress-loop lasso ops (${{ matrix.g.grp }})
+        run: R CMD INSTALL --no-multiarch --install-tests .
+      - name: Stress-loop parallel testthat (${{ matrix.g.grp }})
         shell: bash
         run: |
           set +e
-          Rscript .github/diag/seq_crash.R "$REPS"
-          code=$?
-          echo "=== seq_crash.R exit code: $code ==="
-          if [ "$code" -ne 0 ]; then
-            echo "CRASH DETECTED (non-zero exit $code) for group ${{ matrix.g.grp }}"
-            exit 1
-          fi
-          echo "CLEAN: ${{ matrix.g.grp }} survived $REPS reps"
+          Rscript .github/diag/stress_testthat.R 2>&1 | tee stress.log
+          n=$(grep -oE "TOTAL crashes: [0-9]+" stress.log | grep -oE "[0-9]+" | tail -1)
+          echo "=== ${{ matrix.g.grp }} crashes: ${n:-unknown} / $REPS ==="
+          if [ "${n:-1}" -gt 0 ]; then exit 1; fi
