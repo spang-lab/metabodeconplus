@@ -5,6 +5,12 @@
   mentions model fitting, and the description highlights the end-to-end
   model-fitting workflow (`fit_mdm()` / `benchmark()`) and states that
   metabodeconplus is the backwards-incompatible successor to *metabodecon*.
+* CI: the slow, network-dependent tests now run on at least one runner per OS.
+  `R-CMD-check.yaml` promotes the macOS and Windows `release` jobs from `fast`
+  to `all` (`RUN_SLOW_TESTS=TRUE`), so OS-specific slow tests (e.g. the
+  persistent `datadir()` test, which is `skip_on_os("linux")`) keep their
+  coverage. Download failures skip gracefully via `skip_if_no_example_datasets()`,
+  so the slow jobs do not flake on transient network errors.
 
 # metabodeconplus 0.20.1
 
