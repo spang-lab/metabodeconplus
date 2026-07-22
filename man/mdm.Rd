@@ -9,7 +9,7 @@
 fit_mdm(
   x,
   y,
-  model = c("lasso", "ranger"),
+  model = c("ranger", "lasso"),
   npmax = -1L,
   maxShift = -1L,
   maxCombine = 10L,
@@ -22,7 +22,7 @@ fit_mdm(
 benchmark(
   x,
   y,
-  model = c("lasso", "ranger"),
+  model = c("ranger", "lasso"),
   npmax = -1L,
   maxShift = -1L,
   maxCombine = 10L,
@@ -38,9 +38,9 @@ benchmark(
 
 \item{y}{Factor vector with class labels for each spectrum.}
 
-\item{model}{Classification backend. One of \code{"lasso"} (default,
-L1-penalised logistic regression via \code{glmnet}) or \code{"ranger"}
-(probability random forest).}
+\item{model}{Classification backend. One of \code{"ranger"} (default,
+probability random forest) or \code{"lasso"} (L1-penalised logistic
+regression via \code{glmnet}).}
 
 \item{npmax}{Max peaks per spectrum. Integer in \verb{\{-2, -1, 0, 1, ...\}},
 scalar or vector. \code{-1} (default) selects the median per-spectrum
@@ -103,12 +103,18 @@ outer k-fold cross-validation to estimate end-to-end performance on
 held-out spectra.
 }
 \examples{
-\donttest{
-  x <- sim2
-  y <- attr(sim2, "group")
-  m <- fit_mdm(x, y)                  # lasso, full pipeline
-  mr <- fit_mdm(x, y, model="ranger") # random forest
-  bm <- benchmark(x, y, k=2)          # 2-fold cross-validation
+# Small, fast illustrative run. `deg` restricts deconvolution to a single
+# parameter set and scalar npmax/maxShift/maxCombine give a one-row model
+# grid (`mog`); benchmark() does a single 2-fold cross-validation round.
+i <- c(1:3, 51:53)                       # 3 spectra per class
+x <- sim2[i]
+y <- attr(sim2, "group")[i]
+deg <- expand.grid(nfit=3, smit=1, smws=3, delta=1.6)
+# `ranger` is the default backend and an optional (Suggests) dependency.
+if (requireNamespace("ranger", quietly = TRUE)) {
+    m <- fit_mdm(x, y, npmax=10L, maxShift=1L, maxCombine=2L, deg=deg)
+    bm <- benchmark(x, y, npmax=10L, maxShift=1L, maxCombine=2L, deg=deg, k=2L)
 }
+# `model = "lasso"` selects L1-penalised logistic regression instead.
 
 }

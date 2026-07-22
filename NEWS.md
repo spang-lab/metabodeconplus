@@ -1,5 +1,9 @@
 # metabodeconplus 0.21.0
 
+* `fit_mdm()` and `benchmark()` now default to `model = "ranger"` (probability
+  random forest) instead of `"lasso"`. Ranger is the intended default published
+  model; pass `model = "lasso"` for the L1-penalised logistic-regression
+  backend.
 * CRAN resubmission addressing the review of 0.20.2. No user-facing API
   changes beyond the removal of `install_mdrb()` / `check_mdrb_deps()`.
     * Removed the exported `install_mdrb()` and `check_mdrb_deps()` functions:

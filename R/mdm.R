@@ -30,9 +30,9 @@
 #'
 #' @param x Spectra object.
 #' @param y Factor vector with class labels for each spectrum.
-#' @param model Classification backend. One of `"lasso"` (default,
-#'   L1-penalised logistic regression via `glmnet`) or `"ranger"`
-#'   (probability random forest).
+#' @param model Classification backend. One of `"ranger"` (default,
+#'   probability random forest) or `"lasso"` (L1-penalised logistic
+#'   regression via `glmnet`).
 #' @param npmax Max peaks per spectrum. Integer in `{-2, -1, 0, 1, ...}`,
 #'   scalar or vector. `-1` (default) selects the median per-spectrum
 #'   Kneedle elbow; `-2` selects each spectrum's own elbow.
@@ -66,16 +66,22 @@
 #' (pooled `acc` / `auc`).
 #'
 #' @examples
-#' \donttest{
-#'   x <- sim2
-#'   y <- attr(sim2, "group")
-#'   m <- fit_mdm(x, y)                  # lasso, full pipeline
-#'   mr <- fit_mdm(x, y, model="ranger") # random forest
-#'   bm <- benchmark(x, y, k=2)          # 2-fold cross-validation
+#' # Small, fast illustrative run. `deg` restricts deconvolution to a single
+#' # parameter set and scalar npmax/maxShift/maxCombine give a one-row model
+#' # grid (`mog`); benchmark() does a single 2-fold cross-validation round.
+#' i <- c(1:3, 51:53)                       # 3 spectra per class
+#' x <- sim2[i]
+#' y <- attr(sim2, "group")[i]
+#' deg <- expand.grid(nfit=3, smit=1, smws=3, delta=1.6)
+#' # `ranger` is the default backend and an optional (Suggests) dependency.
+#' if (requireNamespace("ranger", quietly = TRUE)) {
+#'     m <- fit_mdm(x, y, npmax=10L, maxShift=1L, maxCombine=2L, deg=deg)
+#'     bm <- benchmark(x, y, npmax=10L, maxShift=1L, maxCombine=2L, deg=deg, k=2L)
 #' }
+#' # `model = "lasso"` selects L1-penalised logistic regression instead.
 #'
 fit_mdm <- function(
-    x, y, model=c("lasso", "ranger"),
+    x, y, model=c("ranger", "lasso"),
     npmax=-1L, maxShift=-1L, maxCombine=10L,
     nworkers=1L, seed=1L, verbosity=1L, ...
 ) {
@@ -92,7 +98,7 @@ fit_mdm <- function(
 #' @export
 #' @rdname mdm
 benchmark <- function(
-    x, y, model=c("lasso", "ranger"),
+    x, y, model=c("ranger", "lasso"),
     npmax=-1L, maxShift=-1L, maxCombine=10L,
     nworkers=1L, seed=1L, verbosity=2L, k=3L, ...
 ) {
@@ -546,7 +552,10 @@ identity_snap <- function(x, ref=NULL, maxCombine=0L, ...) x
 #'   has been overwritten with the ACC-maximizing (AUC-tiebroken)
 #'   `lambda*`), `acc`, `auc`, `acc_se`, `auc_se`.
 fit_lasso <- function(X, y, seed=1, nworkers=1L, nreps=5L) {
-    requireNamespace("glmnet", quietly=TRUE)
+    if (!requireNamespace("glmnet", quietly=TRUE)) stop(
+        "Package 'glmnet' is required for model = \"lasso\". ",
+        "Install it with install.packages(\"glmnet\").", call.=FALSE
+    )
     stopifnot(is_int(nreps, 1), nreps >= 1L)
     lvs <- levels(y)
     par_ok <- nworkers > 1L && requireNamespace("doParallel", quietly=TRUE)
@@ -612,7 +621,10 @@ fit_lasso <- function(X, y, seed=1, nworkers=1L, nreps=5L) {
 #' @param newx Numeric feature matrix.
 #' @return Numeric vector of length `nrow(newx)`.
 predict_lasso <- function(model, newx) {
-    requireNamespace("glmnet", quietly=TRUE)
+    if (!requireNamespace("glmnet", quietly=TRUE)) stop(
+        "Package 'glmnet' is required for model = \"lasso\". ",
+        "Install it with install.packages(\"glmnet\").", call.=FALSE
+    )
     as.numeric(stats::predict(model, newx=newx, s="lambda.min", type="response"))
 }
 
@@ -645,7 +657,10 @@ predict_lasso <- function(model, newx) {
 fit_ranger <- function(
     X, y, seed=1, nworkers=1L, num.trees=5000L, importance="none"
 ) {
-    requireNamespace("ranger", quietly=TRUE)
+    if (!requireNamespace("ranger", quietly=TRUE)) stop(
+        "Package 'ranger' is required for model = \"ranger\". ",
+        "Install it with install.packages(\"ranger\").", call.=FALSE
+    )
     stopifnot(is_int(num.trees, 1), num.trees >= 1L)
     lvs <- levels(y)
     rf <- ranger::ranger(
@@ -674,7 +689,10 @@ fit_ranger <- function(
 #' @param newx Numeric feature matrix.
 #' @return Numeric vector of length `nrow(newx)`.
 predict_ranger <- function(model, newx) {
-    requireNamespace("ranger", quietly=TRUE)
+    if (!requireNamespace("ranger", quietly=TRUE)) stop(
+        "Package 'ranger' is required for model = \"ranger\". ",
+        "Install it with install.packages(\"ranger\").", call.=FALSE
+    )
     colnames(newx) <- model$forest$independent.variable.names
     pm <- stats::predict(model, data=newx)$predictions
     pm[, model$lvs[2]]

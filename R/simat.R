@@ -118,6 +118,11 @@ lcpar_idx <- function(lcpar, cs) {
 #'   colnames.
 #'
 #' @author 2024-2026 Tobias Schmidt: initial version.
+#'
+#' @examples
+#' decons <- deconvolute(sim[1:3], sfr=c(3.55, 3.35), verbose=FALSE)
+#' aligned <- align(decons, maxShift=50, maxCombine=20, verbose=FALSE)
+#' X <- peak_mat(aligned)
 peak_mat <- function(x, igrs=list(), peakPos=NULL, ...) {
     si_mat(x, igrs=igrs, peakPos=peakPos)
 }
@@ -150,6 +155,10 @@ peak_mat <- function(x, igrs=list(), peakPos=NULL, ...) {
 #'
 #' @return A numeric matrix with one row per spectrum and one column per
 #'   bin.
+#'
+#' @examples
+#' decons <- deconvolute(sim[1:3], sfr=c(3.55, 3.35), verbose=FALSE)
+#' X <- bin(decons, maxCombine=50)
 bin <- function(x, maxCombine=128, igrs=list(), peakPos=NULL, ...) {
     stopifnot(
         inherits(x, "spectra") || inherits(x, "decons2") ||
@@ -238,6 +247,10 @@ bin <- function(x, maxCombine=128, igrs=list(), peakPos=NULL, ...) {
 #'   row names are spectrum names.
 #'
 #' @author 2026 Tobias Schmidt: initial version.
+#'
+#' @examples
+#' # `sim` spans only ~3.3-3.6 ppm, so most of the 700 fixed bins are 0.
+#' X <- bin700(sim[1:3])
 bin700 <- function(x, maxCombine=0L, igrs=list(), peakPos=NULL, ...) {
     stopifnot(is_spectra(x))
     centers <- c(seq(9.495, length.out=300, by=-0.01), seq(4.495, length.out=400, by=-0.01))
