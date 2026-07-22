@@ -61,10 +61,8 @@
 #' @author 2024-2026 Tobias Schmidt: initial version.
 #'
 #' @examples
-#' \dontrun{
-#'   decons <- deconvolute(sim[1:5], sfr=c(3.55, 3.35))
-#'   aligned <- align(decons, maxShift=50, maxCombine=20)
-#' }
+#' decons <- deconvolute(sim[1:5], sfr=c(3.55, 3.35), verbose=FALSE)
+#' aligned <- align(decons, maxShift=50, maxCombine=20, verbose=FALSE)
 align <- function(x, y=NULL, ref=NULL, maxShift=50, maxCombine=0,
                   verbose=TRUE, nworkers=1, full=TRUE, use_speaq=FALSE,
                   gap_tol=NULL) {
@@ -123,6 +121,11 @@ align <- function(x, y=NULL, ref=NULL, maxShift=50, maxCombine=0,
 #'   experimental snap backends.
 #' @param ... Ignored.
 #' @return An object of class `aligns`.
+#'
+#' @examples
+#' decons <- deconvolute(sim[1:5], sfr=c(3.55, 3.35), verbose=FALSE)
+#' aligned <- clupa(decons, maxShift=50, verbose=FALSE)  # CluPA stage
+#' snapped <- snap_to_ref(aligned, maxCombine=20)        # reference snapping
 clupa <- function(
     x, y=NULL, ref=NULL, maxShift=50, verbose=TRUE, nworkers=1,
     full=TRUE, use_speaq=FALSE, gap_tol=NULL

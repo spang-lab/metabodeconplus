@@ -57,11 +57,10 @@ you can verify the discarded region is noise by inspecting \verb{$cs}
 against the metabolite range of interest.
 }
 \examples{
-\dontrun{
-  aki <- metabodeconplus:::read_aki_data()
-  x   <- harmonize_grid(aki$spectra)
-  all(sapply(x, function(s) identical(s$cs, x[[1]]$cs)))  # TRUE
-}
+# `sim` already shares one cs grid, so harmonization is a no-op here;
+# on a corpus from different acquisitions it snaps them to a common grid.
+x <- harmonize_grid(sim)
+all(sapply(x, function(s) identical(s$cs, x[[1]]$cs)))  # TRUE
 }
 \author{
 2026 Tobias Schmidt: initial version.

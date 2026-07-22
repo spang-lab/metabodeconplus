@@ -169,14 +169,8 @@ and after the alignment, you can use `plot_spectra()`:
 metabodeconplus::plot_spectra(deconvoluted_spectra[1:8], lgd = FALSE)
 
 # Align spectra and plot again.
-aligned_spectra <- try(metabodeconplus::align(deconvoluted_spectra)) # (1)
+aligned_spectra <- metabodeconplus::align(deconvoluted_spectra)
 metabodeconplus::plot_spectra(aligned_spectra[1:8])
-
-# (1) The call to align() is wrapped in try() because the function may fail
-# if speaq's Bioconductor dependencies (MassSpecWavelet, impute) are missing
-# and the code runs in a non-interactive R session (e.g., during vignette
-# creation). In interactive sessions, try() is not needed, as the user will
-# be prompted to install missing dependencies automatically.
 ```
 
 The resulting plots are shown in [Figure 3](#fig-align). Before  the  alignment,
@@ -200,15 +194,8 @@ significantly to the left.
 metabodeconplus::plot_spectra(deconvoluted_spectra[1:8], lgd = FALSE)
 
 # Align spectra and plot again.
-aligned_spectra <- try(
-    metabodeconplus::align(deconvoluted_spectra)
-    # We must wrap the call to align() in try() because the function
-    # may fail if speaq's Bioconductor dependencies (MassSpecWavelet,
-    # impute) are missing during vignette creation
-)
-if (!inherits(aligned_spectra, "try-error")) {
-    metabodeconplus::plot_spectra(aligned_spectra[1:8])
-}
+aligned_spectra <- metabodeconplus::align(deconvoluted_spectra)
+metabodeconplus::plot_spectra(aligned_spectra[1:8])
 ```
 
 <!-- Footnotes -->

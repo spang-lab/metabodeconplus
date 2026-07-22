@@ -43,6 +43,10 @@ Always returns all 700 columns; \code{maxCombine}, \code{igrs} and \code{peakPos
 are accepted for \code{feat_fun} protocol compatibility but ignored
 (the bin layout is hardcoded).
 }
+\examples{
+# `sim` spans only ~3.3-3.6 ppm, so most of the 700 fixed bins are 0.
+X <- bin700(sim[1:3])
+}
 \author{
 2026 Tobias Schmidt: initial version.
 }

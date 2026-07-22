@@ -2,7 +2,7 @@
 # Uses tiny simulated spectra to keep CI runtime short.
 
 set.seed(1)
-n <- 32
+n <- 12
 npk <- 3
 cs <- seq(from = 3.6, length.out = 512, by = -0.0006)
 x0 <- sort(runif(npk, 3.42, 3.56))
@@ -22,6 +22,11 @@ for (i in seq_len(n)) {
     )
 }
 class(sp) <- "spectra"
+
+# One-cell deconvolution grid: with npmax=0 (manual) the default 60-cell grid
+# is deconvoluted but never used for selection, so a single cell keeps these
+# smoke tests ~30x faster while exercising the same fit_mdm/benchmark wiring.
+deg <- expand.grid(nfit = 3, smit = 1, smws = 3, delta = 1.6)
 
 # glmnet's compiled code intermittently triggers a Windows access violation
 # (0xC0000005) when the lasso path runs inside a testthat *parallel worker* (as
@@ -44,8 +49,8 @@ skip_lasso_on_windows_check <- function() {
 testthat::test_that("fit_mdm returns mdm with scalar perf and resolved params", {
     skip_lasso_on_windows_check()
     m <- fit_mdm(
-        sp, y,
-        npmax=0L, maxShift=50L, maxCombine=20L,
+        sp, y, model = "lasso",
+        npmax=0L, maxShift=50L, maxCombine=20L, deg = deg,
         use_rust = 0.5, nworkers = 1, verbosity = 0
     )
     testthat::expect_s3_class(m, "mdm")
@@ -58,8 +63,8 @@ testthat::test_that("fit_mdm returns mdm with scalar perf and resolved params", 
 testthat::test_that("benchmark returns predictions and performance", {
     skip_lasso_on_windows_check()
     res <- benchmark(
-        sp, y,
-        npmax=0L, maxShift=50L, maxCombine=20L, k = 4,
+        sp, y, model = "lasso",
+        npmax=0L, maxShift=50L, maxCombine=20L, deg = deg, k = 2,
         use_rust = 0.5, nworkers = 1, verbosity = 0
     )
     testthat::expect_true(is.data.frame(res$predictions))
@@ -76,7 +81,7 @@ testthat::test_that("fit_mdm_internal with bin/identity2 returns mdm object", {
         feat_fun = bin, decon_fun = metabodeconplus:::identity2,
         align_fun = metabodeconplus:::identity_align,
         snap_fun = metabodeconplus:::identity_snap,
-        npmax=0L, maxShift=0L, maxCombine=64L, igrs = list(),
+        npmax=0L, maxShift=0L, maxCombine=64L, igrs = list(), deg = deg,
         verbosity = 0
     )
     testthat::expect_s3_class(m, "mdm")
@@ -88,7 +93,7 @@ testthat::test_that("fit_mdm with model='ranger' returns mdm with OOB scores", {
     testthat::skip_if_not_installed("ranger")
     m <- fit_mdm(
         sp, y, model = "ranger",
-        npmax=0L, maxShift=50L, maxCombine=20L,
+        npmax=0L, maxShift=50L, maxCombine=20L, deg = deg,
         use_rust = 0.5, nworkers = 1, verbosity = 0
     )
     testthat::expect_s3_class(m, "mdm")
@@ -104,7 +109,7 @@ testthat::test_that("fit_mdm_internal with snap_nw_blind predicts on held-out sp
     snap_nw_blind <- metabodeconplus:::snap_nw_blind
     m <- metabodeconplus:::fit_mdm_internal(
         sp, y,
-        npmax=0L, maxShift=50L, maxCombine=20L,
+        npmax=0L, maxShift=50L, maxCombine=20L, deg = deg,
         snap_fun = snap_nw_blind,
         fit_fun = metabodeconplus:::fit_ranger,
         predict_fun = metabodeconplus:::predict_ranger,

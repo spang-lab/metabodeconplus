@@ -9,7 +9,7 @@
 fit_mdm(
   x,
   y,
-  model = c("lasso", "ranger"),
+  model = c("ranger", "lasso"),
   npmax = -1L,
   maxShift = -1L,
   maxCombine = 10L,
@@ -22,7 +22,7 @@ fit_mdm(
 benchmark(
   x,
   y,
-  model = c("lasso", "ranger"),
+  model = c("ranger", "lasso"),
   npmax = -1L,
   maxShift = -1L,
   maxCombine = 10L,
@@ -38,9 +38,9 @@ benchmark(
 
 \item{y}{Factor vector with class labels for each spectrum.}
 
-\item{model}{Classification backend. One of \code{"lasso"} (default,
-L1-penalised logistic regression via \code{glmnet}) or \code{"ranger"}
-(probability random forest).}
+\item{model}{Classification backend. One of \code{"ranger"} (default,
+probability random forest) or \code{"lasso"} (L1-penalised logistic
+regression via \code{glmnet}).}
 
 \item{npmax}{Max peaks per spectrum. Integer in \verb{\{-2, -1, 0, 1, ...\}},
 scalar or vector. \code{-1} (default) selects the median per-spectrum
@@ -63,9 +63,8 @@ vector for repeated CV.}
 \item{verbosity}{Verbosity level.}
 
 \item{...}{Further arguments passed on to the internal engine
-(\code{metabodeconplus:::fit_mdm_internal()} /
-\code{metabodeconplus:::benchmark_internal()}), e.g. \code{sfr}, \code{igrs}, \code{deg},
-\code{use_rust}. Rarely needed.}
+(\code{fit_mdm_internal()} / \code{benchmark_internal()}), e.g. \code{sfr}, \code{igrs},
+\code{deg}, \code{use_rust}. Rarely needed.}
 
 \item{k}{Number of outer folds for \code{\link[=benchmark]{benchmark()}}.}
 }
@@ -91,8 +90,8 @@ set of NMR spectra. Both run the full deconvolute -> align -> snap ->
 featurize -> fit pipeline with sensible defaults and expose only the
 parameters a typical user tunes; the classification backend is chosen
 via \code{model}. Power users who need to swap individual pipeline stages
-can call the internal engines \code{metabodeconplus:::fit_mdm_internal()} /
-\code{metabodeconplus:::benchmark_internal()}, which take pluggable \code{decon_fun}
+can call the internal engines \code{fit_mdm_internal()} /
+\code{benchmark_internal()}, which take pluggable \code{decon_fun}
 / \code{align_fun} / \code{snap_fun} / \code{feat_fun} / \code{fit_fun} / \code{predict_fun}
 arguments.
 
@@ -104,17 +103,18 @@ outer k-fold cross-validation to estimate end-to-end performance on
 held-out spectra.
 }
 \examples{
-\dontrun{
-  x <- sim2
-  y <- attr(sim2, "group")
-  m  <- fit_mdm(x, y)                     # lasso, full pipeline
-  mr <- fit_mdm(x, y, model="ranger")     # random forest
-  bm <- benchmark(x, y, k=5)              # 5-fold CV
-  fm <- fit_mdm(
-      x, y, model="ranger",
-      npmax=25L, maxShift=c(0L, 1L, 2L, 4L, 8L),
-      maxCombine=c(0L, 1L, 2L, 4L), nworkers=4L
-  )
+# Small, fast illustrative run. `deg` restricts deconvolution to a single
+# parameter set and scalar npmax/maxShift/maxCombine give a one-row model
+# grid (`mog`); benchmark() does a single 2-fold cross-validation round.
+i <- c(1:3, 51:53)                       # 3 spectra per class
+x <- sim2[i]
+y <- attr(sim2, "group")[i]
+deg <- expand.grid(nfit=3, smit=1, smws=3, delta=1.6)
+# `ranger` is the default backend and an optional (Suggests) dependency.
+if (requireNamespace("ranger", quietly = TRUE)) {
+    m <- fit_mdm(x, y, npmax=10L, maxShift=1L, maxCombine=2L, deg=deg)
+    bm <- benchmark(x, y, npmax=10L, maxShift=1L, maxCombine=2L, deg=deg, k=2L)
 }
+# `model = "lasso"` selects L1-penalised logistic regression instead.
 
 }
