@@ -57,10 +57,9 @@ reference:
   - download_example_datasets
   - metabodeconplus_file
 - title: Rust backend
-  desc: Functions to install and check the optional Rust backend.
+  desc: Function to check for the optional Rust backend.
   contents:
   - check_mdrb
-  - install_mdrb
 - title: Utility
   desc: Utility functions, e.g. for converting between units or testing.
   contents:

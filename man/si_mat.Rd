@@ -41,11 +41,9 @@ To build a feature matrix where every spectrum shares the same
 column grid, run \code{align(x, maxShift, maxCombine)} first.
 }
 \examples{
-\dontrun{
-  decons <- deconvolute(sim[1:2], sfr=c(3.55, 3.35))
-  aligned <- align(decons, maxShift=50, maxCombine=20)
-  X <- si_mat(aligned)
-}
+decons <- deconvolute(sim[1:2], sfr=c(3.55, 3.35), verbose=FALSE)
+aligned <- align(decons, maxShift=50, maxCombine=20, verbose=FALSE)
+X <- si_mat(aligned)
 }
 \author{
 2024-2026 Tobias Schmidt: initial version.

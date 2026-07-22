@@ -1,6 +1,6 @@
 Package: metabodeconplus
 Title: Deconvolution, Alignment and Model Fitting of 1d NMR Spectra
-Version: 0.20.2
+Version: 0.21.0
 Authors@R: c(
     person(given = "Tobias",
            family = "Schmidt",
@@ -91,7 +91,6 @@ LazyDataCompression: xz
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 Config/testthat/start-first:
-    install_mdrb,
     read_spectrum,
     download_example_datasets,
     cache_example_datasets,

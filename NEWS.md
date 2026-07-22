@@ -1,3 +1,24 @@
+# metabodeconplus 0.21.0
+
+* CRAN resubmission addressing the review of 0.20.2. No user-facing API
+  changes beyond the removal of `install_mdrb()` / `check_mdrb_deps()`.
+    * Removed the exported `install_mdrb()` and `check_mdrb_deps()` functions:
+      packages must not install other packages (CRAN policy). The optional
+      Rust backend `mdrb` is now purely user-installed. When
+      `deconvolute(use_rust >= 1)` is requested but `mdrb` is missing,
+      `check_mdrb()` stops with an error that prints the exact
+      `install.packages("mdrb", repos = "https://spang-lab.r-universe.dev")`
+      command and links to <https://github.com/spang-lab/mdrb>.
+    * Documentation examples no longer use `\dontrun{}`: runnable examples on
+      the public `sim` / `sim2` datasets are now unwrapped or wrapped in
+      `\donttest{}`, and no example uses more than two cores.
+    * Removed the `metabodeconplus:::` (triple-colon) references from the
+      `harmonize_grid()` and `fit_mdm()` / `benchmark()` documentation.
+    * No longer set `options(warn = -1)` anywhere (removed together with
+      `check_mdrb_deps()`).
+    * Internal development helpers no longer write to `.GlobalEnv` or change
+      `par()` without an immediate `on.exit()` / `withr` restore.
+
 # metabodeconplus 0.20.2
 
 * Gave metabodeconplus a distinct `Title` and `Description` in `DESCRIPTION`

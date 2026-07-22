@@ -85,6 +85,7 @@ linter
 lorentz
 lorentzian
 lt
+macOS
 MARQUARDT
 MassSpecWavelet
 md
@@ -140,9 +141,11 @@ readline
 regensburg
 reimplementation
 repo
+resubmission
 Rmd
 roundings
 RStudio
+runnable
 Schweda
 SDP
 sfr
@@ -162,6 +165,7 @@ suboptimally
 subproblem
 Subproblem
 subproblems
+subprocess
 subsubsubfolder
 svg
 Tauber

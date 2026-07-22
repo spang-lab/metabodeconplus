@@ -1099,30 +1099,6 @@ draw_spectrum <- function(
 # Tests #####
 
 #' @noRd
-#' @title Setup a development environment for `plot_spectrum`
-#' @author 2024-2025 Tobias Schmidt: initial version.
-mkenv_plot_spectrum <- function() {
-    stub(
-        func = plot_spectrum,
-        x = deconvolute(metabodeconplus::sim[[1]], sfr = c(3.55, 3.35)),
-        ... = NULL,
-        envir = .GlobalEnv
-    )
-}
-
-#' @noRd
-#' @author 2024-2025 Tobias Schmidt: initial version.
-mkenv_draw_spectrum <- function() {
-    decons <- deconvolute(metabodeconplus::sim[1:4], sfr = c(3.55, 3.35))
-    aligns <- align(decons, maxShift = 100)
-    stub(
-        func = draw_spectrum,
-        obj = aligns[[2]],
-        envir = .GlobalEnv
-    )
-}
-
-#' @noRd
 #' @author 2024-2025 Tobias Schmidt: initial version.
 #' @examples
 #' test_plot_spectrum(1, 2) # first two plots
@@ -1288,7 +1264,7 @@ test_draw_spectrum <- function(figs = 1:8,
 #' @noRd
 #' @author 2024-2025 Tobias Schmidt: initial version.
 test_grafical_units <- function() {
-    par(mfrow = c(1, 2), xpd = TRUE)
+    local_par(mfrow = c(1, 2), xpd = TRUE)
     plot_empty()
     box()
     x <- c(0.25, 0.75)
@@ -1316,7 +1292,6 @@ test_grafical_units <- function() {
         }
     )
     legend("topright", legend = c("fig = left half", "fig = full dev"), col = c("black", "red"), lty = 1)
-    par(mfrow = c(1, 1), xpd = FALSE)
 }
 
 # Private #####

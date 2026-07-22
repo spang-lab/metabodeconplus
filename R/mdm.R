@@ -16,8 +16,8 @@
 #' featurize -> fit pipeline with sensible defaults and expose only the
 #' parameters a typical user tunes; the classification backend is chosen
 #' via `model`. Power users who need to swap individual pipeline stages
-#' can call the internal engines `metabodeconplus:::fit_mdm_internal()` /
-#' `metabodeconplus:::benchmark_internal()`, which take pluggable `decon_fun`
+#' can call the internal engines `fit_mdm_internal()` /
+#' `benchmark_internal()`, which take pluggable `decon_fun`
 #' / `align_fun` / `snap_fun` / `feat_fun` / `fit_fun` / `predict_fun`
 #' arguments.
 #'
@@ -49,9 +49,8 @@
 #' @param verbosity Verbosity level.
 #' @param k Number of outer folds for [metabodeconplus::benchmark()].
 #' @param ... Further arguments passed on to the internal engine
-#'   (`metabodeconplus:::fit_mdm_internal()` /
-#'   `metabodeconplus:::benchmark_internal()`), e.g. `sfr`, `igrs`, `deg`,
-#'   `use_rust`. Rarely needed.
+#'   (`fit_mdm_internal()` / `benchmark_internal()`), e.g. `sfr`, `igrs`,
+#'   `deg`, `use_rust`. Rarely needed.
 #'
 #' @return
 #' [metabodeconplus::fit_mdm()] returns an object of class `mdm` with elements
@@ -67,17 +66,12 @@
 #' (pooled `acc` / `auc`).
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #'   x <- sim2
 #'   y <- attr(sim2, "group")
-#'   m  <- fit_mdm(x, y)                     # lasso, full pipeline
-#'   mr <- fit_mdm(x, y, model="ranger")     # random forest
-#'   bm <- benchmark(x, y, k=5)              # 5-fold CV
-#'   fm <- fit_mdm(
-#'       x, y, model="ranger",
-#'       npmax=25L, maxShift=c(0L, 1L, 2L, 4L, 8L),
-#'       maxCombine=c(0L, 1L, 2L, 4L), nworkers=4L
-#'   )
+#'   m <- fit_mdm(x, y)                  # lasso, full pipeline
+#'   mr <- fit_mdm(x, y, model="ranger") # random forest
+#'   bm <- benchmark(x, y, k=2)          # 2-fold cross-validation
 #' }
 #'
 fit_mdm <- function(

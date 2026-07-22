@@ -63,9 +63,8 @@ vector for repeated CV.}
 \item{verbosity}{Verbosity level.}
 
 \item{...}{Further arguments passed on to the internal engine
-(\code{metabodeconplus:::fit_mdm_internal()} /
-\code{metabodeconplus:::benchmark_internal()}), e.g. \code{sfr}, \code{igrs}, \code{deg},
-\code{use_rust}. Rarely needed.}
+(\code{fit_mdm_internal()} / \code{benchmark_internal()}), e.g. \code{sfr}, \code{igrs},
+\code{deg}, \code{use_rust}. Rarely needed.}
 
 \item{k}{Number of outer folds for \code{\link[=benchmark]{benchmark()}}.}
 }
@@ -91,8 +90,8 @@ set of NMR spectra. Both run the full deconvolute -> align -> snap ->
 featurize -> fit pipeline with sensible defaults and expose only the
 parameters a typical user tunes; the classification backend is chosen
 via \code{model}. Power users who need to swap individual pipeline stages
-can call the internal engines \code{metabodeconplus:::fit_mdm_internal()} /
-\code{metabodeconplus:::benchmark_internal()}, which take pluggable \code{decon_fun}
+can call the internal engines \code{fit_mdm_internal()} /
+\code{benchmark_internal()}, which take pluggable \code{decon_fun}
 / \code{align_fun} / \code{snap_fun} / \code{feat_fun} / \code{fit_fun} / \code{predict_fun}
 arguments.
 
@@ -104,17 +103,12 @@ outer k-fold cross-validation to estimate end-to-end performance on
 held-out spectra.
 }
 \examples{
-\dontrun{
+\donttest{
   x <- sim2
   y <- attr(sim2, "group")
-  m  <- fit_mdm(x, y)                     # lasso, full pipeline
-  mr <- fit_mdm(x, y, model="ranger")     # random forest
-  bm <- benchmark(x, y, k=5)              # 5-fold CV
-  fm <- fit_mdm(
-      x, y, model="ranger",
-      npmax=25L, maxShift=c(0L, 1L, 2L, 4L, 8L),
-      maxCombine=c(0L, 1L, 2L, 4L), nworkers=4L
-  )
+  m <- fit_mdm(x, y)                  # lasso, full pipeline
+  mr <- fit_mdm(x, y, model="ranger") # random forest
+  bm <- benchmark(x, y, k=2)          # 2-fold cross-validation
 }
 
 }
