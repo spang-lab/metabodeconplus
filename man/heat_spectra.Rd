@@ -50,7 +50,7 @@ choice based on the input class. Ignored when \code{objs} is a matrix.}
 
 \item{xlab, ylab}{Axis labels.}
 
-\item{mar}{Numeric vector of length 4 specifying the plot margins. Passed to \code{\link[=par]{par()}}.
+\item{mar}{Numeric vector of length 4 specifying the plot margins. Passed to \code{\link[graphics:par]{graphics::par()}}.
 The right margin is overridden at runtime to fit the spectra names.}
 
 \item{y}{Optional vector of class labels (one per spectrum). If provided, the

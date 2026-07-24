@@ -77,3 +77,8 @@ snapping only \emph{adds} the snapped fields. Collisions on the same
 their areas when rasterising the feature matrix. \code{sit$supal} is
 cleared because the post-snap superposition would need recomputing.
 }
+\examples{
+decons <- deconvolute(sim[1:5], sfr=c(3.55, 3.35), verbose=FALSE)
+aligned <- clupa(decons, maxShift=50, verbose=FALSE)  # CluPA stage
+snapped <- snap_to_ref(aligned, maxCombine=20)        # reference snapping
+}

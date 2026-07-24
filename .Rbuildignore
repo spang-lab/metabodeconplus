@@ -42,3 +42,4 @@
 ^vignettes/TODO$
 ^vignettes/TODO/.*\.Rmd$
 ^vignettes/articles/AKI_Original\.Rmd$
+^Rplots\.pdf$

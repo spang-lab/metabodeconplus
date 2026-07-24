@@ -40,12 +40,12 @@ automatically. Takes precedence over \code{foc_frac}.}
 1-3. See 'Details'.}
 
 \item{mar}{A numeric vector of length 4 specifying the margins of the plot. Passed to
-\code{\link[=par]{par()}}. If set to \code{NULL}, a suitable value is chosen automatically.}
+\code{\link[graphics:par]{graphics::par()}}. If set to \code{NULL}, a suitable value is chosen automatically.}
 
-\item{frame}{A list of values passed to \code{\link[=box]{box()}} when drawing the frame around plot region.
+\item{frame}{A list of values passed to \code{\link[graphics:box]{graphics::box()}} when drawing the frame around plot region.
 If set to \code{NULL}, no frame is drawn.}
 
-\item{con_lines}{A list of values passed to \code{\link[=lines]{lines()}} when drawing the connecting lines between
+\item{con_lines}{A list of values passed to \code{\link[graphics:lines]{graphics::lines()}} when drawing the connecting lines between
 sub figure 1 and the focus rectangle in sub figure 3. See 'Details'.
 If set to \code{NULL}, the connecting lines are not drawn.}
 }
@@ -105,7 +105,7 @@ A sketch of the resulting figure is shown below.
 
 Note  that  the  figure  created  by  \code{plot_spectrum()}  can  be  part  of  a
 multi-figure configuration as created when setting  \code{mfrow}  or  \code{mfcol}  via
-\code{\link[=par]{par()}}. Example:
+\code{\link[graphics:par]{graphics::par()}}. Example:
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{_______________________________________
 | Plot Spectrum with   | Other Figure  |

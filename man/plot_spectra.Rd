@@ -47,13 +47,13 @@ to \code{1} (solid) for all spectra.}
 \item{mar}{A numeric vector of length 4, which specifies the margins of the plot.}
 
 \item{lgd}{Logical or list. If TRUE, a legend is drawn at "topright" with
-\code{cex = 0.8}. If a list, its elements are passed to \code{\link[=legend]{legend()}} to
+\code{cex = 0.8}. If a list, its elements are passed to \code{\link[graphics:legend]{graphics::legend()}} to
 override position, size, etc. Pass \code{lgd = FALSE} to hide.}
 
 \item{main}{Optional plot title. Drawn via \code{\link[graphics:title]{graphics::title()}}.}
 
 \item{xaxt, yaxt}{Character. \code{"s"} (default) draws the axis normally; \code{"n"}
-suppresses axis ticks and tick labels. Passed to \code{\link[=plot]{plot()}}.}
+suppresses axis ticks and tick labels. Passed to \code{\link[graphics:plot.default]{graphics::plot()}}.}
 }
 \value{
 A plot of the deconvoluted spectra.

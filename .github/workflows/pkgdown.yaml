@@ -40,6 +40,24 @@ jobs:
         uses: r-lib/actions/setup-r-dependencies@v2
         with: { extra-packages: "any::pkgdown, local::.", needs: website }
 
+      # speaq is a Suggests used only by align(use_speaq = TRUE); it is not
+      # needed to build the docs. It pulls Rfast, whose RSPM binary currently
+      # has a broken oneTBB ABI on the runner (undefined symbol
+      # _ZTIN3tbb4taskE), which crashes pkgdown when downlit loads speaq to
+      # resolve speaq:: links. Removing speaq makes downlit skip those links
+      # gracefully; no Rfast is loaded.
+      - name: Remove speaq to avoid its broken Rfast binary
+        run: try(remove.packages("speaq"), silent = TRUE)
+        shell: Rscript {0}
+
+      # pkgdown renders every top-level *.md as a site page and offers no option
+      # to exclude them (it also ignores .Rbuildignore for this). CLAUDE.md is an
+      # internal development-instructions file that must not be published, so
+      # remove it from the ephemeral CI checkout before building the site.
+      - name: Keep internal files out of the published docs
+        run: rm -f CLAUDE.md
+        shell: bash
+
       - name: Build site
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
         shell: Rscript {0}

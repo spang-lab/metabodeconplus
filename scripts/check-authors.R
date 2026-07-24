@@ -8,7 +8,6 @@ ignore <- c(
 )
 no_author_needed <- c(
     # Functions to ignore
-    "check_mdrb_deps", # mdrb.R
     # class.R
     "print.spectrum",
     "print.spectra",

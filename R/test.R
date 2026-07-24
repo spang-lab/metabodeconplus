@@ -11,17 +11,17 @@ utils::globalVariables(c("sim", "sim2", "sap"))
 #' @description
 #' Evaluates an expression with a predefined global state, including the:
 #'
-#' - working directory (set via [setwd()])
-#' - global options (set via [options()])
-#' - graphical parameters (set via [par()])
+#' - working directory (set via [base::setwd()])
+#' - global options (set via [base::options()])
+#' - graphical parameters (set via [graphics::par()])
 #'
 #' In addition to that, `evalwith` allows to:
 #'
-#' - Redirect or capture the output and/or message stream via [sink()]
-#' - Measure the runtime of the evaluated expression via [system.time()]
+#' - Redirect or capture the output and/or message stream via [base::sink()]
+#' - Measure the runtime of the evaluated expression via [base::system.time()]
 #' - Creating a temporary test directory (inside [metabodeconplus::tmpdir()]) and populating it
 #'   with input files according to `inputs`
-#' - Predefine answers for calls to [readline()] happening during evaluation of
+#' - Predefine answers for calls to [base::readline()] happening during evaluation of
 #'   `expr`
 #' - Caching the result of the expression
 #'
@@ -55,9 +55,9 @@ utils::globalVariables(c("sim", "sim2", "sap"))
 #' @param inputs Paths to be copied to the test directory before evaluating
 #' `expr`.
 #'
-#' @param opts Named list of options to be set. See [options()].
+#' @param opts Named list of options to be set. See [base::options()].
 #'
-#' @param pars Named list of parameters to be set. See [par()].
+#' @param pars Named list of parameters to be set. See [graphics::par()].
 #'
 #' @param cache Logical indicating whether to cache the result of the
 #' expression.
@@ -87,7 +87,7 @@ utils::globalVariables(c("sim", "sim2", "sap"))
 #'
 #' - `rv`: The return value of the expression.
 #' - `runtime`: The "elapsed" runtime of the expression in seconds. Measured
-#'   with [system.time()].
+#'   with [base::system.time()].
 #' - `output`: The captured output.
 #' - `message`: The captured messages.
 #' - `plot`: The path to the saved plot.

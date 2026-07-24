@@ -39,3 +39,7 @@ Accepts three input types:
 Suitable as the \code{feat_fun} argument of \code{\link[=fit_mdm]{fit_mdm()}} for
 binning baselines.
 }
+\examples{
+decons <- deconvolute(sim[1:3], sfr=c(3.55, 3.35), verbose=FALSE)
+X <- bin(decons, maxCombine=50)
+}

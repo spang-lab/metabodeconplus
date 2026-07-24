@@ -343,11 +343,12 @@ Deprecated functions and classes.
 
 ### mdrb.R
 
-Functions for installing and checking mdrb (metabodeconplus rust backend).
+Function for checking the optional mdrb (metabodeconplus rust backend). The
+package never installs mdrb itself (CRAN policy); `deconvolute(use_rust>=1)`
+errors via `check_mdrb(stop_on_fail=TRUE)` with the install command + repo link
+when mdrb is missing.
 
-- (exported) `check_mdrb`: Checks if the Rust backend is installed.
-- (exported) `check_mdrb_deps`: Checks dependencies for the Rust backend.
-- (exported) `install_mdrb`: Installs the Rust backend.
+- (exported) `check_mdrb`: Checks if a suitable Rust backend is installed.
 - (prviate) `get_mdrb_version`: Retrieves the version of the Rust backend.
 
 ### paper.R

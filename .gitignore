@@ -28,3 +28,4 @@ tests/testthat_outputs/
 testthat.log
 tmp
 vdiffr.Rout.fail
+Rplots.pdf

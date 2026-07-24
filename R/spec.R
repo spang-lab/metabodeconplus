@@ -329,11 +329,10 @@ simulate_spectrum <- function(name = "sim_00",
 #' @author 2026 Tobias Schmidt: initial version.
 #'
 #' @examples
-#' \dontrun{
-#'   aki <- metabodeconplus:::read_aki_data()
-#'   x   <- harmonize_grid(aki$spectra)
-#'   all(sapply(x, function(s) identical(s$cs, x[[1]]$cs)))  # TRUE
-#' }
+#' # `sim` already shares one cs grid, so harmonization is a no-op here;
+#' # on a corpus from different acquisitions it snaps them to a common grid.
+#' x <- harmonize_grid(sim)
+#' all(sapply(x, function(s) identical(s$cs, x[[1]]$cs)))  # TRUE
 harmonize_grid <- function(x, target = "median", pad = 0) {
     stopifnot(is.list(x), length(x) > 0L)
     n <- length(x[[1]]$cs)

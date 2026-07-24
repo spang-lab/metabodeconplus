@@ -91,6 +91,7 @@ test_that("align gives same result for 1 vs multiple workers", {
 test_that("built-in backend matches speaq backend", {
 
     skip_if_speaq_deps_missing()
+    testthat::skip_if_not_installed("speaq")
 
     al_builtin <- clupa(decons, verbose = FALSE, use_speaq = FALSE)
     al_speaq   <- clupa(decons, verbose = FALSE, use_speaq = TRUE)
@@ -105,6 +106,7 @@ test_that("built-in backend matches speaq backend on sim2 across maxShift", {
     # x0al = x0) and so does not exercise speaq, hence it is not in the loop.
 
     skip_if_speaq_deps_missing()
+    testthat::skip_if_not_installed("speaq")
     skip_if_slow_tests_disabled()
 
     # Two sim2 spectra are sufficient: the alignment is per-spectrum and

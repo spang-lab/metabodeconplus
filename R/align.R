@@ -52,6 +52,7 @@
 #' Use `speaq::hClustAlign` instead of the bundled CluPA
 #' implementation. Defaults to `FALSE`; the bundled implementation is
 #' byte-equivalent to the speaq one (see `tests/testthat/test-speaq.R`).
+#' Setting `TRUE` requires the suggested `speaq` package.
 #' @param gap_tol
 #' Optional gap tolerance in ppm. `NULL` (default) uses the standard
 #' CluPA + snapping pipeline; only consulted by experimental snap backends.
@@ -61,10 +62,8 @@
 #' @author 2024-2026 Tobias Schmidt: initial version.
 #'
 #' @examples
-#' \dontrun{
-#'   decons <- deconvolute(sim[1:5], sfr=c(3.55, 3.35))
-#'   aligned <- align(decons, maxShift=50, maxCombine=20)
-#' }
+#' decons <- deconvolute(sim[1:5], sfr=c(3.55, 3.35), verbose=FALSE)
+#' aligned <- align(decons, maxShift=50, maxCombine=20, verbose=FALSE)
 align <- function(x, y=NULL, ref=NULL, maxShift=50, maxCombine=0,
                   verbose=TRUE, nworkers=1, full=TRUE, use_speaq=FALSE,
                   gap_tol=NULL) {
@@ -123,6 +122,11 @@ align <- function(x, y=NULL, ref=NULL, maxShift=50, maxCombine=0,
 #'   experimental snap backends.
 #' @param ... Ignored.
 #' @return An object of class `aligns`.
+#'
+#' @examples
+#' decons <- deconvolute(sim[1:5], sfr=c(3.55, 3.35), verbose=FALSE)
+#' aligned <- clupa(decons, maxShift=50, verbose=FALSE)  # CluPA stage
+#' snapped <- snap_to_ref(aligned, maxCombine=20)        # reference snapping
 clupa <- function(
     x, y=NULL, ref=NULL, maxShift=50, verbose=TRUE, nworkers=1,
     full=TRUE, use_speaq=FALSE, gap_tol=NULL
@@ -537,13 +541,18 @@ hclust_align <- function(
     use_speaq = FALSE
 ) {
 
-    if (use_speaq) return(
-        speaq::hClustAlign(
+    if (use_speaq) {
+        if (!requireNamespace("speaq", quietly=TRUE)) stop(
+            "Package 'speaq' is required for use_speaq = TRUE. ",
+            "Install it with install.packages(\"speaq\").", call.=FALSE
+        )
+        res <- speaq::hClustAlign(
             refSpec=refSpec, tarSpec=tarSpec, peakList=peakList,
             peakLabel=peakLabel, startP=startP, endP=endP,
             distanceMethod="average", maxShift=maxShift, acceptLostPeak=FALSE
         )
-    )
+        return(res)
+    }
 
     minPk <- min(peakList)
     maxPk <- max(peakList)

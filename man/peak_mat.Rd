@@ -29,6 +29,11 @@ Thin wrapper around \code{\link[=si_mat]{si_mat()}} suitable as the
 \code{si_mat(x, igrs=igrs)}; the snapping that used to live here has
 moved into \code{\link[=align]{align()}} (reference-snapping stage).
 }
+\examples{
+decons <- deconvolute(sim[1:3], sfr=c(3.55, 3.35), verbose=FALSE)
+aligned <- align(decons, maxShift=50, maxCombine=20, verbose=FALSE)
+X <- peak_mat(aligned)
+}
 \author{
 2024-2026 Tobias Schmidt: initial version.
 }

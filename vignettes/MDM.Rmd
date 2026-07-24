@@ -135,7 +135,7 @@ columns near `true_x0` show consistent sign differences between A (top) and B
 We fit a probability random forest on the feature matrix with `ranger` and read
 off the out-of-bag (OOB) error.
 
-```{r ranger, eval=requireNamespace("ranger", quietly=TRUE)}
+```{r ranger, eval=TRUE}
 rf <- ranger::ranger(x=X, y=y[tr], probability=TRUE, num.trees=500, seed=1)
 cat(sprintf("OOB error: %.1f%%\n", 100 * rf$prediction.error))
 ```
@@ -147,7 +147,7 @@ fit -- and, when any of `npmax` / `maxShift` / `maxCombine` is a vector,
 searches the grid and returns the best model. Choose the backend with
 `model = "ranger"`.
 
-```{r fit-mdm, eval=requireNamespace("ranger", quietly=TRUE)}
+```{r fit-mdm, eval=TRUE}
 md <- fit_mdm(x[tr], y[tr], model="ranger",
               npmax=0L, maxShift=50L, maxCombine=5L,
               verbosity=0, nworkers=1)
@@ -159,7 +159,7 @@ print(md)
 `predict()` on an `mdm` object mirrors the training pipeline for new data,
 reusing the stored reference and feature columns.
 
-```{r predict, eval=requireNamespace("ranger", quietly=TRUE)}
+```{r predict, eval=TRUE}
 # Small rank-based AUC helper (positive class = second factor level).
 auc <- function(y, prob) {
     pos <- y == levels(y)[2]; r <- rank(prob)
@@ -179,7 +179,7 @@ Passing a vector for `npmax`, `maxShift` or `maxCombine` makes `fit_mdm()`
 evaluate the cartesian product and keep the best-scoring cell (accuracy, ties
 broken by AUC). The augmented grid is returned in `md$mog`.
 
-```{r tune, eval=requireNamespace("ranger", quietly=TRUE)}
+```{r tune, eval=TRUE}
 mt <- fit_mdm(x[tr], y[tr], model="ranger",
               npmax=c(0L, 30L), maxShift=c(20L, 50L), maxCombine=c(2L, 5L),
               verbosity=0, nworkers=1)

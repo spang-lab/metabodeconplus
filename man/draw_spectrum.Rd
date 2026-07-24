@@ -66,7 +66,7 @@ spectrum is drawn.}
 
 \item{fig_rgn}{Drawing region in normalized device coordinates as vector of the form \code{c(x1, x2, y1, y2)}.}
 
-\item{main}{Main title of the plot. Drawn via \code{\link[=title]{title()}}.}
+\item{main}{Main title of the plot. Drawn via \code{\link[graphics:title]{graphics::title()}}.}
 
 \item{show}{Logical. If FALSE, the function returns without doing anything.}
 
@@ -94,7 +94,7 @@ peak.
 region.
 }}
 
-\item{si_line, sm_line, sp_line, al_line, d2_line, lc_lines, tp_lines, al_lines}{List  of  parameters  passed  to  \code{\link[=lines]{lines()}}  when  drawing  the
+\item{si_line, sm_line, sp_line, al_line, d2_line, lc_lines, tp_lines, al_lines}{List  of  parameters  passed  to  \code{\link[graphics:lines]{graphics::lines()}}  when  drawing  the
 raw signal intensities (si_line),
 smoothed signal intensities (sm_line),
 superposition of lorentzian curves (sp_line),
@@ -105,16 +105,16 @@ true lorentzian curves (tp_lines) and
 aligned lorentzian curves (al_lines),
 respectively.}
 
-\item{cent_pts, tp_pts, fp_pts, miss_pts, bord_pts, norm_pts}{List of parameters passed to \code{\link[=points]{points()}} when drawing the peak center points,
+\item{cent_pts, tp_pts, fp_pts, miss_pts, bord_pts, norm_pts}{List of parameters passed to \code{\link[graphics:points]{graphics::points()}} when drawing the peak center points,
 true positive peaks, false positive peaks, missed peaks, peak border points
 and non-peak points.}
 
-\item{bg_rect, lc_rects, foc_rect, tp_rects}{List of parameters passed to \code{\link[=rect]{rect()}} when drawing the background, lorentzian
+\item{bg_rect, lc_rects, foc_rect, tp_rects}{List of parameters passed to \code{\link[graphics:rect]{graphics::rect()}} when drawing the background, lorentzian
 curve substitutes, focus rectangle and/or true lorentzian curve substitutes.}
 
-\item{bt_axis, lt_axis, tp_axis, rt_axis}{List of parameters used to overwrite the default values  passed  to  \code{\link[=axis]{axis()}}
+\item{bt_axis, lt_axis, tp_axis, rt_axis}{List of parameters used to overwrite the default values  passed  to  \code{\link[graphics:axis]{graphics::axis()}}
 when drawing the bottom, left,  top  and  right  axis.  In  addition  to  the
-parameters of \code{\link[=axis]{axis()}}, the following additional parameters are supported  as
+parameters of \code{\link[graphics:axis]{graphics::axis()}}, the following additional parameters are supported  as
 well:
 \itemize{
 \item \code{n}:      Number of tickmarks.
@@ -133,20 +133,20 @@ values, the corresponding margin text is set to "Signal Intensity
 values might be scaled.
 }}
 
-\item{bt_text, lt_text, tp_text, rt_text}{List of parameters used to overwrite the default values passed to \code{\link[=mtext]{mtext()}}
+\item{bt_text, lt_text, tp_text, rt_text}{List of parameters used to overwrite the default values passed to \code{\link[graphics:mtext]{graphics::mtext()}}
 when drawing the bottom, left, top and right margin texts (i.e. the axis
 labels).}
 
-\item{lc_verts, tp_verts, al_verts}{List of parameters passed to \code{\link[=segments]{segments()}} when drawing vertical lines at the
+\item{lc_verts, tp_verts, al_verts}{List of parameters passed to \code{\link[graphics:segments]{graphics::segments()}} when drawing vertical lines at the
 centers of estimated, true or aligned lorentzian curves. Setting
 \code{tp_verts$show} to TRUE requires \code{truepar} to be set.}
 
-\item{ze_hline}{List of parameters passed to \code{\link[=abline]{abline()}} when drawing a horizontal line at y = 0.}
+\item{ze_hline}{List of parameters passed to \code{\link[graphics:abline]{graphics::abline()}} when drawing a horizontal line at y = 0.}
 
-\item{al_arrows}{List of parameters passed to \code{\link[=arrows]{arrows()}} when drawing arrows between the
+\item{al_arrows}{List of parameters passed to \code{\link[graphics:arrows]{graphics::arrows()}} when drawing arrows between the
 estimated and aligned lorentzian curve centers.}
 
-\item{lgd}{List of parameters passed to \code{\link[=legend]{legend()}} when drawing the legend.}
+\item{lgd}{List of parameters passed to \code{\link[graphics:legend]{graphics::legend()}} when drawing the legend.}
 }
 \value{
 NULL. Called for side effect of plotting.
