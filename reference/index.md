@@ -102,13 +102,10 @@ Bundled example datasets and functions to download and locate them.
 
 ## Rust backend
 
-Functions to install and check the optional Rust backend.
+Function to check for the optional Rust backend.
 
 - [`check_mdrb()`](https://spang-lab.github.io/metabodeconplus/reference/check_mdrb.md)
-  [`check_mdrb_deps()`](https://spang-lab.github.io/metabodeconplus/reference/check_mdrb.md)
-  : Check Rust Backend Requirements
-- [`install_mdrb()`](https://spang-lab.github.io/metabodeconplus/reference/install_mdrb.md)
-  **\[experimental\]** : Install Rust Backend
+  : Check Rust Backend Availability
 
 ## Utility
 

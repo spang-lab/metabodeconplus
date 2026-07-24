@@ -64,22 +64,22 @@ plot_spectrum(
 - mar:
 
   A numeric vector of length 4 specifying the margins of the plot.
-  Passed to [`par()`](https://rdrr.io/r/graphics/par.html). If set to
-  `NULL`, a suitable value is chosen automatically.
+  Passed to [`graphics::par()`](https://rdrr.io/r/graphics/par.html). If
+  set to `NULL`, a suitable value is chosen automatically.
 
 - frame:
 
   A list of values passed to
-  [`box()`](https://rdrr.io/r/graphics/box.html) when drawing the frame
-  around plot region. If set to `NULL`, no frame is drawn.
+  [`graphics::box()`](https://rdrr.io/r/graphics/box.html) when drawing
+  the frame around plot region. If set to `NULL`, no frame is drawn.
 
 - con_lines:
 
   A list of values passed to
-  [`lines()`](https://rdrr.io/r/graphics/lines.html) when drawing the
-  connecting lines between sub figure 1 and the focus rectangle in sub
-  figure 3. See 'Details'. If set to `NULL`, the connecting lines are
-  not drawn.
+  [`graphics::lines()`](https://rdrr.io/r/graphics/lines.html) when
+  drawing the connecting lines between sub figure 1 and the focus
+  rectangle in sub figure 3. See 'Details'. If set to `NULL`, the
+  connecting lines are not drawn.
 
 ## Value
 
@@ -138,7 +138,7 @@ A sketch of the resulting figure is shown below.
 
 Note that the figure created by `plot_spectrum()` can be part of a
 multi-figure configuration as created when setting `mfrow` or `mfcol`
-via [`par()`](https://rdrr.io/r/graphics/par.html). Example:
+via [`graphics::par()`](https://rdrr.io/r/graphics/par.html). Example:
 
     _______________________________________
     | Plot Spectrum with   | Other Figure  |
@@ -172,15 +172,15 @@ via [`par()`](https://rdrr.io/r/graphics/par.html). Example:
 
 spec <- sim[[1]]
 decon <- deconvolute(sim[1], sfr = c(3.55, 3.35))
-#> 2026-07-20 06:53:05.19 Starting deconvolution (spectra: 1, workers: 1)
-#> 2026-07-20 06:53:05.19 Starting deconvolution of sim_01 using R backend
-#> 2026-07-20 06:53:05.19 Starting peak selection
-#> 2026-07-20 06:53:05.19 Detected 312 peaks
-#> 2026-07-20 06:53:05.19 Removing peaks with low scores
-#> 2026-07-20 06:53:05.19 Removed 285 peaks
-#> 2026-07-20 06:53:05.19 Fitting Lorentz curves (3 iterations)
-#> 2026-07-20 06:53:05.19 Finished deconvolution of sim_01
-#> 2026-07-20 06:53:05.19 Finished deconvolution 0.004 secs
+#> 2026-07-24 16:46:10.39 Starting deconvolution (spectra: 1, workers: 1)
+#> 2026-07-24 16:46:10.39 Starting deconvolution of sim_01 using R backend
+#> 2026-07-24 16:46:10.39 Starting peak selection
+#> 2026-07-24 16:46:10.39 Detected 312 peaks
+#> 2026-07-24 16:46:10.39 Removing peaks with low scores
+#> 2026-07-24 16:46:10.39 Removed 285 peaks
+#> 2026-07-24 16:46:10.39 Fitting Lorentz curves (3 iterations)
+#> 2026-07-24 16:46:10.39 Finished deconvolution of sim_01
+#> 2026-07-24 16:46:10.39 Finished deconvolution 0.004 secs
 
 ## 2.1. Plot the full (non-deconvoluted) spectrum
 ## 2.2. Remove connecting lines, and focus on a specific region specified in ppm

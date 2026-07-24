@@ -1,6 +1,5 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>https://spang-lab.github.io/metabodeconplus/404.html</loc></url>
-<url><loc>https://spang-lab.github.io/metabodeconplus/CLAUDE.html</loc></url>
 <url><loc>https://spang-lab.github.io/metabodeconplus/LICENSE.html</loc></url>
 <url><loc>https://spang-lab.github.io/metabodeconplus/articles/Contributing.html</loc></url>
 <url><loc>https://spang-lab.github.io/metabodeconplus/articles/Datasets.html</loc></url>
@@ -29,7 +28,6 @@
 <url><loc>https://spang-lab.github.io/metabodeconplus/reference/headtail.html</loc></url>
 <url><loc>https://spang-lab.github.io/metabodeconplus/reference/heat_spectra.html</loc></url>
 <url><loc>https://spang-lab.github.io/metabodeconplus/reference/index.html</loc></url>
-<url><loc>https://spang-lab.github.io/metabodeconplus/reference/install_mdrb.html</loc></url>
 <url><loc>https://spang-lab.github.io/metabodeconplus/reference/make_spectrum.html</loc></url>
 <url><loc>https://spang-lab.github.io/metabodeconplus/reference/mdm.html</loc></url>
 <url><loc>https://spang-lab.github.io/metabodeconplus/reference/mdm_methods.html</loc></url>

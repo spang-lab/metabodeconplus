@@ -50,3 +50,10 @@ bin(x, maxCombine = 128, igrs = list(), peakPos = NULL, ...)
 ## Value
 
 A numeric matrix with one row per spectrum and one column per bin.
+
+## Examples
+
+``` r
+decons <- deconvolute(sim[1:3], sfr=c(3.55, 3.35), verbose=FALSE)
+X <- bin(decons, maxCombine=50)
+```

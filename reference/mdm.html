@@ -6,8 +6,8 @@ set of NMR spectra. Both run the full deconvolute -&amp;gt; align -&amp;gt; snap
 featurize -&amp;gt; fit pipeline with sensible defaults and expose only the
 parameters a typical user tunes; the classification backend is chosen
 via model. Power users who need to swap individual pipeline stages
-can call the internal engines metabodeconplus:::fit_mdm_internal() /
-metabodeconplus:::benchmark_internal(), which take pluggable decon_fun
+can call the internal engines fit_mdm_internal() /
+benchmark_internal(), which take pluggable decon_fun
 / align_fun / snap_fun / feat_fun / fit_fun / predict_fun
 arguments.
 fit_mdm() runs the pipeline once, or iterates over the
@@ -22,8 +22,8 @@ set of NMR spectra. Both run the full deconvolute -&amp;gt; align -&amp;gt; snap
 featurize -&amp;gt; fit pipeline with sensible defaults and expose only the
 parameters a typical user tunes; the classification backend is chosen
 via model. Power users who need to swap individual pipeline stages
-can call the internal engines metabodeconplus:::fit_mdm_internal() /
-metabodeconplus:::benchmark_internal(), which take pluggable decon_fun
+can call the internal engines fit_mdm_internal() /
+benchmark_internal(), which take pluggable decon_fun
 / align_fun / snap_fun / feat_fun / fit_fun / predict_fun
 arguments.
 fit_mdm() runs the pipeline once, or iterates over the
@@ -39,7 +39,7 @@ held-out spectra."><meta property="og:image" content="https://spang-lab.github.i
 
     <a class="navbar-brand me-2" href="../index.html">metabodeconplus</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.20.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.21.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -79,8 +79,8 @@ set of NMR spectra. Both run the full deconvolute -&gt; align -&gt; snap -&gt;
 featurize -&gt; fit pipeline with sensible defaults and expose only the
 parameters a typical user tunes; the classification backend is chosen
 via <code>model</code>. Power users who need to swap individual pipeline stages
-can call the internal engines <code>metabodeconplus:::fit_mdm_internal()</code> /
-<code>metabodeconplus:::benchmark_internal()</code>, which take pluggable <code>decon_fun</code>
+can call the internal engines <code>fit_mdm_internal()</code> /
+<code>benchmark_internal()</code>, which take pluggable <code>decon_fun</code>
 / <code>align_fun</code> / <code>snap_fun</code> / <code>feat_fun</code> / <code>fit_fun</code> / <code>predict_fun</code>
 arguments.</p>
 <p><code>fit_mdm()</code> runs the pipeline once, or iterates over the
@@ -96,7 +96,7 @@ held-out spectra.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fit_mdm</span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
 <span>  <span class="va">y</span>,</span>
-<span>  model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lasso"</span>, <span class="st">"ranger"</span><span class="op">)</span>,</span>
+<span>  model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ranger"</span>, <span class="st">"lasso"</span><span class="op">)</span>,</span>
 <span>  npmax <span class="op">=</span> <span class="op">-</span><span class="fl">1L</span>,</span>
 <span>  maxShift <span class="op">=</span> <span class="op">-</span><span class="fl">1L</span>,</span>
 <span>  maxCombine <span class="op">=</span> <span class="fl">10L</span>,</span>
@@ -109,7 +109,7 @@ held-out spectra.</p>
 <span><span class="fu">benchmark</span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
 <span>  <span class="va">y</span>,</span>
-<span>  model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lasso"</span>, <span class="st">"ranger"</span><span class="op">)</span>,</span>
+<span>  model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ranger"</span>, <span class="st">"lasso"</span><span class="op">)</span>,</span>
 <span>  npmax <span class="op">=</span> <span class="op">-</span><span class="fl">1L</span>,</span>
 <span>  maxShift <span class="op">=</span> <span class="op">-</span><span class="fl">1L</span>,</span>
 <span>  maxCombine <span class="op">=</span> <span class="fl">10L</span>,</span>
@@ -134,9 +134,9 @@ held-out spectra.</p>
 
 
 <dt id="arg-model">model<a class="anchor" aria-label="anchor" href="#arg-model"></a></dt>
-<dd><p>Classification backend. One of <code>"lasso"</code> (default,
-L1-penalised logistic regression via <code>glmnet</code>) or <code>"ranger"</code>
-(probability random forest).</p></dd>
+<dd><p>Classification backend. One of <code>"ranger"</code> (default,
+probability random forest) or <code>"lasso"</code> (L1-penalised logistic
+regression via <code>glmnet</code>).</p></dd>
 
 
 <dt id="arg-npmax">npmax<a class="anchor" aria-label="anchor" href="#arg-npmax"></a></dt>
@@ -173,9 +173,8 @@ vector for repeated CV.</p></dd>
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Further arguments passed on to the internal engine
-(<code>metabodeconplus:::fit_mdm_internal()</code> /
-<code>metabodeconplus:::benchmark_internal()</code>), e.g. <code>sfr</code>, <code>igrs</code>, <code>deg</code>,
-<code>use_rust</code>. Rarely needed.</p></dd>
+(<code>fit_mdm_internal()</code> / <code>benchmark_internal()</code>), e.g. <code>sfr</code>, <code>igrs</code>,
+<code>deg</code>, <code>use_rust</code>. Rarely needed.</p></dd>
 
 
 <dt id="arg-k">k<a class="anchor" aria-label="anchor" href="#arg-k"></a></dt>
@@ -198,18 +197,16 @@ predictions), <code>performance</code> (per-fold <code>acc</code> / <code>auc</c
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span>  <span class="va">x</span> <span class="op">&lt;-</span> <span class="va">sim2</span></span></span>
-<span class="r-in"><span>  <span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">sim2</span>, <span class="st">"group"</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="va">m</span>  <span class="op">&lt;-</span> <span class="fu">fit_mdm</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span>                     <span class="co"># lasso, full pipeline</span></span></span>
-<span class="r-in"><span>  <span class="va">mr</span> <span class="op">&lt;-</span> <span class="fu">fit_mdm</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, model<span class="op">=</span><span class="st">"ranger"</span><span class="op">)</span>     <span class="co"># random forest</span></span></span>
-<span class="r-in"><span>  <span class="va">bm</span> <span class="op">&lt;-</span> <span class="fu">benchmark</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, k<span class="op">=</span><span class="fl">5</span><span class="op">)</span>              <span class="co"># 5-fold CV</span></span></span>
-<span class="r-in"><span>  <span class="va">fm</span> <span class="op">&lt;-</span> <span class="fu">fit_mdm</span><span class="op">(</span></span></span>
-<span class="r-in"><span>      <span class="va">x</span>, <span class="va">y</span>, model<span class="op">=</span><span class="st">"ranger"</span>,</span></span>
-<span class="r-in"><span>      npmax<span class="op">=</span><span class="fl">25L</span>, maxShift<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0L</span>, <span class="fl">1L</span>, <span class="fl">2L</span>, <span class="fl">4L</span>, <span class="fl">8L</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>      maxCombine<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0L</span>, <span class="fl">1L</span>, <span class="fl">2L</span>, <span class="fl">4L</span><span class="op">)</span>, nworkers<span class="op">=</span><span class="fl">4L</span></span></span>
-<span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Small, fast illustrative run. `deg` restricts deconvolution to a single</span></span></span>
+<span class="r-in"><span><span class="co"># parameter set and scalar npmax/maxShift/maxCombine give a one-row model</span></span></span>
+<span class="r-in"><span><span class="co"># grid (`mog`); benchmark() does a single 2-fold cross-validation round.</span></span></span>
+<span class="r-in"><span><span class="va">i</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fl">51</span><span class="op">:</span><span class="fl">53</span><span class="op">)</span>                       <span class="co"># 3 spectra per class</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">sim2</span><span class="op">[</span><span class="va">i</span><span class="op">]</span></span></span>
+<span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">sim2</span>, <span class="st">"group"</span><span class="op">)</span><span class="op">[</span><span class="va">i</span><span class="op">]</span></span></span>
+<span class="r-in"><span><span class="va">deg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/expand.grid.html" class="external-link">expand.grid</a></span><span class="op">(</span>nfit<span class="op">=</span><span class="fl">3</span>, smit<span class="op">=</span><span class="fl">1</span>, smws<span class="op">=</span><span class="fl">3</span>, delta<span class="op">=</span><span class="fl">1.6</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu">fit_mdm</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, npmax<span class="op">=</span><span class="fl">10L</span>, maxShift<span class="op">=</span><span class="fl">1L</span>, maxCombine<span class="op">=</span><span class="fl">2L</span>, deg<span class="op">=</span><span class="va">deg</span>, verbosity<span class="op">=</span><span class="fl">0</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">bm</span> <span class="op">&lt;-</span> <span class="fu">benchmark</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, npmax<span class="op">=</span><span class="fl">10L</span>, maxShift<span class="op">=</span><span class="fl">1L</span>, maxCombine<span class="op">=</span><span class="fl">2L</span>, deg<span class="op">=</span><span class="va">deg</span>, k<span class="op">=</span><span class="fl">2L</span>, verbosity<span class="op">=</span><span class="fl">0</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># `model = "lasso"` selects L1-penalised logistic regression instead.</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

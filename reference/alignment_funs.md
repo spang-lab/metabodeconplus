@@ -84,9 +84,7 @@ snap_to_ref(x, ref = NULL, maxCombine = 20, ...)
 
 - use_speaq:
 
-  Use
-  [`speaq::hClustAlign`](https://rdrr.io/pkg/speaq/man/hClustAlign.html)
-  (CluPA only).
+  Use `speaq::hClustAlign` (CluPA only).
 
 - gap_tol:
 
@@ -104,3 +102,11 @@ snap_to_ref(x, ref = NULL, maxCombine = 20, ...)
 ## Value
 
 An object of class `aligns`.
+
+## Examples
+
+``` r
+decons <- deconvolute(sim[1:5], sfr=c(3.55, 3.35), verbose=FALSE)
+aligned <- clupa(decons, maxShift=50, verbose=FALSE)  # CluPA stage
+snapped <- snap_to_ref(aligned, maxCombine=20)        # reference snapping
+```

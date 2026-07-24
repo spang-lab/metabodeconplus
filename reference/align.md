@@ -86,11 +86,10 @@ align(
 
 - use_speaq:
 
-  Use
-  [`speaq::hClustAlign`](https://rdrr.io/pkg/speaq/man/hClustAlign.html)
-  instead of the bundled CluPA implementation. Defaults to `FALSE`; the
-  bundled implementation is byte-equivalent to the speaq one (see
-  `tests/testthat/test-speaq.R`).
+  Use `speaq::hClustAlign` instead of the bundled CluPA implementation.
+  Defaults to `FALSE`; the bundled implementation is byte-equivalent to
+  the speaq one (see `tests/testthat/test-speaq.R`). Setting `TRUE`
+  requires the suggested `speaq` package.
 
 - gap_tol:
 
@@ -109,8 +108,6 @@ An object of class `aligns`.
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
-  decons <- deconvolute(sim[1:5], sfr=c(3.55, 3.35))
-  aligned <- align(decons, maxShift=50, maxCombine=20)
-} # }
+decons <- deconvolute(sim[1:5], sfr=c(3.55, 3.35), verbose=FALSE)
+aligned <- align(decons, maxShift=50, maxCombine=20, verbose=FALSE)
 ```

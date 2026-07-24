@@ -28,7 +28,7 @@
 
     <a class="navbar-brand me-2" href="index.html">metabodeconplus</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.20.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.21.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -71,20 +71,16 @@
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>To install the <strong>stable version</strong> from <a href="https://cran.r-project.org/" class="external-link">CRAN</a>, including all <a href="https://www.bioconductor.org/" class="external-link">Bioconductor</a> dependencies, paste the following commands in a running R session (e.g. in RStudio):</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"pak"</span><span class="op">)</span></span>
-<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pkg_install.html" class="external-link">pkg_install</a></span><span class="op">(</span><span class="st">"metabodeconplus"</span><span class="op">)</span></span></code></pre></div>
-<p>Alternatively, if you prefer installing via the traditional <code><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages()</a></code> function, you can do so by running the following commands:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Install Bioconductor dependencies</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span></span>
-<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"MassSpecWavelet"</span>, <span class="st">"impute"</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Install metabodeconplus</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"metabodeconplus"</span><span class="op">)</span></span></code></pre></div>
+<!--
+To install the **stable version** from [CRAN](https://cran.r-project.org/), paste the following commands in a running R session:
+
+```R
+# Install metabodeconplus
+install.packages("metabodeconplus")
+```
+-->
 <p>To install the <strong>development version</strong> from <a href="https://github.com/spang-lab/metabodeconplus/" class="external-link">GitHub</a> use:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"pak"</span><span class="op">)</span></span>
 <span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pkg_install.html" class="external-link">pkg_install</a></span><span class="op">(</span><span class="st">"spang-lab/metabodeconplus"</span><span class="op">)</span></span></code></pre></div>
 </div>

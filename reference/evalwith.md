@@ -3,29 +3,29 @@
 Evaluates an expression with a predefined global state, including the:
 
 - working directory (set via
-  [`setwd()`](https://rdrr.io/r/base/getwd.html))
+  [`base::setwd()`](https://rdrr.io/r/base/getwd.html))
 
 - global options (set via
-  [`options()`](https://rdrr.io/r/base/options.html))
+  [`base::options()`](https://rdrr.io/r/base/options.html))
 
 - graphical parameters (set via
-  [`par()`](https://rdrr.io/r/graphics/par.html))
+  [`graphics::par()`](https://rdrr.io/r/graphics/par.html))
 
 In addition to that, `evalwith` allows to:
 
 - Redirect or capture the output and/or message stream via
-  [`sink()`](https://rdrr.io/r/base/sink.html)
+  [`base::sink()`](https://rdrr.io/r/base/sink.html)
 
 - Measure the runtime of the evaluated expression via
-  [`system.time()`](https://rdrr.io/r/base/system.time.html)
+  [`base::system.time()`](https://rdrr.io/r/base/system.time.html)
 
 - Creating a temporary test directory (inside
   [`tmpdir()`](https://spang-lab.github.io/metabodeconplus/reference/tmpdir.md))
   and populating it with input files according to `inputs`
 
 - Predefine answers for calls to
-  [`readline()`](https://rdrr.io/r/base/readline.html) happening during
-  evaluation of `expr`
+  [`base::readline()`](https://rdrr.io/r/base/readline.html) happening
+  during evaluation of `expr`
 
 - Caching the result of the expression
 
@@ -99,12 +99,12 @@ evalwith(
 - opts:
 
   Named list of options to be set. See
-  [`options()`](https://rdrr.io/r/base/options.html).
+  [`base::options()`](https://rdrr.io/r/base/options.html).
 
 - pars:
 
   Named list of parameters to be set. See
-  [`par()`](https://rdrr.io/r/graphics/par.html).
+  [`graphics::par()`](https://rdrr.io/r/graphics/par.html).
 
 - cache:
 
@@ -123,7 +123,7 @@ A list containing with following elements:
 
 - `runtime`: The "elapsed" runtime of the expression in seconds.
   Measured with
-  [`system.time()`](https://rdrr.io/r/base/system.time.html).
+  [`base::system.time()`](https://rdrr.io/r/base/system.time.html).
 
 - `output`: The captured output.
 
@@ -179,11 +179,11 @@ str(x1)
 #>  $ inputs : chr(0) 
 
 x2 <- evalwith(datadir_persistent = "missing", message = "captured", datadir())
-#> Warning: /tmp/RtmpteHmoq/metabodeconplus/data does not exist. Please call `download_example_datasets()` first.
+#> Warning: /tmp/Rtmpj0IDnT/metabodeconplus/data does not exist. Please call `download_example_datasets()` first.
 str(x2)
 #> List of 7
-#>  $ rv     : chr "/tmp/RtmpteHmoq/metabodeconplus/data"
-#>  $ runtime: num 0.002
+#>  $ rv     : chr "/tmp/Rtmpj0IDnT/metabodeconplus/data"
+#>  $ runtime: num 0.001
 #>  $ output : chr(0) 
 #>  $ message: chr(0) 
 #>  $ plot   : NULL
@@ -194,7 +194,7 @@ x3 <- evalwith(testdir = "dummy", inputs = "bruker/urine/urine_1", dir())
 str(x3)
 #> List of 7
 #>  $ rv     : chr "urine_1"
-#>  $ runtime: num 0.001
+#>  $ runtime: num 0
 #>  $ output : chr(0) 
 #>  $ message: chr(0) 
 #>  $ plot   : NULL

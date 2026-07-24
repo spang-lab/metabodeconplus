@@ -71,9 +71,9 @@ grid and `$si` shifted accordingly. All other fields (`$meta`, `$lcpar`,
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
-  aki <- metabodeconplus:::read_aki_data()
-  x   <- harmonize_grid(aki$spectra)
-  all(sapply(x, function(s) identical(s$cs, x[[1]]$cs)))  # TRUE
-} # }
+# `sim` already shares one cs grid, so harmonization is a no-op here;
+# on a corpus from different acquisitions it snaps them to a common grid.
+x <- harmonize_grid(sim)
+all(sapply(x, function(s) identical(s$cs, x[[1]]$cs)))  # TRUE
+#> [1] TRUE
 ```

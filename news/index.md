@@ -1,5 +1,45 @@
 # Changelog
 
+## metabodeconplus 0.21.0
+
+- [`fit_mdm()`](https://spang-lab.github.io/metabodeconplus/reference/mdm.md)
+  and
+  [`benchmark()`](https://spang-lab.github.io/metabodeconplus/reference/mdm.md)
+  now default to `model = "ranger"` (probability random forest) instead
+  of `"lasso"`. Ranger is the intended default published model; pass
+  `model = "lasso"` for the L1-penalised logistic-regression backend.
+- `ranger` moved from Suggests to Imports: it is the default model
+  backend, so it is now a hard dependency and its availability is no
+  longer checked conditionally. `speaq` moved from Imports to Suggests,
+  since it is only used by the non-default `align(use_speaq = TRUE)`
+  path.
+- CRAN resubmission addressing the review of 0.20.2. No user-facing API
+  changes beyond the removal of `install_mdrb()` / `check_mdrb_deps()`.
+  - Removed the exported `install_mdrb()` and `check_mdrb_deps()`
+    functions: packages must not install other packages (CRAN policy).
+    The optional Rust backend `mdrb` is now purely user-installed. When
+    `deconvolute(use_rust >= 1)` is requested but `mdrb` is missing,
+    [`check_mdrb()`](https://spang-lab.github.io/metabodeconplus/reference/check_mdrb.md)
+    stops with an error that prints the exact
+    `install.packages("mdrb", repos = "https://spang-lab.r-universe.dev")`
+    command and links to <https://github.com/spang-lab/mdrb>.
+  - Documentation examples no longer use `\dontrun{}`: runnable examples
+    on the public `sim` / `sim2` datasets are now unwrapped or wrapped
+    in `\donttest{}`, and no example uses more than two cores.
+  - Removed the `metabodeconplus:::` (triple-colon) references from the
+    [`harmonize_grid()`](https://spang-lab.github.io/metabodeconplus/reference/harmonize_grid.md)
+    and
+    [`fit_mdm()`](https://spang-lab.github.io/metabodeconplus/reference/mdm.md)
+    /
+    [`benchmark()`](https://spang-lab.github.io/metabodeconplus/reference/mdm.md)
+    documentation.
+  - No longer set `options(warn = -1)` anywhere (removed together with
+    `check_mdrb_deps()`).
+  - Internal development helpers no longer write to `.GlobalEnv` or
+    change [`par()`](https://rdrr.io/r/graphics/par.html) without an
+    immediate [`on.exit()`](https://rdrr.io/r/base/on.exit.html) /
+    `withr` restore.
+
 ## metabodeconplus 0.20.2
 
 - Gave metabodeconplus a distinct `Title` and `Description` in

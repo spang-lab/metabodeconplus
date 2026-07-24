@@ -53,7 +53,7 @@ cleared because the post-snap superposition would need recomputing."><meta prope
 
     <a class="navbar-brand me-2" href="../index.html">metabodeconplus</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.20.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.21.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -161,7 +161,7 @@ pipeline; accepted for signature compatibility.</p></dd>
 
 
 <dt id="arg-use-speaq">use_speaq<a class="anchor" aria-label="anchor" href="#arg-use-speaq"></a></dt>
-<dd><p>Use <code><a href="https://rdrr.io/pkg/speaq/man/hClustAlign.html" class="external-link">speaq::hClustAlign</a></code> (CluPA only).</p></dd>
+<dd><p>Use <code>speaq::hClustAlign</code> (CluPA only).</p></dd>
 
 
 <dt id="arg-gap-tol">gap_tol<a class="anchor" aria-label="anchor" href="#arg-gap-tol"></a></dt>
@@ -182,6 +182,13 @@ experimental snap backends.</p></dd>
     <p>An object of class <code>aligns</code>.</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">decons</span> <span class="op">&lt;-</span> <span class="fu"><a href="deconvolute.html">deconvolute</a></span><span class="op">(</span><span class="va">sim</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>, sfr<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3.55</span>, <span class="fl">3.35</span><span class="op">)</span>, verbose<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">aligned</span> <span class="op">&lt;-</span> <span class="fu">clupa</span><span class="op">(</span><span class="va">decons</span>, maxShift<span class="op">=</span><span class="fl">50</span>, verbose<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span>  <span class="co"># CluPA stage</span></span></span>
+<span class="r-in"><span><span class="va">snapped</span> <span class="op">&lt;-</span> <span class="fu">snap_to_ref</span><span class="op">(</span><span class="va">aligned</span>, maxCombine<span class="op">=</span><span class="fl">20</span><span class="op">)</span>        <span class="co"># reference snapping</span></span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

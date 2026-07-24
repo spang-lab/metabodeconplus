@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">metabodeconplus</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.20.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.21.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,6 +38,20 @@
       <small>Source: <a href="https://github.com/spang-lab/metabodeconplus/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.21.0" id="metabodeconplus-0210">metabodeconplus 0.21.0<a class="anchor" aria-label="anchor" href="#metabodeconplus-0210"></a></h2>
+<ul><li>
+<code><a href="../reference/mdm.html">fit_mdm()</a></code> and <code><a href="../reference/mdm.html">benchmark()</a></code> now default to <code>model = "ranger"</code> (probability random forest) instead of <code>"lasso"</code>. Ranger is the intended default published model; pass <code>model = "lasso"</code> for the L1-penalised logistic-regression backend.</li>
+<li>
+<code>ranger</code> moved from Suggests to Imports: it is the default model backend, so it is now a hard dependency and its availability is no longer checked conditionally. <code>speaq</code> moved from Imports to Suggests, since it is only used by the non-default <code>align(use_speaq = TRUE)</code> path.</li>
+<li>CRAN resubmission addressing the review of 0.20.2. No user-facing API changes beyond the removal of <code>install_mdrb()</code> / <code>check_mdrb_deps()</code>.
+<ul><li>Removed the exported <code>install_mdrb()</code> and <code>check_mdrb_deps()</code> functions: packages must not install other packages (CRAN policy). The optional Rust backend <code>mdrb</code> is now purely user-installed. When <code>deconvolute(use_rust &gt;= 1)</code> is requested but <code>mdrb</code> is missing, <code><a href="../reference/check_mdrb.html">check_mdrb()</a></code> stops with an error that prints the exact <code>install.packages("mdrb", repos = "https://spang-lab.r-universe.dev")</code> command and links to <a href="https://github.com/spang-lab/mdrb" class="external-link uri">https://github.com/spang-lab/mdrb</a>.</li>
+<li>Documentation examples no longer use <code>\dontrun{}</code>: runnable examples on the public <code>sim</code> / <code>sim2</code> datasets are now unwrapped or wrapped in <code>\donttest{}</code>, and no example uses more than two cores.</li>
+<li>Removed the <code>metabodeconplus:::</code> (triple-colon) references from the <code><a href="../reference/harmonize_grid.html">harmonize_grid()</a></code> and <code><a href="../reference/mdm.html">fit_mdm()</a></code> / <code><a href="../reference/mdm.html">benchmark()</a></code> documentation.</li>
+<li>No longer set <code>options(warn = -1)</code> anywhere (removed together with <code>check_mdrb_deps()</code>).</li>
+<li>Internal development helpers no longer write to <code>.GlobalEnv</code> or change <code><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par()</a></code> without an immediate <code><a href="https://rdrr.io/r/base/on.exit.html" class="external-link">on.exit()</a></code> / <code>withr</code> restore.</li>
+</ul></li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.20.2" id="metabodeconplus-0202">metabodeconplus 0.20.2<a class="anchor" aria-label="anchor" href="#metabodeconplus-0202"></a></h2>
 <ul><li>Gave metabodeconplus a distinct <code>Title</code> and <code>Description</code> in <code>DESCRIPTION</code> so they no longer duplicate the CRAN <em>metabodecon</em> package. The title now mentions model fitting, and the description highlights the end-to-end model-fitting workflow (<code><a href="../reference/mdm.html">fit_mdm()</a></code> / <code><a href="../reference/mdm.html">benchmark()</a></code>) and states that metabodeconplus is the backwards-incompatible successor to <em>metabodecon</em>.</li>

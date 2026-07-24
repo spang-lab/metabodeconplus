@@ -156,14 +156,8 @@ To visualize the data before and after the alignment, you can use
 metabodeconplus::plot_spectra(deconvoluted_spectra[1:8], lgd = FALSE)
 
 # Align spectra and plot again.
-aligned_spectra <- try(metabodeconplus::align(deconvoluted_spectra)) # (1)
+aligned_spectra <- metabodeconplus::align(deconvoluted_spectra)
 metabodeconplus::plot_spectra(aligned_spectra[1:8])
-
-# (1) The call to align() is wrapped in try() because the function may fail
-# if speaq's Bioconductor dependencies (MassSpecWavelet, impute) are missing
-# and the code runs in a non-interactive R session (e.g., during vignette
-# creation). In interactive sessions, try() is not needed, as the user will
-# be prompted to install missing dependencies automatically.
 ```
 
 The resulting plots are shown in [Figure 3](#fig-align). Before the

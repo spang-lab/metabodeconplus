@@ -46,3 +46,11 @@ A numeric matrix with spectra in rows and chemical shifts as colnames.
 ## Author
 
 2024-2026 Tobias Schmidt: initial version.
+
+## Examples
+
+``` r
+decons <- deconvolute(sim[1:3], sfr=c(3.55, 3.35), verbose=FALSE)
+aligned <- align(decons, maxShift=50, maxCombine=20, verbose=FALSE)
+X <- peak_mat(aligned)
+```

@@ -13,7 +13,7 @@ test/testthat/test-draw_spectrum.R.
 
     <a class="navbar-brand me-2" href="../index.html">metabodeconplus</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.20.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.21.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -133,7 +133,7 @@ spectrum is drawn.</p></dd>
 
 
 <dt id="arg-main">main<a class="anchor" aria-label="anchor" href="#arg-main"></a></dt>
-<dd><p>Main title of the plot. Drawn via <code><a href="https://rdrr.io/r/graphics/title.html" class="external-link">title()</a></code>.</p></dd>
+<dd><p>Main title of the plot. Drawn via <code><a href="https://rdrr.io/r/graphics/title.html" class="external-link">graphics::title()</a></code>.</p></dd>
 
 
 <dt id="arg-show">show<a class="anchor" aria-label="anchor" href="#arg-show"></a></dt>
@@ -171,7 +171,7 @@ region.</p></li>
 
 
 <dt id="arg-si-line-sm-line-sp-line-al-line-d-line-lc-lines-tp-lines-al-lines">si_line, sm_line, sp_line, al_line, d2_line, lc_lines, tp_lines, al_lines<a class="anchor" aria-label="anchor" href="#arg-si-line-sm-line-sp-line-al-line-d-line-lc-lines-tp-lines-al-lines"></a></dt>
-<dd><p>List  of  parameters  passed  to  <code><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines()</a></code>  when  drawing  the
+<dd><p>List  of  parameters  passed  to  <code><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">graphics::lines()</a></code>  when  drawing  the
 raw signal intensities (si_line),
 smoothed signal intensities (sm_line),
 superposition of lorentzian curves (sp_line),
@@ -184,20 +184,20 @@ respectively.</p></dd>
 
 
 <dt id="arg-cent-pts-tp-pts-fp-pts-miss-pts-bord-pts-norm-pts">cent_pts, tp_pts, fp_pts, miss_pts, bord_pts, norm_pts<a class="anchor" aria-label="anchor" href="#arg-cent-pts-tp-pts-fp-pts-miss-pts-bord-pts-norm-pts"></a></dt>
-<dd><p>List of parameters passed to <code><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points()</a></code> when drawing the peak center points,
+<dd><p>List of parameters passed to <code><a href="https://rdrr.io/r/graphics/points.html" class="external-link">graphics::points()</a></code> when drawing the peak center points,
 true positive peaks, false positive peaks, missed peaks, peak border points
 and non-peak points.</p></dd>
 
 
 <dt id="arg-bg-rect-lc-rects-foc-rect-tp-rects">bg_rect, lc_rects, foc_rect, tp_rects<a class="anchor" aria-label="anchor" href="#arg-bg-rect-lc-rects-foc-rect-tp-rects"></a></dt>
-<dd><p>List of parameters passed to <code><a href="https://rdrr.io/r/graphics/rect.html" class="external-link">rect()</a></code> when drawing the background, lorentzian
+<dd><p>List of parameters passed to <code><a href="https://rdrr.io/r/graphics/rect.html" class="external-link">graphics::rect()</a></code> when drawing the background, lorentzian
 curve substitutes, focus rectangle and/or true lorentzian curve substitutes.</p></dd>
 
 
 <dt id="arg-bt-axis-lt-axis-tp-axis-rt-axis">bt_axis, lt_axis, tp_axis, rt_axis<a class="anchor" aria-label="anchor" href="#arg-bt-axis-lt-axis-tp-axis-rt-axis"></a></dt>
-<dd><p>List of parameters used to overwrite the default values  passed  to  <code><a href="https://rdrr.io/r/graphics/axis.html" class="external-link">axis()</a></code>
+<dd><p>List of parameters used to overwrite the default values  passed  to  <code><a href="https://rdrr.io/r/graphics/axis.html" class="external-link">graphics::axis()</a></code>
 when drawing the bottom, left,  top  and  right  axis.  In  addition  to  the
-parameters of <code><a href="https://rdrr.io/r/graphics/axis.html" class="external-link">axis()</a></code>, the following additional parameters are supported  as
+parameters of <code><a href="https://rdrr.io/r/graphics/axis.html" class="external-link">graphics::axis()</a></code>, the following additional parameters are supported  as
 well:</p><ul><li><p><code>n</code>:      Number of tickmarks.</p></li>
 <li><p><code>digits</code>: Number of digits for rounding the labels. If a vector of numbers
 is provided, all numbers are tried, until <code>n</code> unique labels are
@@ -216,28 +216,28 @@ values might be scaled.</p></li>
 
 
 <dt id="arg-bt-text-lt-text-tp-text-rt-text">bt_text, lt_text, tp_text, rt_text<a class="anchor" aria-label="anchor" href="#arg-bt-text-lt-text-tp-text-rt-text"></a></dt>
-<dd><p>List of parameters used to overwrite the default values passed to <code><a href="https://rdrr.io/r/graphics/mtext.html" class="external-link">mtext()</a></code>
+<dd><p>List of parameters used to overwrite the default values passed to <code><a href="https://rdrr.io/r/graphics/mtext.html" class="external-link">graphics::mtext()</a></code>
 when drawing the bottom, left, top and right margin texts (i.e. the axis
 labels).</p></dd>
 
 
 <dt id="arg-lc-verts-tp-verts-al-verts">lc_verts, tp_verts, al_verts<a class="anchor" aria-label="anchor" href="#arg-lc-verts-tp-verts-al-verts"></a></dt>
-<dd><p>List of parameters passed to <code><a href="https://rdrr.io/r/graphics/segments.html" class="external-link">segments()</a></code> when drawing vertical lines at the
+<dd><p>List of parameters passed to <code><a href="https://rdrr.io/r/graphics/segments.html" class="external-link">graphics::segments()</a></code> when drawing vertical lines at the
 centers of estimated, true or aligned lorentzian curves. Setting
 <code>tp_verts$show</code> to TRUE requires <code>truepar</code> to be set.</p></dd>
 
 
 <dt id="arg-ze-hline">ze_hline<a class="anchor" aria-label="anchor" href="#arg-ze-hline"></a></dt>
-<dd><p>List of parameters passed to <code><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline()</a></code> when drawing a horizontal line at y = 0.</p></dd>
+<dd><p>List of parameters passed to <code><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">graphics::abline()</a></code> when drawing a horizontal line at y = 0.</p></dd>
 
 
 <dt id="arg-al-arrows">al_arrows<a class="anchor" aria-label="anchor" href="#arg-al-arrows"></a></dt>
-<dd><p>List of parameters passed to <code><a href="https://rdrr.io/r/graphics/arrows.html" class="external-link">arrows()</a></code> when drawing arrows between the
+<dd><p>List of parameters passed to <code><a href="https://rdrr.io/r/graphics/arrows.html" class="external-link">graphics::arrows()</a></code> when drawing arrows between the
 estimated and aligned lorentzian curve centers.</p></dd>
 
 
 <dt id="arg-lgd">lgd<a class="anchor" aria-label="anchor" href="#arg-lgd"></a></dt>
-<dd><p>List of parameters passed to <code><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend()</a></code> when drawing the legend.</p></dd>
+<dd><p>List of parameters passed to <code><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">graphics::legend()</a></code> when drawing the legend.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -265,15 +265,15 @@ point we have n = 4 unique labels (1.024, 1.025, 1.027 and 1.028).</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">decon</span> <span class="op">&lt;-</span> <span class="fu"><a href="deconvolute.html">deconvolute</a></span><span class="op">(</span><span class="va">sim</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, sfr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3.55</span>, <span class="fl">3.35</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-20 06:53:00.23 Starting deconvolution (spectra: 1, workers: 1)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-20 06:53:00.23 Starting deconvolution of sim_01 using R backend</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-20 06:53:00.23 Starting peak selection</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-20 06:53:00.23 Detected 312 peaks</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-20 06:53:00.23 Removing peaks with low scores</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-20 06:53:00.23 Removed 285 peaks</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-20 06:53:00.23 Fitting Lorentz curves (3 iterations)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-20 06:53:00.23 Finished deconvolution of sim_01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-20 06:53:00.23 Finished deconvolution 0.004 secs</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-24 16:46:04.67 Starting deconvolution (spectra: 1, workers: 1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-24 16:46:04.67 Starting deconvolution of sim_01 using R backend</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-24 16:46:04.67 Starting peak selection</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-24 16:46:04.67 Detected 312 peaks</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-24 16:46:04.67 Removing peaks with low scores</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-24 16:46:04.67 Removed 285 peaks</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-24 16:46:04.67 Fitting Lorentz curves (3 iterations)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-24 16:46:04.68 Finished deconvolution of sim_01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-07-24 16:46:04.68 Finished deconvolution 0.004 secs</span>
 <span class="r-in"><span><span class="fu">draw_spectrum</span><span class="op">(</span>obj <span class="op">=</span> <span class="va">decon</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="draw_spectrum-1.png" alt="" width="700" height="433"></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $plt_rgn_ndc</span>

@@ -25,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">metabodeconplus</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.20.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.21.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -209,14 +209,8 @@ visualize the data before and after the alignment, you can use
 <span><span class="fu">metabodeconplus</span><span class="fu">::</span><span class="fu"><a href="../reference/plot_spectra.html">plot_spectra</a></span><span class="op">(</span><span class="va">deconvoluted_spectra</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">]</span>, lgd <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Align spectra and plot again.</span></span>
-<span><span class="va">aligned_spectra</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="fu">metabodeconplus</span><span class="fu">::</span><span class="fu"><a href="../reference/align.html">align</a></span><span class="op">(</span><span class="va">deconvoluted_spectra</span><span class="op">)</span><span class="op">)</span> <span class="co"># (1)</span></span>
-<span><span class="fu">metabodeconplus</span><span class="fu">::</span><span class="fu"><a href="../reference/plot_spectra.html">plot_spectra</a></span><span class="op">(</span><span class="va">aligned_spectra</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">]</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># (1) The call to align() is wrapped in try() because the function may fail</span></span>
-<span><span class="co"># if speaq's Bioconductor dependencies (MassSpecWavelet, impute) are missing</span></span>
-<span><span class="co"># and the code runs in a non-interactive R session (e.g., during vignette</span></span>
-<span><span class="co"># creation). In interactive sessions, try() is not needed, as the user will</span></span>
-<span><span class="co"># be prompted to install missing dependencies automatically.</span></span></code></pre></div>
+<span><span class="va">aligned_spectra</span> <span class="op">&lt;-</span> <span class="fu">metabodeconplus</span><span class="fu">::</span><span class="fu"><a href="../reference/align.html">align</a></span><span class="op">(</span><span class="va">deconvoluted_spectra</span><span class="op">)</span></span>
+<span><span class="fu">metabodeconplus</span><span class="fu">::</span><span class="fu"><a href="../reference/plot_spectra.html">plot_spectra</a></span><span class="op">(</span><span class="va">aligned_spectra</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <p>The resulting plots are shown in <a href="#fig-align">Figure 3</a>.
 Before the alignment, the spectra exhibit generally similar shapes but
 do not perfectly overlap. After the alignment, the spectra are much more

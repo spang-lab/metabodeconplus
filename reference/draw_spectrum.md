@@ -93,7 +93,7 @@ draw_spectrum(
 - main:
 
   Main title of the plot. Drawn via
-  [`title()`](https://rdrr.io/r/graphics/title.html).
+  [`graphics::title()`](https://rdrr.io/r/graphics/title.html).
 
 - show:
 
@@ -138,34 +138,36 @@ draw_spectrum(
   al_lines:
 
   List of parameters passed to
-  [`lines()`](https://rdrr.io/r/graphics/lines.html) when drawing the
-  raw signal intensities (si_line), smoothed signal intensities
-  (sm_line), superposition of lorentzian curves (sp_line), aligned
-  lorentzian curves (al_line), second derivative (d2_line), lorentzian
-  curves found by deconvolution (lc_lines), true lorentzian curves
-  (tp_lines) and aligned lorentzian curves (al_lines), respectively.
+  [`graphics::lines()`](https://rdrr.io/r/graphics/lines.html) when
+  drawing the raw signal intensities (si_line), smoothed signal
+  intensities (sm_line), superposition of lorentzian curves (sp_line),
+  aligned lorentzian curves (al_line), second derivative (d2_line),
+  lorentzian curves found by deconvolution (lc_lines), true lorentzian
+  curves (tp_lines) and aligned lorentzian curves (al_lines),
+  respectively.
 
 - cent_pts, tp_pts, fp_pts, miss_pts, bord_pts, norm_pts:
 
   List of parameters passed to
-  [`points()`](https://rdrr.io/r/graphics/points.html) when drawing the
-  peak center points, true positive peaks, false positive peaks, missed
-  peaks, peak border points and non-peak points.
+  [`graphics::points()`](https://rdrr.io/r/graphics/points.html) when
+  drawing the peak center points, true positive peaks, false positive
+  peaks, missed peaks, peak border points and non-peak points.
 
 - bg_rect, lc_rects, foc_rect, tp_rects:
 
   List of parameters passed to
-  [`rect()`](https://rdrr.io/r/graphics/rect.html) when drawing the
-  background, lorentzian curve substitutes, focus rectangle and/or true
-  lorentzian curve substitutes.
+  [`graphics::rect()`](https://rdrr.io/r/graphics/rect.html) when
+  drawing the background, lorentzian curve substitutes, focus rectangle
+  and/or true lorentzian curve substitutes.
 
 - bt_axis, lt_axis, tp_axis, rt_axis:
 
   List of parameters used to overwrite the default values passed to
-  [`axis()`](https://rdrr.io/r/graphics/axis.html) when drawing the
-  bottom, left, top and right axis. In addition to the parameters of
-  [`axis()`](https://rdrr.io/r/graphics/axis.html), the following
-  additional parameters are supported as well:
+  [`graphics::axis()`](https://rdrr.io/r/graphics/axis.html) when
+  drawing the bottom, left, top and right axis. In addition to the
+  parameters of
+  [`graphics::axis()`](https://rdrr.io/r/graphics/axis.html), the
+  following additional parameters are supported as well:
 
   - `n`: Number of tickmarks.
 
@@ -187,33 +189,36 @@ draw_spectrum(
 - bt_text, lt_text, tp_text, rt_text:
 
   List of parameters used to overwrite the default values passed to
-  [`mtext()`](https://rdrr.io/r/graphics/mtext.html) when drawing the
-  bottom, left, top and right margin texts (i.e. the axis labels).
+  [`graphics::mtext()`](https://rdrr.io/r/graphics/mtext.html) when
+  drawing the bottom, left, top and right margin texts (i.e. the axis
+  labels).
 
 - lc_verts, tp_verts, al_verts:
 
   List of parameters passed to
-  [`segments()`](https://rdrr.io/r/graphics/segments.html) when drawing
-  vertical lines at the centers of estimated, true or aligned lorentzian
-  curves. Setting `tp_verts$show` to TRUE requires `truepar` to be set.
+  [`graphics::segments()`](https://rdrr.io/r/graphics/segments.html)
+  when drawing vertical lines at the centers of estimated, true or
+  aligned lorentzian curves. Setting `tp_verts$show` to TRUE requires
+  `truepar` to be set.
 
 - ze_hline:
 
   List of parameters passed to
-  [`abline()`](https://rdrr.io/r/graphics/abline.html) when drawing a
-  horizontal line at y = 0.
+  [`graphics::abline()`](https://rdrr.io/r/graphics/abline.html) when
+  drawing a horizontal line at y = 0.
 
 - al_arrows:
 
   List of parameters passed to
-  [`arrows()`](https://rdrr.io/r/graphics/arrows.html) when drawing
-  arrows between the estimated and aligned lorentzian curve centers.
+  [`graphics::arrows()`](https://rdrr.io/r/graphics/arrows.html) when
+  drawing arrows between the estimated and aligned lorentzian curve
+  centers.
 
 - lgd:
 
   List of parameters passed to
-  [`legend()`](https://rdrr.io/r/graphics/legend.html) when drawing the
-  legend.
+  [`graphics::legend()`](https://rdrr.io/r/graphics/legend.html) when
+  drawing the legend.
 
 ## Value
 
@@ -253,15 +258,15 @@ this point we have n = 4 unique labels (1.024, 1.025, 1.027 and 1.028).
 
 ``` r
 decon <- deconvolute(sim[[1]], sfr = c(3.55, 3.35))
-#> 2026-07-20 06:53:00.23 Starting deconvolution (spectra: 1, workers: 1)
-#> 2026-07-20 06:53:00.23 Starting deconvolution of sim_01 using R backend
-#> 2026-07-20 06:53:00.23 Starting peak selection
-#> 2026-07-20 06:53:00.23 Detected 312 peaks
-#> 2026-07-20 06:53:00.23 Removing peaks with low scores
-#> 2026-07-20 06:53:00.23 Removed 285 peaks
-#> 2026-07-20 06:53:00.23 Fitting Lorentz curves (3 iterations)
-#> 2026-07-20 06:53:00.23 Finished deconvolution of sim_01
-#> 2026-07-20 06:53:00.23 Finished deconvolution 0.004 secs
+#> 2026-07-24 16:46:04.67 Starting deconvolution (spectra: 1, workers: 1)
+#> 2026-07-24 16:46:04.67 Starting deconvolution of sim_01 using R backend
+#> 2026-07-24 16:46:04.67 Starting peak selection
+#> 2026-07-24 16:46:04.67 Detected 312 peaks
+#> 2026-07-24 16:46:04.67 Removing peaks with low scores
+#> 2026-07-24 16:46:04.67 Removed 285 peaks
+#> 2026-07-24 16:46:04.67 Fitting Lorentz curves (3 iterations)
+#> 2026-07-24 16:46:04.68 Finished deconvolution of sim_01
+#> 2026-07-24 16:46:04.68 Finished deconvolution 0.004 secs
 draw_spectrum(obj = decon)
 
 #> $plt_rgn_ndc

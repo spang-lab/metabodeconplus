@@ -58,9 +58,7 @@ spectrum names.
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
-  decons <- deconvolute(sim[1:2], sfr=c(3.55, 3.35))
-  aligned <- align(decons, maxShift=50, maxCombine=20)
-  X <- si_mat(aligned)
-} # }
+decons <- deconvolute(sim[1:2], sfr=c(3.55, 3.35), verbose=FALSE)
+aligned <- align(decons, maxShift=50, maxCombine=20, verbose=FALSE)
+X <- si_mat(aligned)
 ```

@@ -13,31 +13,6 @@ al. (2021)](https://doi.org/10.3390/metabo11070452).
 
 ## Installation
 
-To install the **stable version** from
-[CRAN](https://cran.r-project.org/), including all
-[Bioconductor](https://www.bioconductor.org/) dependencies, paste the
-following commands in a running R session (e.g. in RStudio):
-
-``` r
-
-install.packages("pak")
-pak::pkg_install("metabodeconplus")
-```
-
-Alternatively, if you prefer installing via the traditional
-[`install.packages()`](https://rdrr.io/r/utils/install.packages.html)
-function, you can do so by running the following commands:
-
-``` r
-
-# Install Bioconductor dependencies
-install.packages("BiocManager")
-BiocManager::install(c("MassSpecWavelet", "impute"))
-
-# Install metabodeconplus
-install.packages("metabodeconplus")
-```
-
 To install the **development version** from
 [GitHub](https://github.com/spang-lab/metabodeconplus/) use:
 
