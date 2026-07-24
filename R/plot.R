@@ -43,7 +43,7 @@
 #'
 #' @param lgd
 #' Logical or list. If TRUE, a legend is drawn at "topright" with
-#' `cex = 0.8`. If a list, its elements are passed to [legend()] to
+#' `cex = 0.8`. If a list, its elements are passed to [graphics::legend()] to
 #' override position, size, etc. Pass `lgd = FALSE` to hide.
 #'
 #' @param main
@@ -51,7 +51,7 @@
 #'
 #' @param xaxt,yaxt
 #' Character. `"s"` (default) draws the axis normally; `"n"`
-#' suppresses axis ticks and tick labels. Passed to [plot()].
+#' suppresses axis ticks and tick labels. Passed to [graphics::plot()].
 #'
 #' @return
 #' A plot of the deconvoluted spectra.
@@ -162,7 +162,7 @@ plot_spectra <- function(
 #' Axis labels.
 #'
 #' @param mar
-#' Numeric vector of length 4 specifying the plot margins. Passed to [par()].
+#' Numeric vector of length 4 specifying the plot margins. Passed to [graphics::par()].
 #' The right margin is overridden at runtime to fit the spectra names.
 #'
 #' @param y
@@ -531,14 +531,14 @@ as_heatmap_matrix <- function(objs, what=NULL) {
 #'
 #' @param mar
 #' A numeric vector of length 4 specifying the margins of the plot. Passed to
-#' [par()]. If set to `NULL`, a suitable value is chosen automatically.
+#' [graphics::par()]. If set to `NULL`, a suitable value is chosen automatically.
 #'
 #' @param frame
-#' A list of values passed to [box()] when drawing the frame around plot region.
+#' A list of values passed to [graphics::box()] when drawing the frame around plot region.
 #' If set to `NULL`, no frame is drawn.
 #'
 #' @param con_lines
-#' A list of values passed to [lines()] when drawing the connecting lines between
+#' A list of values passed to [graphics::lines()] when drawing the connecting lines between
 #' sub figure 1 and the focus rectangle in sub figure 3. See 'Details'.
 #' If set to `NULL`, the connecting lines are not drawn.
 #'
@@ -595,7 +595,7 @@ as_heatmap_matrix <- function(objs, what=NULL) {
 #'
 #' Note  that  the  figure  created  by  `plot_spectrum()`  can  be  part  of  a
 #' multi-figure configuration as created when setting  `mfrow`  or  `mfcol`  via
-#' [par()]. Example:
+#' [graphics::par()]. Example:
 #'
 #' ```
 #' _______________________________________
@@ -729,10 +729,10 @@ plot_spectrum <- function(x,
 #' Number of lines below/left-of/above/right-of plot region.
 #'
 #' @param lgd
-#' List of parameters passed to [legend()] when drawing the legend.
+#' List of parameters passed to [graphics::legend()] when drawing the legend.
 #'
 #' @param main
-#' Main title of the plot. Drawn via [title()].
+#' Main title of the plot. Drawn via [graphics::title()].
 #'
 #' @param show
 #' Logical. If FALSE, the function returns without doing anything.
@@ -762,7 +762,7 @@ plot_spectrum <- function(x,
 #'             region.
 #'
 #' @param si_line,sm_line,sp_line,al_line,d2_line,lc_lines,tp_lines,al_lines
-#' List  of  parameters  passed  to  [lines()]  when  drawing  the
+#' List  of  parameters  passed  to  [graphics::lines()]  when  drawing  the
 #' raw signal intensities (si_line),
 #' smoothed signal intensities (sm_line),
 #' superposition of lorentzian curves (sp_line),
@@ -774,18 +774,18 @@ plot_spectrum <- function(x,
 #' respectively.
 #'
 #' @param cent_pts,tp_pts,fp_pts,miss_pts,bord_pts,norm_pts
-#' List of parameters passed to [points()] when drawing the peak center points,
+#' List of parameters passed to [graphics::points()] when drawing the peak center points,
 #' true positive peaks, false positive peaks, missed peaks, peak border points
 #' and non-peak points.
 #'
 #' @param bg_rect,lc_rects,foc_rect,tp_rects
-#' List of parameters passed to [rect()] when drawing the background, lorentzian
+#' List of parameters passed to [graphics::rect()] when drawing the background, lorentzian
 #' curve substitutes, focus rectangle and/or true lorentzian curve substitutes.
 #'
 #' @param bt_axis,lt_axis,tp_axis,rt_axis
-#' List of parameters used to overwrite the default values  passed  to  [axis()]
+#' List of parameters used to overwrite the default values  passed  to  [graphics::axis()]
 #' when drawing the bottom, left,  top  and  right  axis.  In  addition  to  the
-#' parameters of [axis()], the following additional parameters are supported  as
+#' parameters of [graphics::axis()], the following additional parameters are supported  as
 #' well:
 #'
 #' - `n`:      Number of tickmarks.
@@ -804,20 +804,20 @@ plot_spectrum <- function(x,
 #'             values might be scaled.
 #'
 #' @param bt_text,lt_text,tp_text,rt_text
-#' List of parameters used to overwrite the default values passed to [mtext()]
+#' List of parameters used to overwrite the default values passed to [graphics::mtext()]
 #' when drawing the bottom, left, top and right margin texts (i.e. the axis
 #' labels).
 #'
 #' @param lc_verts,tp_verts,al_verts
-#' List of parameters passed to [segments()] when drawing vertical lines at the
+#' List of parameters passed to [graphics::segments()] when drawing vertical lines at the
 #' centers of estimated, true or aligned lorentzian curves. Setting
 #' `tp_verts$show` to TRUE requires `truepar` to be set.
 #'
 #' @param ze_hline
-#' List of parameters passed to [abline()] when drawing a horizontal line at y = 0.
+#' List of parameters passed to [graphics::abline()] when drawing a horizontal line at y = 0.
 #'
 #' @param al_arrows
-#' List of parameters passed to [arrows()] when drawing arrows between the
+#' List of parameters passed to [graphics::arrows()] when drawing arrows between the
 #' estimated and aligned lorentzian curve centers.
 #'
 #' @return

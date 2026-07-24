@@ -73,11 +73,8 @@
 #' x <- sim2[i]
 #' y <- attr(sim2, "group")[i]
 #' deg <- expand.grid(nfit=3, smit=1, smws=3, delta=1.6)
-#' # `ranger` is the default backend and an optional (Suggests) dependency.
-#' if (requireNamespace("ranger", quietly = TRUE)) {
-#'     m <- fit_mdm(x, y, npmax=10L, maxShift=1L, maxCombine=2L, deg=deg)
-#'     bm <- benchmark(x, y, npmax=10L, maxShift=1L, maxCombine=2L, deg=deg, k=2L)
-#' }
+#' m <- fit_mdm(x, y, npmax=10L, maxShift=1L, maxCombine=2L, deg=deg)
+#' bm <- benchmark(x, y, npmax=10L, maxShift=1L, maxCombine=2L, deg=deg, k=2L)
 #' # `model = "lasso"` selects L1-penalised logistic regression instead.
 #'
 fit_mdm <- function(
@@ -657,10 +654,6 @@ predict_lasso <- function(model, newx) {
 fit_ranger <- function(
     X, y, seed=1, nworkers=1L, num.trees=5000L, importance="none"
 ) {
-    if (!requireNamespace("ranger", quietly=TRUE)) stop(
-        "Package 'ranger' is required for model = \"ranger\". ",
-        "Install it with install.packages(\"ranger\").", call.=FALSE
-    )
     stopifnot(is_int(num.trees, 1), num.trees >= 1L)
     lvs <- levels(y)
     rf <- ranger::ranger(
@@ -689,10 +682,6 @@ fit_ranger <- function(
 #' @param newx Numeric feature matrix.
 #' @return Numeric vector of length `nrow(newx)`.
 predict_ranger <- function(model, newx) {
-    if (!requireNamespace("ranger", quietly=TRUE)) stop(
-        "Package 'ranger' is required for model = \"ranger\". ",
-        "Install it with install.packages(\"ranger\").", call.=FALSE
-    )
     colnames(newx) <- model$forest$independent.variable.names
     pm <- stats::predict(model, data=newx)$predictions
     pm[, model$lvs[2]]

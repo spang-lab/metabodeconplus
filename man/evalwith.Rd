@@ -48,9 +48,9 @@ details section.}
 \item{inputs}{Paths to be copied to the test directory before evaluating
 \code{expr}.}
 
-\item{opts}{Named list of options to be set. See \code{\link[=options]{options()}}.}
+\item{opts}{Named list of options to be set. See \code{\link[base:options]{base::options()}}.}
 
-\item{pars}{Named list of parameters to be set. See \code{\link[=par]{par()}}.}
+\item{pars}{Named list of parameters to be set. See \code{\link[graphics:par]{graphics::par()}}.}
 
 \item{cache}{Logical indicating whether to cache the result of the
 expression.}
@@ -63,7 +63,7 @@ A list containing with following elements:
 \itemize{
 \item \code{rv}: The return value of the expression.
 \item \code{runtime}: The "elapsed" runtime of the expression in seconds. Measured
-with \code{\link[=system.time]{system.time()}}.
+with \code{\link[base:system.time]{base::system.time()}}.
 \item \code{output}: The captured output.
 \item \code{message}: The captured messages.
 \item \code{plot}: The path to the saved plot.
@@ -74,18 +74,18 @@ with \code{\link[=system.time]{system.time()}}.
 \description{
 Evaluates an expression with a predefined global state, including the:
 \itemize{
-\item working directory (set via \code{\link[=setwd]{setwd()}})
-\item global options (set via \code{\link[=options]{options()}})
-\item graphical parameters (set via \code{\link[=par]{par()}})
+\item working directory (set via \code{\link[base:getwd]{base::setwd()}})
+\item global options (set via \code{\link[base:options]{base::options()}})
+\item graphical parameters (set via \code{\link[graphics:par]{graphics::par()}})
 }
 
 In addition to that, \code{evalwith} allows to:
 \itemize{
-\item Redirect or capture the output and/or message stream via \code{\link[=sink]{sink()}}
-\item Measure the runtime of the evaluated expression via \code{\link[=system.time]{system.time()}}
+\item Redirect or capture the output and/or message stream via \code{\link[base:sink]{base::sink()}}
+\item Measure the runtime of the evaluated expression via \code{\link[base:system.time]{base::system.time()}}
 \item Creating a temporary test directory (inside \code{\link[=tmpdir]{tmpdir()}}) and populating it
 with input files according to \code{inputs}
-\item Predefine answers for calls to \code{\link[=readline]{readline()}} happening during evaluation of
+\item Predefine answers for calls to \code{\link[base:readline]{base::readline()}} happening during evaluation of
 \code{expr}
 \item Caching the result of the expression
 }

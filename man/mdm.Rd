@@ -110,11 +110,8 @@ i <- c(1:3, 51:53)                       # 3 spectra per class
 x <- sim2[i]
 y <- attr(sim2, "group")[i]
 deg <- expand.grid(nfit=3, smit=1, smws=3, delta=1.6)
-# `ranger` is the default backend and an optional (Suggests) dependency.
-if (requireNamespace("ranger", quietly = TRUE)) {
-    m <- fit_mdm(x, y, npmax=10L, maxShift=1L, maxCombine=2L, deg=deg)
-    bm <- benchmark(x, y, npmax=10L, maxShift=1L, maxCombine=2L, deg=deg, k=2L)
-}
+m <- fit_mdm(x, y, npmax=10L, maxShift=1L, maxCombine=2L, deg=deg)
+bm <- benchmark(x, y, npmax=10L, maxShift=1L, maxCombine=2L, deg=deg, k=2L)
 # `model = "lasso"` selects L1-penalised logistic regression instead.
 
 }

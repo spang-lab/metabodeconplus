@@ -47,8 +47,8 @@ RoxygenNote: 7.3.3
 Depends: R (>= 3.5.0)
 Imports:
     mathjaxr,
+    ranger,
     readJDX,
-    speaq,
     toscutil (>= 2.8.0),
     withr
 Suggests:
@@ -78,8 +78,8 @@ Suggests:
     remotes,
     rlang,
     rmarkdown,
-    ranger,
     rpart,
+    speaq,
     styler,
     testthat (>= 3.0.0),
     usethis,

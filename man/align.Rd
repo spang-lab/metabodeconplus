@@ -43,7 +43,8 @@ no longer Lorentz-compatible).}
 
 \item{use_speaq}{Use \code{speaq::hClustAlign} instead of the bundled CluPA
 implementation. Defaults to \code{FALSE}; the bundled implementation is
-byte-equivalent to the speaq one (see \code{tests/testthat/test-speaq.R}).}
+byte-equivalent to the speaq one (see \code{tests/testthat/test-speaq.R}).
+Setting \code{TRUE} requires the suggested \code{speaq} package.}
 
 \item{gap_tol}{Optional gap tolerance in ppm. \code{NULL} (default) uses the standard
 CluPA + snapping pipeline; only consulted by experimental snap backends.}

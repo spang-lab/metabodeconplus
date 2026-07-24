@@ -90,7 +90,6 @@ testthat::test_that("fit_mdm_internal with bin/identity2 returns mdm object", {
 })
 
 testthat::test_that("fit_mdm with model='ranger' returns mdm with OOB scores", {
-    testthat::skip_if_not_installed("ranger")
     m <- fit_mdm(
         sp, y, model = "ranger",
         npmax=0L, maxShift=50L, maxCombine=20L, deg = deg,
@@ -105,7 +104,6 @@ testthat::test_that("fit_mdm with model='ranger' returns mdm with OOB scores", {
 })
 
 testthat::test_that("fit_mdm_internal with snap_nw_blind predicts on held-out spectra", {
-    testthat::skip_if_not_installed("ranger")
     snap_nw_blind <- metabodeconplus:::snap_nw_blind
     m <- metabodeconplus:::fit_mdm_internal(
         sp, y,

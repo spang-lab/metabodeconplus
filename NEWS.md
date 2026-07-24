@@ -4,6 +4,10 @@
   random forest) instead of `"lasso"`. Ranger is the intended default published
   model; pass `model = "lasso"` for the L1-penalised logistic-regression
   backend.
+* `ranger` moved from Suggests to Imports: it is the default model backend, so
+  it is now a hard dependency and its availability is no longer checked
+  conditionally. `speaq` moved from Imports to Suggests, since it is only used
+  by the non-default `align(use_speaq = TRUE)` path.
 * CRAN resubmission addressing the review of 0.20.2. No user-facing API
   changes beyond the removal of `install_mdrb()` / `check_mdrb_deps()`.
     * Removed the exported `install_mdrb()` and `check_mdrb_deps()` functions:
