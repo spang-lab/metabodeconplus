@@ -40,6 +40,16 @@ jobs:
         uses: r-lib/actions/setup-r-dependencies@v2
         with: { extra-packages: "any::pkgdown, local::.", needs: website }
 
+      # speaq is a Suggests used only by align(use_speaq = TRUE); it is not
+      # needed to build the docs. It pulls Rfast, whose RSPM binary currently
+      # has a broken oneTBB ABI on the runner (undefined symbol
+      # _ZTIN3tbb4taskE), which crashes pkgdown when downlit loads speaq to
+      # resolve speaq:: links. Removing speaq makes downlit skip those links
+      # gracefully; no Rfast is loaded.
+      - name: Remove speaq to avoid its broken Rfast binary
+        run: try(remove.packages("speaq"), silent = TRUE)
+        shell: Rscript {0}
+
       - name: Build site
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
         shell: Rscript {0}
