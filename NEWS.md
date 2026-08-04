@@ -1,3 +1,32 @@
+# metabodeconplus 0.22.0
+
+* CRAN resubmission addressing the review of 0.21.0, which still saw changes
+  of `options()` and `par()` without an appropriate reset in `R/plot.R` and
+  `R/util.R`. No user-facing API changes.
+
+* Every `options()` and `par()` change in the package is now made with base R
+  and reverted by an `on.exit()` handler registered in the very same function,
+  directly next to the change. The package no longer relies on `withr` for
+  this, so each change and its reset are visible side by side at the call
+  site.
+
+* Fixed a real leak in the private multi-figure helpers: `set_fig()` changed
+  `par(fig=, new=)` and merely *returned* a reset function, so the caller's
+  graphical parameters stayed modified whenever that function was not called,
+  or when drawing failed in between. `set_fig()` and `local_fig()` were
+  removed and folded into `with_fig()` and `draw_spectrum()`, which now
+  restore the multi-figure configuration via `on.exit()`. `plot_spectrum()`
+  and `draw_spectrum()` now leave `par()` exactly as a plain `plot()` call
+  would, including inside `mfrow` / `mfcol` layouts.
+
+* Removed the unused private helper `catft()`, which permanently set the
+  `metabodeconplus.catft.time` option, and dropped the equally unused
+  `options(metabodeconplus.aki_cache=)` assignment from `.onLoad()`. The
+  package no longer sets any global option that outlives a function call.
+
+* `withr` is now imported selectively (`local_dir()`, `local_pdf()`) instead
+  of via `@import withr`, and all remaining `withr` calls are fully qualified.
+
 # metabodeconplus 0.21.0
 
 * `fit_mdm()` and `benchmark()` now default to `model = "ranger"` (probability

@@ -108,7 +108,8 @@ plot_spectra <- function(
     cols <- cols %||% rainbow(n)
     ltys <- rep_len(lty %||% 1L, n)
     names <- names %||% get_names(x)
-    local_par(mar=mar)
+    opar <- graphics::par(mar=mar)
+    on.exit(graphics::par(opar), add=TRUE, after=FALSE)
     # When y-axis ticks are suppressed there are no tick labels to clash
     # with, so draw the ylab close to the axis (mirrors heat_spectra
     # `mtext(ylab, side=2, line=0.5)`). Otherwise let plot() place it at
@@ -352,7 +353,8 @@ heat_spectra <- function(
         cw <- par("cin")[1]                # char width in inches at cex=1
         mai[4] <- cw * max(nchar(nms)) * 0.8 + 0.15
     }
-    local_par(mai=mai)
+    opar <- graphics::par(mai=mai)
+    on.exit(graphics::par(opar), add=TRUE, after=FALSE)
     # When cs is unevenly spaced (e.g. peak-area feature matrix or sorted
     # by col_scores), draw equal-width columns by indexing on column
     # position; otherwise use ppm coords for a true spectrum-like x-axis.
@@ -678,7 +680,8 @@ plot_spectrum <- function(x,
     # Setup Plotting Canvas
     three_plus_layout <- sub3$show && any(sub1$show, sub2$show)
     default_mar <- if (three_plus_layout) c(4, 3, 1, 1) else c(4, 6, 2, 2)
-    local_par(mar = mar %||% default_mar)
+    opar <- graphics::par(mar = mar %||% default_mar)
+    on.exit(graphics::par(opar), add = TRUE, after = FALSE)
     plot_empty()
 
     # Prepare Sub-Figure Arguments
@@ -919,9 +922,25 @@ draw_spectrum <- function(
     ensure_bwc("tp_axis", "tp_text");
     ensure_bwc("rt_axis", "rt_text")
 
-    # Set graphical parameters (7ms)
-    local_par(mar = mar, new = add)
-    local_fig(fig = fig_rgn, add = add)
+    # Set graphical parameters (7ms). Every `par()` call below is paired with
+    # an `on.exit()` handler registered immediately afterwards, so all changes
+    # are reverted when `draw_spectrum()` returns, also on error.
+    opar <- graphics::par(mar = mar, new = add)
+    on.exit(graphics::par(opar), add = TRUE, after = FALSE)
+    if (!is.null(fig_rgn)) {
+        # Setting `fig` resets the multi-figure configuration (MFC) to 1x1, so
+        # the MFC has to be saved and restored by hand. See `with_fig()` for a
+        # detailed description of the individual steps.
+        if (isFALSE(add)) plot_empty() # Advance one frame (Note 3)
+        byrow <- mf_filled_by_row() # Store MF conf (Note 1)
+        omfc <- graphics::par(c("mfrow", "mfcol", "mfg")) # Store MFC (Note 1)
+        on.exit({
+            if (byrow) graphics::par(mfrow = omfc$mfrow) else graphics::par(mfcol = omfc$mfcol)
+            graphics::par(mfg = omfc$mfg) # Restore current figure number (Note 1)
+            plot_empty() # Advance one frame (Note 2)
+        }, add = TRUE, after = FALSE)
+        graphics::par(fig = fig_rgn, new = TRUE) # Set fig region (Note 3)
+    }
 
     # Get xy values over all data points (13us)
     cs <- cs_all <- obj$cs
@@ -1104,14 +1123,15 @@ draw_spectrum <- function(
 #' test_plot_spectrum(1, 2) # first two plots
 #' test_plot_spectrum(2:4) # second to fourth plot
 test_plot_spectrum <- function(figs = 1:6, store = FALSE) {
-    if (store) local_pdf("tmp/test_plot_spectrum.pdf", width = 14, height = 10)
+    if (store) withr::local_pdf("tmp/test_plot_spectrum.pdf", width = 14, height = 10)
     if (environment() %===% .GlobalEnv) figs <- 1:6
     n <- length(figs)
     nr <- ceiling(sqrt(n))
     nc <- if ((nr - 1) * nr >= n) nr - 1 else nr
     spec <- sim[[1]]
     decon <- deconvolute(sim[1], sfr = c(3.55, 3.35))
-    local_par(mfrow = c(nr, nc))
+    opar <- graphics::par(mfrow = c(nr, nc))
+    on.exit(graphics::par(opar), add = TRUE, after = FALSE)
 
     # Plot the full (non-deconvoluted) spectrum
     if (1 %in% figs) plot_spectrum(
@@ -1185,12 +1205,13 @@ test_draw_spectrum <- function(figs = 1:8,
     decon <- decons[[2]]
     aligns <- align(decons, maxShift = 100)
     align <- aligns[[2]]
-    if (store) local_pdf("tmp/test_draw_spectrum.pdf", width = 14, height = 10)
+    if (store) withr::local_pdf("tmp/test_draw_spectrum.pdf", width = 14, height = 10)
 
     fig5 <- c(0.1, 0.4, 0.30, 0.45)
     fig7 <- c(0.1, 0.4, 0.05, 0.20)
     lt_text_short <- list(text = "SI / 1e6")
-    local_par(mfrow = mfrow, mar = mar, oma = oma)
+    opar <- graphics::par(mfrow = mfrow, mar = mar, oma = oma)
+    on.exit(graphics::par(opar), add = TRUE, after = FALSE)
     if (1 %in% figs) plot_dummy()
     if (2 %in% figs) draw_spectrum(obj = decon)
     if (3 %in% figs) draw_spectrum(
@@ -1264,7 +1285,8 @@ test_draw_spectrum <- function(figs = 1:8,
 #' @noRd
 #' @author 2024-2025 Tobias Schmidt: initial version.
 test_grafical_units <- function() {
-    local_par(mfrow = c(1, 2), xpd = TRUE)
+    opar <- graphics::par(mfrow = c(1, 2), xpd = TRUE)
+    on.exit(graphics::par(opar), add = TRUE, after = FALSE)
     plot_empty()
     box()
     x <- c(0.25, 0.75)
@@ -1401,8 +1423,8 @@ plot_align <- function(YA, YB, PA, PB, mfcol = c(nrow(YA), 1)) {
     stop("Implementation of this function is not finished yet.")
     s <- nrow(YA)
     if (!is.null(mfcol)) {
-        opar <- par(mfcol = mfcol, mar = c(0, 2, 0, 0), oma = c(4.1, 2.1, 0, 0))
-        on.exit(par(opar), add = TRUE)
+        opar <- graphics::par(mfcol = mfcol, mar = c(0, 2, 0, 0), oma = c(4.1, 2.1, 0, 0))
+        on.exit(graphics::par(opar), add = TRUE, after = FALSE)
     }
     for (i in seq_len(s)) {
         plot(x = seq_len(ncol(YB)), y = YB[i, ],
@@ -1500,7 +1522,8 @@ draw_legend <- function(args, si_line, sm_line, lc_lines, sp_line, d2_line,
         unlist(rep(NA, length(hlns)))
     )
     args$x <- args$x %||% "topright"
-    local_par(xpd = NA)
+    opar <- graphics::par(xpd = NA)
+    on.exit(graphics::par(opar), add = TRUE, after = FALSE)
     tw <- try(max(strwidth(args$legend, cex = args$cex %||% 1)) * 1.1, silent = TRUE)
     if (is.null(args$text.width) && is.numeric(tw) && length(tw) == 1 && tw > 0) {
         args$text.width <- tw
@@ -1516,7 +1539,8 @@ draw_con_lines <- function(top_fig, bot_fig, con_lines) {
     if (is.null(bot_fig$foc_rgn_ndc)) return()
     plt_rgn_usr <- ndc_to_usr(top_fig$plt_rgn_ndc)
     foc_rgn_usr <- ndc_to_usr(bot_fig$foc_rgn_ndc)
-    local_par(xpd = NA)
+    opar <- graphics::par(xpd = NA)
+    on.exit(graphics::par(opar), add = TRUE, after = FALSE)
     con_lines$y0 <- max(foc_rgn_usr[3:4])
     con_lines$y1 <- min(plt_rgn_usr[3:4])
     con_lines$x0 <- min(foc_rgn_usr[1:2])
@@ -1592,7 +1616,10 @@ draw_mtext <- function(side = 1, args = list()) {
     if (is.null(args$cex)) args$cex <- par("cex")
     if (is.null(args$line)) args$line <- c(2, 3, 0, 0)[side]
     xpd <- pop(args, "xpd")
-    if (!is.null(xpd)) local_par(xpd = xpd)
+    if (!is.null(xpd)) {
+        opar <- graphics::par(xpd = xpd)
+        on.exit(graphics::par(opar), add = TRUE, after = FALSE)
+    }
     args$side <- side
     do.call(mtext, args)
 }
@@ -1984,20 +2011,26 @@ npc_to_ndc <- function(npc = c(0, 1, 0, 1)) {
 
 #' @noRd
 #'
-#' @title Set Figure Region
+#' @title Plot into a specific figure region
 #'
 #' @description
 #' Calling `par(fig=xxyy)` resets the current multi-figure configuration (MFC)
-#' to one row and one column. `set_fig()` handles this scenario, by first
-#' storing the current MFC, then calling `par(fig=xxyy)` and finally returning a
-#' function that can be used to restore the MFC. See 'Details' for further
-#' information.
+#' to one row and one column. `with_fig()` handles this scenario, by first
+#' storing the current MFC, then calling `par(fig=xxyy)`, then evaluating
+#' `expr` and finally restoring the MFC. The restore is registered via
+#' [base::on.exit()] directly after the MFC has been stored, i.e. the user's
+#' graphical parameters are restored even if `expr` throws an error. See
+#' 'Details' for further information.
+#'
+#' @param expr Expression to evaluate inside the given figure region.
 #'
 #' @param fig Region to draw into, given as normalized device coordinates.
 #'
+#' @param pos Unused. Kept for backwards compatibility.
+#'
 #' @param add If TRUE, the new plot is added to the existing plot.
 #'
-#' @return Function to reset the MFC.
+#' @return The value of `expr`.
 #'
 #' @details
 #' Note 1: Setting `par(fig=xxyy)` resets the current MFC to one row and one
@@ -2027,46 +2060,6 @@ npc_to_ndc <- function(npc = c(0, 1, 0, 1)) {
 #' p <- local({
 #'     opar <- par(mfrow = c(2, 2), mar = c(2, 2, 0.5, 0.5))
 #'     on.exit(par(opar))
-#'
-#'     topleft <- plot_dummy()
-#'     reset_mfc <- set_fig(fig = c(0.25, 0.50, 0.50, 0.75), add = TRUE)
-#'     topleft2 <- plot_dummy()
-#'     reset_mfc()
-#'
-#'     topright <- plot_dummy()
-#'
-#'     reset_mfc <- set_fig(fig = c(0.1, 0.4, 0.1, 0.4), add = FALSE)
-#'     bottom_left <- plot_dummy()
-#'     reset_mfc()
-#'
-#'     bottom_right <- plot_dummy()
-#' })
-set_fig <- function(fig = NULL, add = TRUE) {
-    if (is.null(fig)) return(function() {}) # Nothing to do if figure region is NULL
-    if (isFALSE(add)) plot_empty() # Advance one frame if `add=FALSE` (Note 3)
-    op <- par(c("mar", "mfrow", "mfcol", "mfg", "fig")) # Store MF conf (Note 1)
-    byrow <- mf_filled_by_row() # Store MF conf (Note 1)
-    par(fig = fig, new = TRUE) # Set new figure region (Note 3)
-    reset_mfc <- function() {
-        if (byrow) par(mfrow = op$mfrow) else par(mfcol = op$mfcol) # Restore MF Layout (Note 1)
-        par(mfg = op$mfg) # Restore current figure number (Note 1)
-        plot_empty() # Advance one frame (Note 2)
-    }
-    reset_mfc
-}
-
-#' @noRd
-#' @title Plot into specific figure region
-#' @description For Details see [metabodeconplus::set_fig()].
-#' @author 2024-2025 Tobias Schmidt: initial version.
-#' @examples
-#' plot_dummy <- function() {
-#'     plot(0, 0, ylim = c(0, 1), xlim = c(0, 1), xaxs = "i", yaxs = "i")
-#'     text(0.5, 0.5, "dummy")
-#' }
-#' p <- local({
-#'     opar <- par(mfrow = c(2, 2), mar = c(2, 2, 0.5, 0.5))
-#'     on.exit(par(opar))
 #'     topleft <- plot_dummy()
 #'     topleft2 <- with_fig(fig = c(0.25, 0.50, 0.50, 0.75), add = TRUE, plot_dummy())
 #'     topright <- plot_dummy()
@@ -2074,16 +2067,17 @@ set_fig <- function(fig = NULL, add = TRUE) {
 #'     bottom_right <- plot_dummy()
 #' })
 with_fig <- function(expr, fig = NULL, pos = NULL, add = TRUE) {
-    reset_mfc <- set_fig(fig = fig, add = add)
-    on.exit(reset_mfc())
+    if (is.null(fig)) return(expr) # Nothing to do if figure region is NULL
+    if (isFALSE(add)) plot_empty() # Advance one frame if `add=FALSE` (Note 3)
+    byrow <- mf_filled_by_row() # Store MF orientation (Note 1)
+    omfc <- graphics::par(c("mfrow", "mfcol", "mfg")) # Store MFC (Note 1)
+    on.exit({
+        if (byrow) graphics::par(mfrow = omfc$mfrow) else graphics::par(mfcol = omfc$mfcol)
+        graphics::par(mfg = omfc$mfg) # Restore current figure number (Note 1)
+        plot_empty() # Advance one frame (Note 2)
+    }, add = TRUE, after = FALSE)
+    graphics::par(fig = fig, new = TRUE) # Set new figure region (Note 3)
     expr
-}
-
-#' @noRd
-#' @author 2024-2025 Tobias Schmidt: initial version.
-local_fig <- function(fig = NULL, add = TRUE, envir = parent.frame()) {
-  reset_mfc <- set_fig(fig = fig, add = add)
-  defer(reset_mfc(), envir = envir)
 }
 
 #' @noRd
@@ -2117,15 +2111,17 @@ mf_filled_by_row <- function() {
         # c(1, 2) we are row-oriented, if we end up in c(2, 1) we are
         # column-oriented. After doing this we can reset the current figure
         # number to the original value.
-        par(mfg = c(1, 1, nrows, ncols))
+        # The reset handler is registered *before* `mfg` is changed, so the
+        # user's graphical parameters are restored even on error.
         on.exit({
-            par(mfg = mfg) # Reset current figure number
+            graphics::par(mfg = mfg) # Reset current figure number
             plot_empty() # (1)
             # (1) When querying `mfg` we get the "current figure number". But
             # when setting it, we set the "next figure number". I.e. we need to
             # advance one frame, or we would set the "current figure number" as
             # "next figure number".
-        })
+        }, add = TRUE, after = FALSE)
+        graphics::par(mfg = c(1, 1, nrows, ncols))
         plot_empty() # Draw into c(1, 1)
         plot_empty() # Draw into c(1, 2) or c(2, 1)
         mfg2 <- par("mfg") # Query current position

@@ -12,7 +12,13 @@
 #' @import mathjaxr
 
 # 3rd Party
-#' @import withr
+#
+# Note: `withr` is imported selectively (not via `@import withr`) so that every
+# call into it stays visible as `withr::<fun>` at the call site. The package
+# does not use `withr` for `par()` or `options()` any more: all such changes are
+# made with base R and reverted via an `on.exit()` handler registered directly
+# afterwards, in the very function that makes the change.
+#' @importFrom withr local_dir local_pdf
 #' @import toscutil
 
 # Docs ########################################################################
@@ -660,27 +666,6 @@ logf <- function(fmt,
                  sep2 = "",
                  end = "\n") {
     cat(prefix(), sep1, sprintf(fmt, ...), sep2, end, sep = "", file = file, append = append)
-}
-
-#' @noRd
-catft <- function(fmt, ...) {
-
-    now <- Sys.time()
-
-    # Finish previous log by printing it's duration
-    prev <- getOption("metabodeconplus.catft.time", NULL)
-    dt <- if (is.null(prev)) "" else sprintf(" (%.1fs)\n", as.numeric(now - prev))
-    istty <- isatty(stdout())
-    if (istty) dt <- paste0(esc$bright_cyan, dt, esc$reset)
-    cat(dt)
-
-    # Start new log message with timestamp and formatted text
-    txt <- sprintf(fmt, ...)
-    ts <- format(now, "%Y-%m-%d %H:%M:%S")
-    if (istty) txt <- paste0(esc$bright_black, txt, esc$reset)
-    msg <- sprintf("%s %s", ts, txt)
-    cat(msg)
-    options(metabodeconplus.catft.time = now)
 }
 
 #' @noRd
@@ -1602,7 +1587,6 @@ expand.grid2 <- function(..., KEEP.OUT.ATTRS=FALSE, stringsAsFactors=FALSE) {
     if (loaded_via_devtools()) {
         cache_dir <- file.path(datadir_persistent(), "cache")
         dir.create(cache_dir, recursive = TRUE, showWarnings = FALSE)
-        options(metabodeconplus.aki_cache = cache_dir)
     }
 }
 

@@ -176,8 +176,14 @@ evalwith <- function(expr,
         else if (grepl("\\.png$", plot)) png(plot)
         else stop("plot must be an expression opening a device or a path ending in .pdf, .svg, or .png")
     }
-    if (!is.null(opts)) local_options(opts)
-    if (!is.null(pars)) local_par(pars)
+    if (!is.null(opts)) {
+        oopt <- options(opts)
+        on.exit(options(oopt), add = TRUE, after = FALSE)
+    }
+    if (!is.null(pars)) {
+        opar <- graphics::par(pars)
+        on.exit(graphics::par(opar), add = TRUE, after = FALSE)
+    }
     if (!identical(dev_cur, dev.cur())) {
         # This must be done after both arguments `plot` and `pars` have been
         # evaluated, as both can lead to a change in the graphical device.
