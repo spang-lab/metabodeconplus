@@ -179,10 +179,10 @@ str(x1)
 #>  $ inputs : chr(0) 
 
 x2 <- evalwith(datadir_persistent = "missing", message = "captured", datadir())
-#> Warning: /tmp/Rtmp5W0Feq/metabodeconplus/data does not exist. Please call `download_example_datasets()` first.
+#> Warning: /tmp/Rtmpi85I0K/metabodeconplus/data does not exist. Please call `download_example_datasets()` first.
 str(x2)
 #> List of 7
-#>  $ rv     : chr "/tmp/Rtmp5W0Feq/metabodeconplus/data"
+#>  $ rv     : chr "/tmp/Rtmpi85I0K/metabodeconplus/data"
 #>  $ runtime: num 0.001
 #>  $ output : chr(0) 
 #>  $ message: chr(0) 
