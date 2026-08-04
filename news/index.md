@@ -1,5 +1,33 @@
 # Changelog
 
+## metabodeconplus 0.22.0
+
+- CRAN resubmission addressing the review of 0.21.0, which still saw
+  changes of [`options()`](https://rdrr.io/r/base/options.html) and
+  [`par()`](https://rdrr.io/r/graphics/par.html) without an appropriate
+  reset in `R/plot.R` and `R/util.R`. No user-facing API changes.
+
+- Removed the private multi-figure helpers `set_fig()` and
+  `local_fig()`. `set_fig()` changed `par(fig=, new=)` and returned a
+  reset function that its two callers registered via
+  [`on.exit()`](https://rdrr.io/r/base/on.exit.html) /
+  [`withr::defer()`](https://withr.r-lib.org/reference/defer.html), so
+  the reset sat in a different function than the
+  [`par()`](https://rdrr.io/r/graphics/par.html) call it reverts. That
+  logic now lives in `with_fig()` and in
+  [`draw_spectrum()`](https://spang-lab.github.io/metabodeconplus/reference/draw_spectrum.md),
+  which change [`par()`](https://rdrr.io/r/graphics/par.html) and
+  register the restoring
+  [`on.exit()`](https://rdrr.io/r/base/on.exit.html) handler in the same
+  function, before [`par()`](https://rdrr.io/r/graphics/par.html) is
+  touched. Plot output is unchanged.
+
+- Removed the unused private helper `catft()`, which permanently set the
+  `metabodeconplus.catft.time` option, and dropped the equally unused
+  `options(metabodeconplus.aki_cache=)` assignment from `.onLoad()`. The
+  package no longer sets any global option that outlives a function
+  call.
+
 ## metabodeconplus 0.21.0
 
 - [`fit_mdm()`](https://spang-lab.github.io/metabodeconplus/reference/mdm.md)

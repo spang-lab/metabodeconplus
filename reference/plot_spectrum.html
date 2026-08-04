@@ -9,7 +9,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">metabodeconplus</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.21.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,7 +37,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Plot Spectrum</h1>
-      <small class="dont-index">Source: <a href="https://github.com/spang-lab/metabodeconplus/blob/v0.21.0/R/plot.R" class="external-link"><code>R/plot.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/spang-lab/metabodeconplus/blob/v0.22.0/R/plot.R" class="external-link"><code>R/plot.R</code></a></small>
       <div class="d-none name"><code>plot_spectrum.Rd</code></div>
     </div>
 
@@ -193,15 +193,15 @@ multi-figure configuration as created when setting  <code>mfrow</code>  or  <cod
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">spec</span> <span class="op">&lt;-</span> <span class="va">sim</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span></span>
 <span class="r-in"><span><span class="va">decon</span> <span class="op">&lt;-</span> <span class="fu"><a href="deconvolute.html">deconvolute</a></span><span class="op">(</span><span class="va">sim</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, sfr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3.55</span>, <span class="fl">3.35</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-08-04 20:25:54.58 Starting deconvolution (spectra: 1, workers: 1)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-08-04 20:25:54.58 Starting deconvolution of sim_01 using R backend</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-08-04 20:25:54.58 Starting peak selection</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-08-04 20:25:54.58 Detected 312 peaks</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-08-04 20:25:54.58 Removing peaks with low scores</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-08-04 20:25:54.58 Removed 285 peaks</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-08-04 20:25:54.58 Fitting Lorentz curves (3 iterations)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-08-04 20:25:54.58 Finished deconvolution of sim_01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-08-04 20:25:54.58 Finished deconvolution 0.004 secs</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-08-04 20:28:59.84 Starting deconvolution (spectra: 1, workers: 1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-08-04 20:28:59.84 Starting deconvolution of sim_01 using R backend</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-08-04 20:28:59.84 Starting peak selection</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-08-04 20:28:59.84 Detected 312 peaks</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-08-04 20:28:59.84 Removing peaks with low scores</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-08-04 20:28:59.84 Removed 285 peaks</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-08-04 20:28:59.84 Fitting Lorentz curves (3 iterations)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-08-04 20:28:59.84 Finished deconvolution of sim_01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2026-08-04 20:28:59.84 Finished deconvolution 0.004 secs</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## 2.1. Plot the full (non-deconvoluted) spectrum</span></span></span>
 <span class="r-in"><span><span class="co">## 2.2. Remove connecting lines, and focus on a specific region specified in ppm</span></span></span>

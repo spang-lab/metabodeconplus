@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">metabodeconplus</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.21.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,9 +35,15 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Changelog</h1>
-      <small>Source: <a href="https://github.com/spang-lab/metabodeconplus/blob/v0.21.0/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/spang-lab/metabodeconplus/blob/v0.22.0/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.22.0" id="metabodeconplus-0220">metabodeconplus 0.22.0<a class="anchor" aria-label="anchor" href="#metabodeconplus-0220"></a></h2>
+<ul><li><p>CRAN resubmission addressing the review of 0.21.0, which still saw changes of <code><a href="https://rdrr.io/r/base/options.html" class="external-link">options()</a></code> and <code><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par()</a></code> without an appropriate reset in <code>R/plot.R</code> and <code>R/util.R</code>. No user-facing API changes.</p></li>
+<li><p>Removed the private multi-figure helpers <code>set_fig()</code> and <code>local_fig()</code>. <code>set_fig()</code> changed <code>par(fig=, new=)</code> and returned a reset function that its two callers registered via <code><a href="https://rdrr.io/r/base/on.exit.html" class="external-link">on.exit()</a></code> / <code><a href="https://withr.r-lib.org/reference/defer.html" class="external-link">withr::defer()</a></code>, so the reset sat in a different function than the <code><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par()</a></code> call it reverts. That logic now lives in <code>with_fig()</code> and in <code><a href="../reference/draw_spectrum.html">draw_spectrum()</a></code>, which change <code><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par()</a></code> and register the restoring <code><a href="https://rdrr.io/r/base/on.exit.html" class="external-link">on.exit()</a></code> handler in the same function, before <code><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par()</a></code> is touched. Plot output is unchanged.</p></li>
+<li><p>Removed the unused private helper <code>catft()</code>, which permanently set the <code>metabodeconplus.catft.time</code> option, and dropped the equally unused <code>options(metabodeconplus.aki_cache=)</code> assignment from <code>.onLoad()</code>. The package no longer sets any global option that outlives a function call.</p></li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.21.0" id="metabodeconplus-0210">metabodeconplus 0.21.0<a class="anchor" aria-label="anchor" href="#metabodeconplus-0210"></a></h2>
 <ul><li>
