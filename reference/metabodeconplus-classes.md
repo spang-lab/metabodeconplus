@@ -188,44 +188,44 @@ is_spectrum(s)
 #> [1] TRUE
 
 d <- deconvolute(s, sfr = c(3.55, 3.35))
-#> 2026-07-24 16:46:09.44 Starting deconvolution (spectra: 1, workers: 1)
-#> 2026-07-24 16:46:09.44 Starting deconvolution of sim_01 using R backend
-#> 2026-07-24 16:46:09.44 Starting peak selection
-#> 2026-07-24 16:46:09.44 Detected 312 peaks
-#> 2026-07-24 16:46:09.44 Removing peaks with low scores
-#> 2026-07-24 16:46:09.44 Removed 285 peaks
-#> 2026-07-24 16:46:09.44 Fitting Lorentz curves (3 iterations)
-#> 2026-07-24 16:46:09.44 Finished deconvolution of sim_01
-#> 2026-07-24 16:46:09.44 Finished deconvolution 0.004 secs
+#> 2026-08-04 18:18:47.09 Starting deconvolution (spectra: 1, workers: 1)
+#> 2026-08-04 18:18:47.09 Starting deconvolution of sim_01 using R backend
+#> 2026-08-04 18:18:47.09 Starting peak selection
+#> 2026-08-04 18:18:47.09 Detected 312 peaks
+#> 2026-08-04 18:18:47.09 Removing peaks with low scores
+#> 2026-08-04 18:18:47.09 Removed 285 peaks
+#> 2026-08-04 18:18:47.09 Fitting Lorentz curves (3 iterations)
+#> 2026-08-04 18:18:47.09 Finished deconvolution of sim_01
+#> 2026-08-04 18:18:47.09 Finished deconvolution 0.004 secs
 class(d) # c("decon2", "spectrum")
 #> [1] "decon2"   "spectrum"
 inherits(d, "spectrum") # TRUE
 #> [1] TRUE
 
 ds <- deconvolute(sim[1:3], sfr = c(3.55, 3.35))
-#> 2026-07-24 16:46:09.45 Starting deconvolution (spectra: 3, workers: 1)
-#> 2026-07-24 16:46:09.45 Starting deconvolution of sim_01 using R backend
-#> 2026-07-24 16:46:09.45 Starting peak selection
-#> 2026-07-24 16:46:09.45 Detected 312 peaks
-#> 2026-07-24 16:46:09.45 Removing peaks with low scores
-#> 2026-07-24 16:46:09.45 Removed 285 peaks
-#> 2026-07-24 16:46:09.45 Fitting Lorentz curves (3 iterations)
-#> 2026-07-24 16:46:09.45 Finished deconvolution of sim_01
-#> 2026-07-24 16:46:09.45 Starting deconvolution of sim_02 using R backend
-#> 2026-07-24 16:46:09.45 Starting peak selection
-#> 2026-07-24 16:46:09.45 Detected 316 peaks
-#> 2026-07-24 16:46:09.45 Removing peaks with low scores
-#> 2026-07-24 16:46:09.45 Removed 286 peaks
-#> 2026-07-24 16:46:09.45 Fitting Lorentz curves (3 iterations)
-#> 2026-07-24 16:46:09.46 Finished deconvolution of sim_02
-#> 2026-07-24 16:46:09.46 Starting deconvolution of sim_03 using R backend
-#> 2026-07-24 16:46:09.46 Starting peak selection
-#> 2026-07-24 16:46:09.46 Detected 333 peaks
-#> 2026-07-24 16:46:09.46 Removing peaks with low scores
-#> 2026-07-24 16:46:09.46 Removed 308 peaks
-#> 2026-07-24 16:46:09.46 Fitting Lorentz curves (3 iterations)
-#> 2026-07-24 16:46:09.46 Finished deconvolution of sim_03
-#> 2026-07-24 16:46:09.46 Finished deconvolution 0.01 secs
+#> 2026-08-04 18:18:47.10 Starting deconvolution (spectra: 3, workers: 1)
+#> 2026-08-04 18:18:47.10 Starting deconvolution of sim_01 using R backend
+#> 2026-08-04 18:18:47.10 Starting peak selection
+#> 2026-08-04 18:18:47.10 Detected 312 peaks
+#> 2026-08-04 18:18:47.10 Removing peaks with low scores
+#> 2026-08-04 18:18:47.10 Removed 285 peaks
+#> 2026-08-04 18:18:47.10 Fitting Lorentz curves (3 iterations)
+#> 2026-08-04 18:18:47.10 Finished deconvolution of sim_01
+#> 2026-08-04 18:18:47.10 Starting deconvolution of sim_02 using R backend
+#> 2026-08-04 18:18:47.10 Starting peak selection
+#> 2026-08-04 18:18:47.10 Detected 316 peaks
+#> 2026-08-04 18:18:47.10 Removing peaks with low scores
+#> 2026-08-04 18:18:47.10 Removed 286 peaks
+#> 2026-08-04 18:18:47.10 Fitting Lorentz curves (3 iterations)
+#> 2026-08-04 18:18:47.10 Finished deconvolution of sim_02
+#> 2026-08-04 18:18:47.10 Starting deconvolution of sim_03 using R backend
+#> 2026-08-04 18:18:47.10 Starting peak selection
+#> 2026-08-04 18:18:47.10 Detected 333 peaks
+#> 2026-08-04 18:18:47.10 Removing peaks with low scores
+#> 2026-08-04 18:18:47.11 Removed 308 peaks
+#> 2026-08-04 18:18:47.11 Fitting Lorentz curves (3 iterations)
+#> 2026-08-04 18:18:47.11 Finished deconvolution of sim_03
+#> 2026-08-04 18:18:47.11 Finished deconvolution 0.01 secs
 class(ds)              # c("decons2", "spectra")
 #> [1] "decons2" "spectra"
 as_spectra(s)
