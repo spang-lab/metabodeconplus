@@ -663,27 +663,6 @@ logf <- function(fmt,
 }
 
 #' @noRd
-catft <- function(fmt, ...) {
-
-    now <- Sys.time()
-
-    # Finish previous log by printing it's duration
-    prev <- getOption("metabodeconplus.catft.time", NULL)
-    dt <- if (is.null(prev)) "" else sprintf(" (%.1fs)\n", as.numeric(now - prev))
-    istty <- isatty(stdout())
-    if (istty) dt <- paste0(esc$bright_cyan, dt, esc$reset)
-    cat(dt)
-
-    # Start new log message with timestamp and formatted text
-    txt <- sprintf(fmt, ...)
-    ts <- format(now, "%Y-%m-%d %H:%M:%S")
-    if (istty) txt <- paste0(esc$bright_black, txt, esc$reset)
-    msg <- sprintf("%s %s", ts, txt)
-    cat(msg)
-    options(metabodeconplus.catft.time = now)
-}
-
-#' @noRd
 #' @title Log formatted messages if verbosity is high enough
 #' @description
 #' Logs `fmt` via `logf()` if `verbosity >= 1` (`logv`) or `>= 2` (`logvv`).
@@ -1602,7 +1581,6 @@ expand.grid2 <- function(..., KEEP.OUT.ATTRS=FALSE, stringsAsFactors=FALSE) {
     if (loaded_via_devtools()) {
         cache_dir <- file.path(datadir_persistent(), "cache")
         dir.create(cache_dir, recursive = TRUE, showWarnings = FALSE)
-        options(metabodeconplus.aki_cache = cache_dir)
     }
 }
 

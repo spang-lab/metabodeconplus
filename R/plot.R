@@ -921,7 +921,22 @@ draw_spectrum <- function(
 
     # Set graphical parameters (7ms)
     local_par(mar = mar, new = add)
-    local_fig(fig = fig_rgn, add = add)
+    if (!is.null(fig_rgn)) {
+        # Setting `fig` resets the multi-figure configuration (MFC) to 1x1, so
+        # the MFC must be saved and restored by hand. This is done inline (and
+        # not in a helper) so that the `par()` call and the `on.exit()` handler
+        # that reverts it sit in the same function. See `with_fig()` for a
+        # description of the individual steps.
+        if (isFALSE(add)) plot_empty() # Advance one frame (Note 3)
+        byrow <- mf_filled_by_row() # Store MF orientation (Note 1)
+        omfc <- par(c("mfrow", "mfcol", "mfg")) # Store MFC (Note 1)
+        on.exit({
+            if (byrow) par(mfrow = omfc$mfrow) else par(mfcol = omfc$mfcol)
+            par(mfg = omfc$mfg) # Restore current figure number (Note 1)
+            plot_empty() # Advance one frame (Note 2)
+        }, add = TRUE, after = FALSE)
+        par(fig = fig_rgn, new = TRUE) # Set new figure region (Note 3)
+    }
 
     # Get xy values over all data points (13us)
     cs <- cs_all <- obj$cs
@@ -1984,20 +1999,26 @@ npc_to_ndc <- function(npc = c(0, 1, 0, 1)) {
 
 #' @noRd
 #'
-#' @title Set Figure Region
+#' @title Plot into a specific figure region
 #'
 #' @description
 #' Calling `par(fig=xxyy)` resets the current multi-figure configuration (MFC)
-#' to one row and one column. `set_fig()` handles this scenario, by first
-#' storing the current MFC, then calling `par(fig=xxyy)` and finally returning a
-#' function that can be used to restore the MFC. See 'Details' for further
-#' information.
+#' to one row and one column. `with_fig()` handles this scenario, by first
+#' storing the current MFC, then calling `par(fig=xxyy)`, then evaluating
+#' `expr` and finally restoring the MFC. The restoring handler is registered
+#' via [base::on.exit()] before `par()` is touched, so the user's graphical
+#' parameters are restored even if `expr` throws an error. See 'Details' for
+#' further information.
+#'
+#' @param expr Expression to evaluate inside the given figure region.
 #'
 #' @param fig Region to draw into, given as normalized device coordinates.
 #'
+#' @param pos Unused. Kept for backwards compatibility.
+#'
 #' @param add If TRUE, the new plot is added to the existing plot.
 #'
-#' @return Function to reset the MFC.
+#' @return The value of `expr`.
 #'
 #' @details
 #' Note 1: Setting `par(fig=xxyy)` resets the current MFC to one row and one
@@ -2027,46 +2048,6 @@ npc_to_ndc <- function(npc = c(0, 1, 0, 1)) {
 #' p <- local({
 #'     opar <- par(mfrow = c(2, 2), mar = c(2, 2, 0.5, 0.5))
 #'     on.exit(par(opar))
-#'
-#'     topleft <- plot_dummy()
-#'     reset_mfc <- set_fig(fig = c(0.25, 0.50, 0.50, 0.75), add = TRUE)
-#'     topleft2 <- plot_dummy()
-#'     reset_mfc()
-#'
-#'     topright <- plot_dummy()
-#'
-#'     reset_mfc <- set_fig(fig = c(0.1, 0.4, 0.1, 0.4), add = FALSE)
-#'     bottom_left <- plot_dummy()
-#'     reset_mfc()
-#'
-#'     bottom_right <- plot_dummy()
-#' })
-set_fig <- function(fig = NULL, add = TRUE) {
-    if (is.null(fig)) return(function() {}) # Nothing to do if figure region is NULL
-    if (isFALSE(add)) plot_empty() # Advance one frame if `add=FALSE` (Note 3)
-    op <- par(c("mar", "mfrow", "mfcol", "mfg", "fig")) # Store MF conf (Note 1)
-    byrow <- mf_filled_by_row() # Store MF conf (Note 1)
-    par(fig = fig, new = TRUE) # Set new figure region (Note 3)
-    reset_mfc <- function() {
-        if (byrow) par(mfrow = op$mfrow) else par(mfcol = op$mfcol) # Restore MF Layout (Note 1)
-        par(mfg = op$mfg) # Restore current figure number (Note 1)
-        plot_empty() # Advance one frame (Note 2)
-    }
-    reset_mfc
-}
-
-#' @noRd
-#' @title Plot into specific figure region
-#' @description For Details see [metabodeconplus::set_fig()].
-#' @author 2024-2025 Tobias Schmidt: initial version.
-#' @examples
-#' plot_dummy <- function() {
-#'     plot(0, 0, ylim = c(0, 1), xlim = c(0, 1), xaxs = "i", yaxs = "i")
-#'     text(0.5, 0.5, "dummy")
-#' }
-#' p <- local({
-#'     opar <- par(mfrow = c(2, 2), mar = c(2, 2, 0.5, 0.5))
-#'     on.exit(par(opar))
 #'     topleft <- plot_dummy()
 #'     topleft2 <- with_fig(fig = c(0.25, 0.50, 0.50, 0.75), add = TRUE, plot_dummy())
 #'     topright <- plot_dummy()
@@ -2074,16 +2055,17 @@ set_fig <- function(fig = NULL, add = TRUE) {
 #'     bottom_right <- plot_dummy()
 #' })
 with_fig <- function(expr, fig = NULL, pos = NULL, add = TRUE) {
-    reset_mfc <- set_fig(fig = fig, add = add)
-    on.exit(reset_mfc())
+    if (is.null(fig)) return(expr) # Nothing to do if figure region is NULL
+    if (isFALSE(add)) plot_empty() # Advance one frame if `add=FALSE` (Note 3)
+    byrow <- mf_filled_by_row() # Store MF orientation (Note 1)
+    omfc <- par(c("mfrow", "mfcol", "mfg")) # Store MFC (Note 1)
+    on.exit({
+        if (byrow) par(mfrow = omfc$mfrow) else par(mfcol = omfc$mfcol)
+        par(mfg = omfc$mfg) # Restore current figure number (Note 1)
+        plot_empty() # Advance one frame (Note 2)
+    }, add = TRUE, after = FALSE)
+    par(fig = fig, new = TRUE) # Set new figure region (Note 3)
     expr
-}
-
-#' @noRd
-#' @author 2024-2025 Tobias Schmidt: initial version.
-local_fig <- function(fig = NULL, add = TRUE, envir = parent.frame()) {
-  reset_mfc <- set_fig(fig = fig, add = add)
-  defer(reset_mfc(), envir = envir)
 }
 
 #' @noRd
