@@ -12,13 +12,7 @@
 #' @import mathjaxr
 
 # 3rd Party
-#
-# Note: `withr` is imported selectively (not via `@import withr`) so that every
-# call into it stays visible as `withr::<fun>` at the call site. The package
-# does not use `withr` for `par()` or `options()` any more: all such changes are
-# made with base R and reverted via an `on.exit()` handler registered directly
-# afterwards, in the very function that makes the change.
-#' @importFrom withr local_dir local_pdf
+#' @import withr
 #' @import toscutil
 
 # Docs ########################################################################

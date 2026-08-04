@@ -187,10 +187,7 @@ deconvolute_spectra <- function(
 ) {
 
     # Init locals
-    if (!verbose) {
-        oopt <- options(toscutil.logf.file = nullfile())
-        on.exit(options(oopt), add = TRUE, after = FALSE)
-    }
+    if (!verbose) local_options(toscutil.logf.file = nullfile())
     x <- as_spectra(x)
     ns <- length(x)
     nw <- min(half_cores(), ns, nworkers)
@@ -240,10 +237,7 @@ deconvolute_spectrum <- function(
 ) {
 
     # Init locals
-    if (isFALSE(verbose)) {
-        oopt <- options(toscutil.logf.file = nullfile())
-        on.exit(options(oopt), add = TRUE, after = FALSE)
-    }
+    if (isFALSE(verbose)) local_options(toscutil.logf.file = nullfile())
     sfr <- sfr %||% quantile(x$cs, c(0.9, 0.1))
     name <- get_name(x)
     backend <- if (use_rust >= 1) "Rust" else "R"
@@ -394,10 +388,7 @@ grid_deconvolute_spectra <- function(
     x, deg=expand.grid(nfit=10, smit=1:3, smws=c(3,5,7,9), delta=(1:5)*1.6),
     sfr=NULL, igrs=list(), verbose=TRUE, nworkers=1, use_rust=FALSE
 ) {
-    if (isFALSE(verbose)) {
-        oopt <- options(toscutil.logf.file = nullfile())
-        on.exit(options(oopt), add = TRUE, after = FALSE)
-    }
+    if (isFALSE(verbose)) local_options(toscutil.logf.file = nullfile())
     if (!is.null(deg) && "npmax" %in% names(deg)) {
         cols <- c("nfit", "smit", "smws", "delta")
         deg <- unique(deg[deg$npmax > 0, cols, drop=FALSE])
@@ -449,10 +440,7 @@ grid_deconvolute_spectrum <- function(
         nfit=10, smit=1:3, smws=c(3,5,7,9), delta=(1:5)*1.6
     )
     if (!is.null(x$deg)) return(x)
-    if (!verbose) {
-        oopt <- options(toscutil.logf.file = nullfile())
-        on.exit(options(oopt), add = TRUE, after = FALSE)
-    }
+    if (!verbose) local_options(toscutil.logf.file = nullfile())
 
     cols <- c("smit", "smws", "delta", "nfit")
     stopifnot(all(cols %in% colnames(deg)))
