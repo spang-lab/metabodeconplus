@@ -20,15 +20,12 @@ Nothing in the package called it.
 Nothing in the package read that option.
 The package now sets no global option that outlives a function call.
 
-3. Functions set_fig() and local_fig() from file plot.R have been removed.
-They changed par(fig=, new=) and only returned a function that the caller had to call in order to restore the multi-figure configuration, so the parameters stayed modified if the caller did not call it, or if drawing failed in between.
-Their logic now lives in with_fig(), which sets par() and restores it via on.exit() within one function, and in draw_spectrum(), which does the same inline for the region it draws into.
-Both register the restoring handler before changing par(), so the parameters are restored even if drawing throws an error.
+3. The private functions set_fig() and local_fig() from file plot.R have been removed.
+set_fig() changed par(fig=, new=) and returned a function that restores the multi-figure configuration, and its two callers registered that function via on.exit() or withr::defer().
+The reset therefore did not live in the function that changed par(), which is what your check reported.
+That logic now lives in with_fig() and in draw_spectrum(), which change par() and register the restoring on.exit() handler in the same function, before par() is touched.
 
-We verified the fix by snapshotting par(no.readonly=TRUE) before and after every exported plotting function.
-They now leave par() exactly as a plain plot() call does, also when they exit with an error, and running deconvolute() no longer adds or changes any entry in options().
-
-All other par() changes in the package are saved and restored inside the very function that makes them, so they are unchanged in this version.
+All remaining par() changes in the package are made with withr::local_par(), which restores the previous values when the calling function exits.
 
 
 R CMD CHECK RESULTS

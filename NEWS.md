@@ -4,15 +4,13 @@
   of `options()` and `par()` without an appropriate reset in `R/plot.R` and
   `R/util.R`. No user-facing API changes.
 
-* Fixed a leak in the private multi-figure helpers: `set_fig()` changed
-  `par(fig=, new=)` and merely *returned* a reset function, so the caller's
-  graphical parameters stayed modified whenever that function was not called,
-  or when drawing failed in between. `set_fig()` and `local_fig()` were
-  removed and folded into `with_fig()` and `draw_spectrum()`, which restore
-  the multi-figure configuration via an `on.exit()` handler registered before
-  `par()` is touched. `plot_spectrum()` and `draw_spectrum()` now leave
-  `par()` exactly as a plain `plot()` call would, including inside `mfrow` /
-  `mfcol` layouts and when they exit with an error.
+* Removed the private multi-figure helpers `set_fig()` and `local_fig()`.
+  `set_fig()` changed `par(fig=, new=)` and returned a reset function that its
+  two callers registered via `on.exit()` / `withr::defer()`, so the reset sat
+  in a different function than the `par()` call it reverts. That logic now
+  lives in `with_fig()` and in `draw_spectrum()`, which change `par()` and
+  register the restoring `on.exit()` handler in the same function, before
+  `par()` is touched. Plot output is unchanged.
 
 * Removed the unused private helper `catft()`, which permanently set the
   `metabodeconplus.catft.time` option, and dropped the equally unused

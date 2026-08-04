@@ -923,10 +923,10 @@ draw_spectrum <- function(
     local_par(mar = mar, new = add)
     if (!is.null(fig_rgn)) {
         # Setting `fig` resets the multi-figure configuration (MFC) to 1x1, so
-        # the MFC must be saved and restored by hand. The restoring handler is
-        # registered via `on.exit()` before `par()` is touched, so the user's
-        # graphical parameters are restored even if drawing throws an error.
-        # See `with_fig()` for a description of the individual steps.
+        # the MFC must be saved and restored by hand. This is done inline (and
+        # not in a helper) so that the `par()` call and the `on.exit()` handler
+        # that reverts it sit in the same function. See `with_fig()` for a
+        # description of the individual steps.
         if (isFALSE(add)) plot_empty() # Advance one frame (Note 3)
         byrow <- mf_filled_by_row() # Store MF orientation (Note 1)
         omfc <- par(c("mfrow", "mfcol", "mfg")) # Store MFC (Note 1)
