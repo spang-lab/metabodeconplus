@@ -1,3 +1,16 @@
+# metabodeconplus 0.22.2
+
+* Runtime improvement: `fit_mdm()` and `benchmark()` now skip the
+  up-front `$deg` grid search when no pipeline stage reads it, i.e. for
+  `npmax = 0` (literal deconvolution parameters) and for
+  `decon_fun = identity2`, where `benchmark()` previously re-ran the
+  whole grid search once per outer fold and discarded the result. No
+  result changes anywhere; only non-default configurations are affected.
+  `decon_fun` is not reachable through the exported API (`identity2` is
+  internal), so of the two only `npmax = 0` can be triggered by a public
+  `fit_mdm()` / `benchmark()` call; the default `npmax = -1` still needs
+  the grid.
+
 # metabodeconplus 0.22.1
 
 * Improvement: make `calc_prarp()` clamp both scores at zero, so `prarp` and `prarpx` stay in `[0, 1]`. Practically irrelevant, because the residual is never bigger than the spectrum area for any reasonable deconvolution, but makes the implementation match the theoretical formulation.

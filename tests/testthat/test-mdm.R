@@ -23,9 +23,9 @@ for (i in seq_len(n)) {
 }
 class(sp) <- "spectra"
 
-# One-cell deconvolution grid: with npmax=0 (manual) the default 60-cell grid
-# is deconvoluted but never used for selection, so a single cell keeps these
-# smoke tests ~30x faster while exercising the same fit_mdm/benchmark wiring.
+# One-cell deconvolution grid, kept so the wiring is exercised end to end.
+# With npmax=0 (manual params) nothing reads the grid, so fit_mdm/benchmark
+# skip the grid search altogether (see decon_needs_deg()).
 deg <- expand.grid(nfit = 3, smit = 1, smws = 3, delta = 1.6)
 
 # glmnet's compiled code intermittently triggers a Windows access violation
@@ -119,4 +119,17 @@ testthat::test_that("fit_mdm_internal with snap_nw_blind predicts on held-out sp
     p <- stats::predict(m, sp[1:4], type = "prob", verbosity = 0)
     testthat::expect_length(p, 4L)
     testthat::expect_true(all(is.finite(p)))
+})
+
+testthat::test_that("decon_needs_deg gates the up-front grid search", {
+    f <- metabodeconplus:::decon_needs_deg
+    id2 <- metabodeconplus:::identity2
+    ds <- metabodeconplus:::deconvolute_spectra
+    testthat::expect_false(f(id2, 0L))                 # decon discarded
+    testthat::expect_false(f(id2, c(0L, 10L, -2L)))
+    testthat::expect_true(f(id2, c(10L, -1L)))         # elbow reads $deg
+    testthat::expect_false(f(ds, 0L))                  # literal params
+    testthat::expect_true(f(ds, c(0L, 10L)))           # row 2 reads $deg
+    testthat::expect_true(f(ds, -2L))                  # per-spectrum elbow
+    testthat::expect_true(f(function(x, ...) x, 0L))   # unknown decon_fun
 })

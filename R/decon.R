@@ -144,6 +144,21 @@ is_npmax <- function(x) is_int(x, 1) && x >= -2L
 # except `0` (the literal-params mode).
 npmax_needs_deg <- function(npmax) isTRUE(npmax != 0L)
 
+# Whether `fit_mdm_internal()` / `benchmark_internal()` must attach the
+# `$deg` grids before running their model grid. Attaching them is a slow
+# per-spectrum grid search, so it is skipped when nothing reads them:
+# `npmax=-1` resolution (find_npmax_elbow) always does, `identity2`
+# never does (it discards the deconvolution) and `deconvolute_spectra()`
+# does for every npmax except `0` (see npmax_needs_deg). `npmax` may be
+# a vector; any other `decon_fun` is a black box and assumed to need
+# them.
+decon_needs_deg <- function(decon_fun, npmax) {
+    if (any(npmax == -1L)) return(TRUE)
+    if (identical(decon_fun, identity2)) return(FALSE)
+    if (identical(decon_fun, deconvolute_spectra)) return(any(npmax != 0L))
+    TRUE
+}
+
 # Per-spectrum npmax elbow from the (np, cum-min ar) frontier of `s$deg`.
 # Same Kneedle-on-cum-min-frontier idea as `mdp::find_ellbow` but returns
 # only the np at the knee. `s$deg` must be populated upstream (typically

@@ -220,7 +220,8 @@ benchmark <- function(
 #' recent deconvolution and alignment are reused across rows.
 #' [metabodeconplus::fit_mdm()] runs an idempotent
 #' [metabodeconplus::grid_deconvolute_spectra()] up front to attach `$deg`
-#' to each spectrum (pre-enriched spectra skip the slow step).
+#' to each spectrum (pre-enriched spectra skip the slow step, and so do
+#' configurations that never read `$deg`, e.g. `decon_fun=identity2`).
 #' [metabodeconplus::benchmark()] runs outer folds sequentially; all
 #' parallelism is delegated to `fit_fun` via `nworkers`.
 #'
@@ -309,8 +310,12 @@ fit_mdm_internal <- function(
     )
     lvs <- levels(y)
     verbose <- verbosity >= 2L
-    x <- grid_deconvolute_spectra(x, deg, sfr, igrs, verbose, nworkers, use_rust)
-    npmax[npmax == -1L] <- find_npmax_elbow(x)
+    if (decon_needs_deg(decon_fun, npmax)) {
+        x <- grid_deconvolute_spectra(x, deg, sfr, igrs, verbose, nworkers, use_rust)
+    }
+    # Guarded because R evaluates the RHS even when the index selects
+    # nothing, and find_npmax_elbow() requires the `$deg` grids.
+    if (any(npmax == -1L)) npmax[npmax == -1L] <- find_npmax_elbow(x)
     g <- get_mog(npmax, maxShift, maxCombine)
     nr <- nrow(g)
     ns <- length(x)
@@ -414,8 +419,9 @@ benchmark_internal <- function(
     )
 
     # One-time grid attach so each per-fold fit_mdm() sees pre-enriched
-    # spectra and skips this step.
-    if (!identical(decon_fun, identity2)) {
+    # spectra and skips this step. Skipped entirely when no fold needs
+    # the grids (see decon_needs_deg).
+    if (decon_needs_deg(decon_fun, npmax)) {
         x <- grid_deconvolute_spectra(
             x=x, deg=deg, sfr=sfr, igrs=igrs,
             verbose=verbosity >= 2, nworkers=nworkers, use_rust=use_rust
