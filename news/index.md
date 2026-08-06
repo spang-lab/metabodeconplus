@@ -1,5 +1,13 @@
 # Changelog
 
+## metabodeconplus 0.22.1
+
+- Improvement: make `calc_prarp()` clamp both scores at zero, so `prarp`
+  and `prarpx` stay in `[0, 1]`. Practically irrelevant, because the
+  residual is never bigger than the spectrum area for any reasonable
+  deconvolution, but makes the implementation match the theoretical
+  formulation.
+
 ## metabodeconplus 0.22.0
 
 - CRAN resubmission addressing the review of 0.21.0, which still saw
