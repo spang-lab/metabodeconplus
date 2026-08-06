@@ -774,29 +774,31 @@ lorentz_int <- function(x0, A, lambda, lcpar = NULL, limits = NULL) {
 #' @title Calculate the PRARP Score
 #'
 #' @description
-#' Calculates the PRARP score for a deconvolution. The PRARP score is the
-#' product of the peak ratio and the area ratio and can be used to assess the
-#' quality of a deconvolution. See 'Details' for more information on how the
-#' score is calculated.
+#' Calculates the PRARP and PRARPX scores for a deconvolution. Both combine a
+#' peak term with the area ratio and can be used to assess the quality of a
+#' deconvolution. See 'Details' for how they are calculated.
 #'
-#' @param decon A list containing the deconvolution results, as returned by
+#' @param x A deconvolution, as returned by
 #' [metabodeconplus::generate_lorentz_curves()].
 #'
-#' @param lcpar A data frame containing the true parameters of the peaks.
+#' @param truepar A list of the true peak parameters (`x0`, `A`, `lambda`).
+#' Defaults to `x$meta$simpar`.
 #'
-#' @return The PRARP score as numeric scalar. In addition, a plot is created to
-#' visualize the deconvolution results.
+#' @return A named list with `prarpx`, `prarp`, both peak ratios, the peak
+#' counts and the areas.
 #'
 #' @details
-#' The PRARP score is calculated as follows:
+#' The scores are calculated as follows:
 #'
-#' peak_ratio = min(peaks_true, peaks_found) / max(peaks_true, peaks_found)
-#' area_ratio = min(area_true,  area_found)  / max(area_true,  area_found)
-#' prarp      = peak_ratio * area_ratio
+#' peak_ratio   = min(np_found, np_true) / max(np_found, np_true)
+#' peak_ratio_x = np_correct / (np_true + np_wrong)
+#' area_ratio   = sum(|residual|) / sum(|spectrum|)
+#' prarp        = peak_ratio   * max(0, 1 - area_ratio)
+#' prarpx       = peak_ratio_x * max(0, 1 - area_ratio)
 #'
-#' I.e., the score is close to 1 if the number of peaks and the area of the
-#' peaks are similar in the true and found spectra and the score is close to 0
-#' if the number of peaks and/or the area of the peaks are very different.
+#' I.e., a score is close to 1 if the right peaks were found and the
+#' reconstruction matches the spectrum, and 0 if the residual is at least as
+#' large as the spectrum.
 #'
 #' @author 2024-2025 Tobias Schmidt: initial version.
 #'
@@ -833,8 +835,8 @@ calc_prarp <- function(x, truepar = NULL, ...) {
     area_residuals <- sum(abs(obj$sit$sup - obj$si))
     area_ratio <- area_residuals / area_spectrum
 
-    prarp <- peak_ratio * (1 - area_ratio)
-    prarpx <- peak_ratio_x * (1 - area_ratio)
+    prarp <- peak_ratio * max(0, 1 - area_ratio)
+    prarpx <- peak_ratio_x * max(0, 1 - area_ratio)
 
     named(
         prarpx, prarp, peak_ratio_x, peak_ratio,
