@@ -133,36 +133,36 @@ adjusted to optimally approximate the measured spectrum.
 ## Deconvolute a single spectrum
 spectrum <- sim[[1]]
 decon <- deconvolute(spectrum)
-#> 2026-08-06 09:40:48.29 Starting deconvolution (spectra: 1, workers: 1)
-#> 2026-08-06 09:40:48.29 Starting deconvolution of sim_01 using R backend
-#> 2026-08-06 09:40:48.29 Starting peak selection
-#> 2026-08-06 09:40:48.29 Detected 312 peaks
-#> 2026-08-06 09:40:48.29 Removing peaks with low scores
-#> 2026-08-06 09:40:48.30 Removed 285 peaks
-#> 2026-08-06 09:40:48.30 Fitting Lorentz curves (3 iterations)
-#> 2026-08-06 09:40:48.30 Finished deconvolution of sim_01
-#> 2026-08-06 09:40:48.30 Finished deconvolution 0.005 secs
+#> 2026-08-07 04:23:19.63 Starting deconvolution (spectra: 1, workers: 1)
+#> 2026-08-07 04:23:19.63 Starting deconvolution of sim_01 using R backend
+#> 2026-08-07 04:23:19.63 Starting peak selection
+#> 2026-08-07 04:23:19.63 Detected 312 peaks
+#> 2026-08-07 04:23:19.63 Removing peaks with low scores
+#> 2026-08-07 04:23:19.63 Removed 285 peaks
+#> 2026-08-07 04:23:19.63 Fitting Lorentz curves (3 iterations)
+#> 2026-08-07 04:23:19.63 Finished deconvolution of sim_01
+#> 2026-08-07 04:23:19.63 Finished deconvolution 0.005 secs
 
 ## Read multiple spectra from disk and deconvolute at once
 spectra_dir <- metabodeconplus_file("sim_subset")
 spectra <- read_spectra(spectra_dir)
 decons <- deconvolute(spectra, sfr = c(3.55,3.35))
-#> 2026-08-06 09:40:48.31 Starting deconvolution (spectra: 2, workers: 1)
-#> 2026-08-06 09:40:48.31 Starting deconvolution of sim_01 using R backend
-#> 2026-08-06 09:40:48.31 Starting peak selection
-#> 2026-08-06 09:40:48.31 Detected 312 peaks
-#> 2026-08-06 09:40:48.31 Removing peaks with low scores
-#> 2026-08-06 09:40:48.31 Removed 285 peaks
-#> 2026-08-06 09:40:48.31 Fitting Lorentz curves (3 iterations)
-#> 2026-08-06 09:40:48.31 Finished deconvolution of sim_01
-#> 2026-08-06 09:40:48.31 Starting deconvolution of sim_02 using R backend
-#> 2026-08-06 09:40:48.31 Starting peak selection
-#> 2026-08-06 09:40:48.31 Detected 316 peaks
-#> 2026-08-06 09:40:48.31 Removing peaks with low scores
-#> 2026-08-06 09:40:48.32 Removed 286 peaks
-#> 2026-08-06 09:40:48.32 Fitting Lorentz curves (3 iterations)
-#> 2026-08-06 09:40:48.32 Finished deconvolution of sim_02
-#> 2026-08-06 09:40:48.32 Finished deconvolution 0.012 secs
+#> 2026-08-07 04:23:19.64 Starting deconvolution (spectra: 2, workers: 1)
+#> 2026-08-07 04:23:19.64 Starting deconvolution of sim_01 using R backend
+#> 2026-08-07 04:23:19.64 Starting peak selection
+#> 2026-08-07 04:23:19.64 Detected 312 peaks
+#> 2026-08-07 04:23:19.64 Removing peaks with low scores
+#> 2026-08-07 04:23:19.64 Removed 285 peaks
+#> 2026-08-07 04:23:19.64 Fitting Lorentz curves (3 iterations)
+#> 2026-08-07 04:23:19.64 Finished deconvolution of sim_01
+#> 2026-08-07 04:23:19.64 Starting deconvolution of sim_02 using R backend
+#> 2026-08-07 04:23:19.64 Starting peak selection
+#> 2026-08-07 04:23:19.64 Detected 316 peaks
+#> 2026-08-07 04:23:19.64 Removing peaks with low scores
+#> 2026-08-07 04:23:19.65 Removed 286 peaks
+#> 2026-08-07 04:23:19.65 Fitting Lorentz curves (3 iterations)
+#> 2026-08-07 04:23:19.65 Finished deconvolution of sim_02
+#> 2026-08-07 04:23:19.65 Finished deconvolution 0.012 secs
 get_deg()
 #>    nfit smit smws delta
 #> 1    10    1    3   1.6
