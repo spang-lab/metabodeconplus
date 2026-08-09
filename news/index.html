@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">metabodeconplus</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,6 +39,11 @@
     </div>
 
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.22.3" id="metabodeconplus-0223">metabodeconplus 0.22.3<a class="anchor" aria-label="anchor" href="#metabodeconplus-0223"></a></h2>
+<ul><li><p><code><a href="../reference/alignment_funs.html">snap_to_ref()</a></code> no longer returns a zero-column feature matrix when it is handed spectra that did not pass through <code><a href="../reference/alignment_funs.html">clupa()</a></code>. It already derived a missing <code>pcial</code> for the reference spectrum but not for the others, so every non-reference peak snapped to <code>NA</code> and <code><a href="../reference/si_mat.html">si_mat()</a></code> dropped it – silently, with no error. The same fallback now applies to every spectrum. Results on the normal path are unchanged, since <code><a href="../reference/alignment_funs.html">clupa()</a></code> always sets <code>pcial</code>.</p></li>
+<li><p><code>combine_peaks()</code> documents why it is not usable as a <code>snap_fun</code> for <code><a href="../reference/mdm.html">fit_mdm()</a></code>: it declares <code>ref</code> and never reads it, so prediction would recompute a merge from the test spectra instead of reusing the trained one.</p></li>
+</ul></div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.22.2" id="metabodeconplus-0222">metabodeconplus 0.22.2<a class="anchor" aria-label="anchor" href="#metabodeconplus-0222"></a></h2>
 <ul><li>Runtime improvement: <code><a href="../reference/mdm.html">fit_mdm()</a></code> and <code><a href="../reference/mdm.html">benchmark()</a></code> now skip the up-front <code>$deg</code> grid search when no pipeline stage reads it, i.e. for <code>npmax = 0</code> (literal deconvolution parameters) and for <code>decon_fun = identity2</code>, where <code><a href="../reference/mdm.html">benchmark()</a></code> previously re-ran the whole grid search once per outer fold and discarded the result. No result changes anywhere; only non-default configurations are affected. <code>decon_fun</code> is not reachable through the exported API (<code>identity2</code> is internal), so of the two only <code>npmax = 0</code> can be triggered by a public <code><a href="../reference/mdm.html">fit_mdm()</a></code> / <code><a href="../reference/mdm.html">benchmark()</a></code> call; the default <code>npmax = -1</code> still needs the grid.</li>
 </ul></div>
@@ -47,7 +52,7 @@
 <ul><li>Improvement: make <code>calc_prarp()</code> clamp both scores at zero, so <code>prarp</code> and <code>prarpx</code> stay in <code>[0, 1]</code>. Practically irrelevant, because the residual is never bigger than the spectrum area for any reasonable deconvolution, but makes the implementation match the theoretical formulation.</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.22.0" id="metabodeconplus-0220">metabodeconplus 0.22.0<a class="anchor" aria-label="anchor" href="#metabodeconplus-0220"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.22.0" id="metabodeconplus-0220">metabodeconplus 0.22.0<a class="anchor" aria-label="anchor" href="#metabodeconplus-0220"></a></h2><p class="text-muted">CRAN release: 2026-08-09</p>
 <ul><li><p>CRAN resubmission addressing the review of 0.21.0, which still saw changes of <code><a href="https://rdrr.io/r/base/options.html" class="external-link">options()</a></code> and <code><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par()</a></code> without an appropriate reset in <code>R/plot.R</code> and <code>R/util.R</code>. No user-facing API changes.</p></li>
 <li><p>Removed the private multi-figure helpers <code>set_fig()</code> and <code>local_fig()</code>. <code>set_fig()</code> changed <code>par(fig=, new=)</code> and returned a reset function that its two callers registered via <code><a href="https://rdrr.io/r/base/on.exit.html" class="external-link">on.exit()</a></code> / <code><a href="https://withr.r-lib.org/reference/defer.html" class="external-link">withr::defer()</a></code>, so the reset sat in a different function than the <code><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par()</a></code> call it reverts. That logic now lives in <code>with_fig()</code> and in <code><a href="../reference/draw_spectrum.html">draw_spectrum()</a></code>, which change <code><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par()</a></code> and register the restoring <code><a href="https://rdrr.io/r/base/on.exit.html" class="external-link">on.exit()</a></code> handler in the same function, before <code><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par()</a></code> is touched. Plot output is unchanged.</p></li>
 <li><p>Removed the unused private helper <code>catft()</code>, which permanently set the <code>metabodeconplus.catft.time</code> option, and dropped the equally unused <code>options(metabodeconplus.aki_cache=)</code> assignment from <code>.onLoad()</code>. The package no longer sets any global option that outlives a function call.</p></li>

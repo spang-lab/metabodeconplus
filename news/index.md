@@ -1,5 +1,24 @@
 # Changelog
 
+## metabodeconplus 0.22.3
+
+- [`snap_to_ref()`](https://spang-lab.github.io/metabodeconplus/reference/alignment_funs.md)
+  no longer returns a zero-column feature matrix when it is handed
+  spectra that did not pass through
+  [`clupa()`](https://spang-lab.github.io/metabodeconplus/reference/alignment_funs.md).
+  It already derived a missing `pcial` for the reference spectrum but
+  not for the others, so every non-reference peak snapped to `NA` and
+  [`si_mat()`](https://spang-lab.github.io/metabodeconplus/reference/si_mat.md)
+  dropped it – silently, with no error. The same fallback now applies to
+  every spectrum. Results on the normal path are unchanged, since
+  [`clupa()`](https://spang-lab.github.io/metabodeconplus/reference/alignment_funs.md)
+  always sets `pcial`.
+
+- `combine_peaks()` documents why it is not usable as a `snap_fun` for
+  [`fit_mdm()`](https://spang-lab.github.io/metabodeconplus/reference/mdm.md):
+  it declares `ref` and never reads it, so prediction would recompute a
+  merge from the test spectra instead of reusing the trained one.
+
 ## metabodeconplus 0.22.2
 
 - Runtime improvement:
@@ -29,6 +48,8 @@
   formulation.
 
 ## metabodeconplus 0.22.0
+
+CRAN release: 2026-08-09
 
 - CRAN resubmission addressing the review of 0.21.0, which still saw
   changes of [`options()`](https://rdrr.io/r/base/options.html) and
