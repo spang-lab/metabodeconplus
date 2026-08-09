@@ -1,3 +1,18 @@
+# metabodeconplus 0.22.3
+
+* `snap_to_ref()` no longer returns a zero-column feature matrix when it
+  is handed spectra that did not pass through `clupa()`. It already
+  derived a missing `pcial` for the reference spectrum but not for the
+  others, so every non-reference peak snapped to `NA` and `si_mat()`
+  dropped it -- silently, with no error. The same fallback now applies
+  to every spectrum. Results on the normal path are unchanged, since
+  `clupa()` always sets `pcial`.
+
+* `combine_peaks()` documents why it is not usable as a `snap_fun` for
+  `fit_mdm()`: it declares `ref` and never reads it, so prediction would
+  recompute a merge from the test spectra instead of reusing the trained
+  one.
+
 # metabodeconplus 0.22.2
 
 * Runtime improvement: `fit_mdm()` and `benchmark()` now skip the

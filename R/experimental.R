@@ -168,6 +168,32 @@ snap_nw_blind <- function(x, ref=NULL, maxCombine=20, w_A=0, ...) {
 
 #' @noRd
 #' @title Greedy post-CluPA column-merge snap
+#' @description
+#' NOT usable as a `snap_fun` for [metabodeconplus::fit_mdm()] as it
+#' stands. Four things to fix first, all verified 2026-08-08:
+#'
+#' 1. `ref` is declared and never read. `fit_mdm_internal()` snaps the
+#'    training folds with `snap_fun(a, ref = NULL, ...)` and then snaps
+#'    the test spectra with `snap_fun(a, ref = object$ref$snap, ...)`.
+#'    Ignoring `ref` means prediction recomputes a merge from the test
+#'    spectra instead of reusing the trained one, so the feature columns
+#'    do not correspond between fit and predict. Silently.
+#' 2. `igrs` is swallowed by `...` and ignored, so a merge may cross an
+#'    ignore-region boundary and carry masked intensity into a kept
+#'    column. [metabodeconplus::snap_to_ref()] has the same exposure but
+#'    its callers mask afterwards.
+#' 3. `maxCombine = 0` returns `x` before the class is set to `aligns`
+#'    and before `pcisn` / `x0sn` are written, so it is not
+#'    interchangeable with `snap_to_ref(maxCombine = 0)`.
+#' 4. The outer loop of [combine_peaks_mat()] starts at `nrow(M) - 1`, so
+#'    a column occupied in every spectrum can never be a merge seed --
+#'    it can only be absorbed, never absorb. That is an undocumented
+#'    asymmetry and it applies to exactly the most reliable peaks.
+#'
+#' It also discards nothing: every peak with a valid `pcial` gets a
+#' `pcisn`, so it yields several times more features than
+#' [metabodeconplus::snap_to_ref()] at the same `maxCombine`. The two are
+#' not interchangeable even where the signature matches.
 combine_peaks <- function(x, ref=NULL, maxCombine=20, ...) {
     stopifnot(inherits(x, "decons2"), is_int(maxCombine, 1), maxCombine >= 0)
     if (maxCombine == 0L) return(x)

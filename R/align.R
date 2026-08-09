@@ -310,6 +310,11 @@ snap_lcpar <- function(lcpar, pp, maxCombine, cs) {
     lcpar$pcisn <- rep(NA_integer_, n)
     lcpar$x0sn  <- rep(NA_real_,    n)
     if (n == 0L || length(pp) == 0L) return(lcpar)
+    # Same fallback snap_to_ref() applies to the reference: identity_align()
+    # returns its input untouched, so spectra that reached here without CluPA
+    # carry no pcial. Without this every peak snapped to NA and si_mat()
+    # returned a zero-column matrix -- a silent wrong answer, not an error.
+    if (is.null(lcpar$pcial)) lcpar$pcial <- pci_on_cs(lcpar$x0, cs)
     pcial <- as.integer(lcpar$pcial)
     idx <- findInterval(pcial, pp)
     lo <- pmax(idx, 1L); hi <- pmin(idx + 1L, length(pp))
