@@ -4,7 +4,7 @@
 \alias{mdm}
 \alias{fit_mdm}
 \alias{benchmark}
-\title{Metabodecon Models}
+\title{metabodeconplus Models}
 \usage{
 fit_mdm(
   x,

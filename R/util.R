@@ -22,14 +22,14 @@
 "_PACKAGE"
 
 #' @export
-#' @title Get URL of Metabodecon "Get Started" Page
+#' @title Get URL of metabodeconplus "Get Started" Page
 #' @description
 #' `get_started` and `aaa_Get_Started` both return (and optionally open) the URL
 #' of the "Get Started" page of the metabodeconplus documentation. The
 #' `aaa_Get_Started` version exists, because functions are listed alphabetically
 #' in the reference manual and we want `get_started` to be shown at the top of
 #' the list (i.e., it needs to start with an 'a').
-#' @param open_browser If TRUE, the "Get Stated" page is opened in the default
+#' @param open_browser If TRUE, the "Get Started" page is opened in the default
 #' browser.
 #' @return A character string containing the URL of the "Get Started" page.
 #' @author 2024-2025 Tobias Schmidt: initial version.

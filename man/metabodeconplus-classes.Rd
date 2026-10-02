@@ -13,7 +13,7 @@
 \alias{as_decon2}
 \alias{as_decons2}
 \alias{get_names}
-\title{Metabodecon Classes and Helpers}
+\title{metabodeconplus Classes and Helpers}
 \usage{
 is_spectrum(x)
 is_spectra(x)
@@ -35,7 +35,7 @@ The \verb{as_*()} functions return an object of the requested class.
 \code{get_names()} returns a character vector.
 }
 \description{
-Metabodecon represents NMR data using a small set of S3 classes connected
+metabodeconplus represents NMR data using a small set of S3 classes connected
 by \strong{cumulative inheritance}. A raw spectrum has class \code{"spectrum"}. After
 \code{\link[=deconvolute]{deconvolute()}} it gains class \code{"decon2"}, so its class vector becomes
 \code{c("decon2", "spectrum")}. After \code{\link[=align]{align()}} it gains class \code{"align"}, with
