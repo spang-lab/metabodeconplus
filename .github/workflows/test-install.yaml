@@ -2,9 +2,9 @@ name: Install-check
 permissions: read-all
 
 # This workflow verifies that end users can install the *published* package
-# (from CRAN / R-Universe / GitHub releases). metabodeconplus has not been
-# published yet, so it is manual-only for now. Re-enable the push/pull_request
-# triggers once the package is available from at least one of those sources.
+# (from CRAN and GitHub). It installs the released package, not the code of
+# the triggering commit, so it is manual-only: run it after a CRAN release or
+# when installation problems are reported.
 on: {
   workflow_dispatch: {}
 }
@@ -25,7 +25,7 @@ jobs:
       R_KEEP_PKG_SOURCE: yes
       RUN_SLOW_TESTS: "TRUE"
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Set up R
         uses: r-lib/actions/setup-r@v2
