@@ -1,6 +1,6 @@
 Package: metabodeconplus
 Title: Deconvolution, Alignment and Model Fitting of 1d NMR Spectra
-Version: 0.22.3
+Version: 0.22.4
 Authors@R: c(
     person(given = "Tobias",
            family = "Schmidt",
@@ -34,7 +34,9 @@ Description: An integrated framework for deconvolution, alignment and
     <doi:10.1371/journal.pcbi.1006018> and Vu et al. (2011)
     <doi:10.1186/1471-2105-12-405>. A detailed description and evaluation of an
     early version of the package can be found in Haeckl
-    et al. (2021) <doi:10.3390/metabo11070452>. 'metabodeconplus' is the
+    et al. (2021) <doi:10.3390/metabo11070452>. The current package, including
+    the model fitting workflow, is described in Schmidt et al. (2026)
+    <doi:10.3390/metabo16090604>. 'metabodeconplus' is the
     actively developed successor to the 'metabodecon' package and introduces
     backwards-incompatible API changes.
 License: GPL (>= 3)

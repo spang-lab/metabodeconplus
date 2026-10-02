@@ -1,91 +1,47 @@
-RESUBMISSION (version 0.22.0)
+UPDATE SUBMISSION (version 0.22.4)
 
-This is the second resubmission of metabodeconplus.
-It was first submitted as 0.20.2 on 2026-07-13, then resubmitted as 0.21.0 on 2026-07-24, and is now on version 0.22.0.
-
-The current version addresses the findings by Leonore Hochhauser of 2026-08-04, which reported that we still change options and par without an appropriate reset in R/plot.R and R/util.R.
-Thank you for catching this.
-We are sorry that our previous fix was incomplete.
-
-The full history of all previous review rounds is kept below this section, so the current state can be seen in context.
+This is an update of metabodeconplus, which is currently on CRAN as version 0.22.0.
+It is a bug fix release without user-facing API changes.
 
 
-SUMMARY OF CHANGES FOR 0.22.0
+SUMMARY OF CHANGES SINCE 0.22.0
 
-1. The private helper catft() from file util.R was removed.
-It used options(metabodeconplus.catft.time=now) to store the time between two log messages and never reset it.
-Nothing in the package called it.
+1. snap_to_ref() no longer drops all non-reference peaks when it is given spectra that did not pass through clupa() (0.22.3).
 
-2. Function .onLoad() from file util.R no longer sets options(metabodeconplus.aki_cache=cache_dir).
-Nothing in the package read that option.
-The package now sets no global option that outlives a function call.
+2. fit_mdm() and benchmark() skip an unnecessary parameter grid search for non-default configurations, which makes them faster without changing results (0.22.2).
 
-3. The private functions set_fig() and local_fig() from file plot.R have been removed.
-set_fig() changed par(fig=, new=) and returned a function that restores the multi-figure configuration, and its two callers registered that function via on.exit() or withr::defer().
-The reset therefore did not live in the function that changed par(), which is what your check reported.
-That logic now lives in with_fig() and in draw_spectrum(), which change par() and register the restoring on.exit() handler in the same function, before par() is touched.
+3. The internal PRARP score used during parameter selection is now clamped to the range from 0 to 1, matching its theoretical definition (0.22.1).
 
-All remaining par() changes in the package are made with withr::local_par(), which restores the previous values when the calling function exits.
+4. The package now ships an inst/CITATION file referencing Schmidt et al. (2026) <doi:10.3390/metabo16090604>, which is also cited in the Description field (0.22.4).
+
+5. Documentation fixes in the README, the vignettes and several help pages (0.22.4).
+
+See NEWS.md for details.
 
 
 R CMD CHECK RESULTS
 
-0 errors, 0 warnings, 1 note.
+TODO: fill in before submission, e.g. "0 errors, 0 warnings, 0 notes".
 
-The note is the CRAN incoming feasibility note, unchanged from the previous submission and described further down.
+Checked on:
 
+- TODO: local machine (OS, R version)
 
-SUMMARY OF CHANGES FOR 0.21.0
+- TODO: win-builder (release, devel, oldrelease)
 
-This version addressed every point from the review by Konstanze Lauseker of 2026-07-22.
+- TODO: mac-builder (release)
 
-1. Triple-colon operator in documentation.
-We removed the metabodeconplus:::read_aki_data() call from the harmonize_grid() example.
-That example now uses the bundled sim dataset.
-We also removed the metabodeconplus::: references from the fit_mdm() and benchmark() documentation.
-No triple-colon operator remains in any Rd file.
-
-2. Use of dontrun.
-We removed every dontrun block.
-All examples now run during R CMD check.
-The fit_mdm() and benchmark() examples run in about one to two seconds on a small subset of the bundled sim2 dataset.
-No example uses more than two cores.
-
-3. Setting options(warn = -1).
-This is no longer done anywhere.
-The only two occurrences were in check_mdrb_deps(), which we removed.
-See point 6.
-
-4. Changing the user's options, par or working directory.
-We audited every file in the R folder.
-setwd() is not used.
-This audit was incomplete; see the 0.22.0 section above for what it missed.
-
-5. Modifying the global environment.
-We removed the two internal development helpers that assigned into .GlobalEnv.
-No package code writes to .GlobalEnv.
-
-6. Installing packages.
-We removed the exported install_mdrb() function.
-It was the only function that called install.packages(), after obtaining permission interactively.
-No function, example or vignette installs packages now.
+- TODO: GitHub Actions (ubuntu, macOS, windows)
 
 
-RELATIONSHIP TO THE METABODECON PACKAGE
+REVERSE DEPENDENCIES
 
-metabodeconplus is the actively developed successor to our existing CRAN package metabodecon.
-Both have the same maintainer.
-It keeps the deconvolution and alignment core and adds an end-to-end model-fitting workflow, fit_mdm() and benchmark(), that turns aligned signal integrals into classification models.
-It introduces backwards-incompatible API changes.
-We ship it under a new name so that existing metabodecon workflows keep working unchanged.
-Both packages will be maintained side by side.
-This is why the title and description overlap with metabodecon.
+TODO: confirm there are no reverse dependencies on CRAN.
 
 
 THE SUGGESTED MDRB DEPENDENCY
 
-The incoming feasibility note flags the suggested dependency mdrb.
-It is available from https://spang-lab.r-universe.dev and is listed under Additional_repositories in DESCRIPTION.
+The suggested dependency mdrb is available from https://spang-lab.r-universe.dev and is listed under Additional_repositories in DESCRIPTION.
 It provides optional Rust code that speeds up some functions.
 It is maintained by our group, the Spang Lab at the University of Regensburg.
 All functionality works without it.
