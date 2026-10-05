@@ -5,7 +5,7 @@
 #' @name mdm
 #' @rdname mdm
 #'
-#' @title Metabodecon Models
+#' @title metabodeconplus Models
 #'
 #' @description
 #' `r lifecycle::badge("experimental")`
@@ -113,7 +113,7 @@ benchmark <- function(
 
 #' @noRd
 #'
-#' @title Metabodecon Models (internal pluggable engine)
+#' @title metabodeconplus Models (internal pluggable engine)
 #'
 #' @description
 #' `r lifecycle::badge("experimental")`

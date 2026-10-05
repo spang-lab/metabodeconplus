@@ -3,10 +3,10 @@
 #' @aliases spectrum spectra decon2 decons2 aligns
 #' @aliases is_spectrum is_spectra as_spectra as_decon2 as_decons2 get_names
 #'
-#' @title Metabodecon Classes and Helpers
+#' @title metabodeconplus Classes and Helpers
 #'
 #' @description
-#' Metabodecon represents NMR data using a small set of S3 classes connected
+#' metabodeconplus represents NMR data using a small set of S3 classes connected
 #' by **cumulative inheritance**. A raw spectrum has class `"spectrum"`. After
 #' [metabodeconplus::deconvolute()] it gains class `"decon2"`, so its class vector becomes
 #' `c("decon2", "spectrum")`. After [metabodeconplus::align()] it gains class `"align"`, with

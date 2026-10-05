@@ -3,14 +3,14 @@
 \name{aaa_Get_Started}
 \alias{aaa_Get_Started}
 \alias{get_started}
-\title{Get URL of Metabodecon "Get Started" Page}
+\title{Get URL of metabodeconplus "Get Started" Page}
 \usage{
 aaa_Get_Started(open_browser = interactive())
 
 get_started(open_browser = interactive())
 }
 \arguments{
-\item{open_browser}{If TRUE, the "Get Stated" page is opened in the default
+\item{open_browser}{If TRUE, the "Get Started" page is opened in the default
 browser.}
 }
 \value{

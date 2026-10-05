@@ -38,7 +38,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-This article shows how Metabodecon can be used for  deconvoluting  and  aligning
+This article shows how metabodeconplus can be used for deconvoluting and aligning
 one-dimensional NMR spectra using the pre-installed [Sim] dataset as an example.
 The Sim dataset includes 16  simulated  spectra,  each  with  2048  data  points
 ranging from ≈ 3.6 to  3.3  ppm.  These  simulated  spectra  closely  mimic  the
@@ -157,7 +157,7 @@ Out of the 16 generated plots, the first two are shown as  examples  in  [Figure
 
 # Align deconvoluted spectra
 
-The last step in the Metabodecon Workflow is to align the deconvoluted  spectra.
+The last step in the metabodeconplus workflow is to align the deconvoluted spectra.
 This is necessary because the chemical shifts of the peaks in  the  spectra  may
 vary slightly due to differences in the measurement conditions.
 

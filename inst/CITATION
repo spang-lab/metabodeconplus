@@ -1,0 +1,55 @@
+bibentry(
+    bibtype = "Article",
+    header = "To cite metabodeconplus in publications use:",
+    title = "Metabodeconplus—An R Package for Automated Deconvolution and Alignment of 1D NMR Metabolomics Data",
+    author = c(
+        person("Tobias", "Schmidt"),
+        person("Maximilian", "Sombke"),
+        person(c("Helena", "U."), "Zacharias"),
+        person(c("Peter", "J."), "Oefner"),
+        person("Rainer", "Spang"),
+        person("Wolfram", "Gronwald"),
+        person("on behalf of the GCKD Investigators")
+    ),
+    journal = "Metabolites",
+    year = "2026",
+    volume = "16",
+    number = "9",
+    pages = "604",
+    doi = "10.3390/metabo16090604",
+    textVersion = paste(
+        "Schmidt T, Sombke M, Zacharias HU, Oefner PJ, Spang R, Gronwald W,",
+        "on behalf of the GCKD Investigators.",
+        "Metabodeconplus—An R Package for Automated Deconvolution and",
+        "Alignment of 1D NMR Metabolomics Data.",
+        "Metabolites. 2026;16(9):604. doi:10.3390/metabo16090604"
+    )
+)
+
+bibentry(
+    bibtype = "Article",
+    header = "The original deconvolution algorithm (MetaboDecon1D) is described in:",
+    title = "An R-Package for the Deconvolution and Integration of 1D NMR Data: MetaboDecon1D",
+    author = c(
+        person("Martina", "Häckl"),
+        person("Philipp", "Tauber"),
+        person("Frank", "Schweda"),
+        person(c("Helena", "U."), "Zacharias"),
+        person("Michael", "Altenbuchinger"),
+        person(c("Peter", "J."), "Oefner"),
+        person("Wolfram", "Gronwald")
+    ),
+    journal = "Metabolites",
+    year = "2021",
+    volume = "11",
+    number = "7",
+    pages = "452",
+    doi = "10.3390/metabo11070452",
+    textVersion = paste(
+        "Häckl M, Tauber P, Schweda F, Zacharias HU, Altenbuchinger M,",
+        "Oefner PJ, Gronwald W.",
+        "An R-Package for the Deconvolution and Integration of 1D NMR Data:",
+        "MetaboDecon1D.",
+        "Metabolites. 2021;11(7):452. doi:10.3390/metabo11070452"
+    )
+)
