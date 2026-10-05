@@ -13,16 +13,36 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/spang-lab/metabodeconplus/blob/main/DESCRIPTION)
+[`inst/CITATION`](https://github.com/spang-lab/metabodeconplus/blob/main/inst/CITATION)
 
-Schmidt T, Haeckl M, Gronwald W (2026). *metabodeconplus: Deconvolution,
-Alignment and Model Fitting of 1d NMR Spectra*. R package version
-0.22.3, <https://github.com/spang-lab/metabodeconplus/>.
+Schmidt T, Sombke M, Zacharias HU, Oefner PJ, Spang R, Gronwald W, on
+behalf of the GCKD Investigators. Metabodeconplus—An R Package for
+Automated Deconvolution and Alignment of 1D NMR Metabolomics Data.
+Metabolites. 2026;16(9):604. doi:10.3390/metabo16090604
 
-    @Manual{,
-      title = {metabodeconplus: Deconvolution, Alignment and Model Fitting of 1d NMR Spectra},
-      author = {Tobias Schmidt and Martina Haeckl and Wolfram Gronwald},
+    @Article{,
+      title = {Metabodeconplus—An R Package for Automated Deconvolution and Alignment of 1D NMR Metabolomics Data},
+      author = {Tobias Schmidt and Maximilian Sombke and Helena U. Zacharias and Peter J. Oefner and Rainer Spang and Wolfram Gronwald and {on behalf of the GCKD Investigators}},
+      journal = {Metabolites},
       year = {2026},
-      note = {R package version 0.22.3},
-      url = {https://github.com/spang-lab/metabodeconplus/},
+      volume = {16},
+      number = {9},
+      pages = {604},
+      doi = {10.3390/metabo16090604},
+    }
+
+Häckl M, Tauber P, Schweda F, Zacharias HU, Altenbuchinger M, Oefner PJ,
+Gronwald W. An R-Package for the Deconvolution and Integration of 1D NMR
+Data: MetaboDecon1D. Metabolites. 2021;11(7):452.
+doi:10.3390/metabo11070452
+
+    @Article{,
+      title = {An R-Package for the Deconvolution and Integration of 1D NMR Data: MetaboDecon1D},
+      author = {Martina Häckl and Philipp Tauber and Frank Schweda and Helena U. Zacharias and Michael Altenbuchinger and Peter J. Oefner and Wolfram Gronwald},
+      journal = {Metabolites},
+      year = {2021},
+      volume = {11},
+      number = {7},
+      pages = {452},
+      doi = {10.3390/metabo11070452},
     }

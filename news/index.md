@@ -1,5 +1,26 @@
 # Changelog
 
+## metabodeconplus 0.22.4
+
+- Added a citation entry: `citation("metabodeconplus")` now returns
+  Schmidt et al. (2026), Metabolites 16(9):604,
+  <doi:10.3390/metabo16090604>, and Haeckl et al. (2021) for the
+  original algorithm.
+
+- The package description, README and Model Fitting article now
+  reference Schmidt et al. (2026).
+
+- README now presents CRAN as the stable source and GitHub as the
+  development version, and links the Model Fitting and Datasets
+  articles.
+
+- Documentation fixes: titles and vignettes now say metabodeconplus
+  instead of Metabodecon, and the Contributing article describes how to
+  run the tests, install the package and prepare a release.
+
+- CI: bumped GitHub Actions versions and allowed manual runs of
+  R-CMD-check.
+
 ## metabodeconplus 0.22.3
 
 - [`snap_to_ref()`](https://spang-lab.github.io/metabodeconplus/reference/alignment_funs.md)
@@ -13,11 +34,6 @@
   every spectrum. Results on the normal path are unchanged, since
   [`clupa()`](https://spang-lab.github.io/metabodeconplus/reference/alignment_funs.md)
   always sets `pcial`.
-
-- `combine_peaks()` documents why it is not usable as a `snap_fun` for
-  [`fit_mdm()`](https://spang-lab.github.io/metabodeconplus/reference/mdm.md):
-  it declares `ref` and never reads it, so prediction would recompute a
-  merge from the test spectra instead of reusing the trained one.
 
 ## metabodeconplus 0.22.2
 

@@ -1,6 +1,6 @@
 # Get Started
 
-This article shows how Metabodecon can be used for deconvoluting and
+This article shows how metabodeconplus can be used for deconvoluting and
 aligning one-dimensional NMR spectra using the pre-installed
 [Sim](https://spang-lab.github.io/metabodeconplus/articles/Datasets.html#sim)
 dataset as an example. The Sim dataset includes 16 simulated spectra,
@@ -120,16 +120,14 @@ Out of the 16 generated plots, the first two are shown as examples in
     should reduce the threshold `delta` in the call to
     [`deconvolute()`](https://spang-lab.github.io/metabodeconplus/reference/deconvolute.md).
 
-![\<strong\>Figure 2.\</strong\> Deconvolution results for the first two
-spectra of the Sim dataset. The raw SI (black), smoothed SI (blue), and
-superposition of Lorentz curves (red) are closely aligned, indicating
-that \<code\>smit\</code\>/\<code\>smws\</code\> and
-\<code\>delta\</code\> were chosen well and that the deconvolution was
-successful.](Get_Started_files/figure-html/fig-plot-spectrum-1.png)![\<strong\>Figure
-2.\</strong\> Deconvolution results for the first two spectra of the Sim
+![Figure 2. Deconvolution results for the first two spectra of the Sim
 dataset. The raw SI (black), smoothed SI (blue), and superposition of
-Lorentz curves (red) are closely aligned, indicating that
-\<code\>smit\</code\>/\<code\>smws\</code\> and \<code\>delta\</code\>
+Lorentz curves (red) are closely aligned, indicating that smit/smws and
+delta were chosen well and that the deconvolution was
+successful.](Get_Started_files/figure-html/fig-plot-spectrum-1.png)![Figure
+2. Deconvolution results for the first two spectra of the Sim dataset.
+The raw SI (black), smoothed SI (blue), and superposition of Lorentz
+curves (red) are closely aligned, indicating that smit/smws and delta
 were chosen well and that the deconvolution was
 successful.](Get_Started_files/figure-html/fig-plot-spectrum-2.png)
 
@@ -140,10 +138,10 @@ and `delta` were chosen well and that the deconvolution was successful.
 
 ## Align deconvoluted spectra
 
-The last step in the Metabodecon Workflow is to align the deconvoluted
-spectra. This is necessary because the chemical shifts of the peaks in
-the spectra may vary slightly due to differences in the measurement
-conditions.
+The last step in the metabodeconplus workflow is to align the
+deconvoluted spectra. This is necessary because the chemical shifts of
+the peaks in the spectra may vary slightly due to differences in the
+measurement conditions.
 
 To perform the alignment, you can use
 [`align()`](https://spang-lab.github.io/metabodeconplus/reference/align.md).
@@ -167,19 +165,19 @@ consistent with each other, indicating that the alignment was
 successful. Notably, spectrum two has been shifted significantly to the
 left.
 
-![\<strong\>Figure 3.\</strong\> Overlay of the first eight deconvoluted
-spectra from the Sim dataset before alignment (left) and after alignment
-(right). The x-Axis gives the chemical shift of each datapoint in parts
-per million (ppm). The y-Axis gives the signal intensity of each
-datapoint in arbitrary units (au). All specta are pretty similar to each
-other except for Spectrum 2, which got shifted approx. 0.01 ppm to the
-right.](Get_Started_files/figure-html/fig-align-1.png)![\<strong\>Figure
-3.\</strong\> Overlay of the first eight deconvoluted spectra from the
-Sim dataset before alignment (left) and after alignment (right). The
-x-Axis gives the chemical shift of each datapoint in parts per million
-(ppm). The y-Axis gives the signal intensity of each datapoint in
-arbitrary units (au). All specta are pretty similar to each other except
-for Spectrum 2, which got shifted approx. 0.01 ppm to the
+![Figure 3. Overlay of the first eight deconvoluted spectra from the Sim
+dataset before alignment (left) and after alignment (right). The x-Axis
+gives the chemical shift of each datapoint in parts per million (ppm).
+The y-Axis gives the signal intensity of each datapoint in arbitrary
+units (au). All specta are pretty similar to each other except for
+Spectrum 2, which got shifted approx. 0.01 ppm to the
+right.](Get_Started_files/figure-html/fig-align-1.png)![Figure 3.
+Overlay of the first eight deconvoluted spectra from the Sim dataset
+before alignment (left) and after alignment (right). The x-Axis gives
+the chemical shift of each datapoint in parts per million (ppm). The
+y-Axis gives the signal intensity of each datapoint in arbitrary units
+(au). All specta are pretty similar to each other except for Spectrum 2,
+which got shifted approx. 0.01 ppm to the
 right.](Get_Started_files/figure-html/fig-align-2.png)
 
 **Figure 3.** Overlay of the first eight deconvoluted spectra from the

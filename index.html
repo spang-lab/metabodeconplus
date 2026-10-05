@@ -16,8 +16,8 @@
 <script src="deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Deconvolution, Alignment and Model Fitting of 1d NMR Spectra">
-<meta name="description" content="An integrated framework for deconvolution, alignment and postprocessing of 1-dimensional (1d) nuclear magnetic resonance (NMR) spectra, extended with end-to-end model fitting that turns the resulting matrix of aligned signal integrals into classification models. The deconvolution part uses the algorithm described in Koh et al. (2009) &lt;doi:10.1016/j.jmr.2009.09.003&gt;. The alignment part is based on functions from the speaq package, described in Beirnaert et al. (2018) &lt;doi:10.1371/journal.pcbi.1006018&gt; and Vu et al. (2011) &lt;doi:10.1186/1471-2105-12-405&gt;. A detailed description and evaluation of an early version of the package can be found in Haeckl et al. (2021) &lt;doi:10.3390/metabo11070452&gt;. metabodeconplus is the actively developed successor to the metabodecon package and introduces backwards-incompatible API changes.">
-<meta property="og:description" content="An integrated framework for deconvolution, alignment and postprocessing of 1-dimensional (1d) nuclear magnetic resonance (NMR) spectra, extended with end-to-end model fitting that turns the resulting matrix of aligned signal integrals into classification models. The deconvolution part uses the algorithm described in Koh et al. (2009) &lt;doi:10.1016/j.jmr.2009.09.003&gt;. The alignment part is based on functions from the speaq package, described in Beirnaert et al. (2018) &lt;doi:10.1371/journal.pcbi.1006018&gt; and Vu et al. (2011) &lt;doi:10.1186/1471-2105-12-405&gt;. A detailed description and evaluation of an early version of the package can be found in Haeckl et al. (2021) &lt;doi:10.3390/metabo11070452&gt;. metabodeconplus is the actively developed successor to the metabodecon package and introduces backwards-incompatible API changes.">
+<meta name="description" content="An integrated framework for deconvolution, alignment and postprocessing of 1-dimensional (1d) nuclear magnetic resonance (NMR) spectra, extended with end-to-end model fitting that turns the resulting matrix of aligned signal integrals into classification models. The deconvolution part uses the algorithm described in Koh et al. (2009) &lt;doi:10.1016/j.jmr.2009.09.003&gt;. The alignment part is based on functions from the speaq package, described in Beirnaert et al. (2018) &lt;doi:10.1371/journal.pcbi.1006018&gt; and Vu et al. (2011) &lt;doi:10.1186/1471-2105-12-405&gt;. A detailed description and evaluation of an early version of the package can be found in Haeckl et al. (2021) &lt;doi:10.3390/metabo11070452&gt;. The current package, including the model fitting workflow, is described in Schmidt et al. (2026) &lt;doi:10.3390/metabo16090604&gt;. metabodeconplus is the actively developed successor to the metabodecon package and introduces backwards-incompatible API changes.">
+<meta property="og:description" content="An integrated framework for deconvolution, alignment and postprocessing of 1-dimensional (1d) nuclear magnetic resonance (NMR) spectra, extended with end-to-end model fitting that turns the resulting matrix of aligned signal integrals into classification models. The deconvolution part uses the algorithm described in Koh et al. (2009) &lt;doi:10.1016/j.jmr.2009.09.003&gt;. The alignment part is based on functions from the speaq package, described in Beirnaert et al. (2018) &lt;doi:10.1371/journal.pcbi.1006018&gt; and Vu et al. (2011) &lt;doi:10.1186/1471-2105-12-405&gt;. A detailed description and evaluation of an early version of the package can be found in Haeckl et al. (2021) &lt;doi:10.3390/metabo11070452&gt;. The current package, including the model fitting workflow, is described in Schmidt et al. (2026) &lt;doi:10.3390/metabo16090604&gt;. metabodeconplus is the actively developed successor to the metabodecon package and introduces backwards-incompatible API changes.">
 <meta property="og:image" content="https://spang-lab.github.io/metabodeconplus/logo.svg">
 </head>
 <body>
@@ -28,7 +28,7 @@
 
     <a class="navbar-brand me-2" href="index.html">metabodeconplus</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,20 +67,15 @@
 <img src="logo.svg" class="logo" alt=""><h1 id="metabodeconplus-">metabodeconplus <a class="anchor" aria-label="anchor" href="#metabodeconplus-"></a>
 </h1>
 </div>
-<p>A framework for deconvolution, alignment and postprocessing of 1D NMR spectra, resulting in a data matrix of aligned signal integrals. The deconvolution part uses the algorithm described in <a href="https://doi.org/10.1016/j.jmr.2009.09.003" class="external-link">Koh et al. (2009)</a>. The alignment part is based on functions from the ‘speaq’ package, described in <a href="https://doi.org/10.1371/journal.pcbi.1006018" class="external-link">Beirnaert et al. (2018)</a> and <a href="https://doi.org/10.1186/1471-2105-12-405" class="external-link">Vu et al. (2011)</a>. A detailed description and evaluation of an early version of the package, ‘MetaboDecon1D v0.2.2’, can be found in <a href="https://doi.org/10.3390/metabo11070452" class="external-link">Haeckl et al. (2021)</a>.</p>
+<p>A framework for deconvolution, alignment and postprocessing of 1D NMR spectra, resulting in a data matrix of aligned signal integrals that can be used directly for fitting statistical models. The package is described in <a href="https://doi.org/10.3390/metabo16090604" class="external-link">Schmidt et al. (2026)</a>.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<!--
-To install the **stable version** from [CRAN](https://cran.r-project.org/), paste the following commands in a running R session:
-
-```R
-# Install metabodeconplus
-install.packages("metabodeconplus")
-```
--->
-<p>To install the <strong>development version</strong> from <a href="https://github.com/spang-lab/metabodeconplus/" class="external-link">GitHub</a> use:</p>
+<p>To install the stable version from <a href="https://cran.r-project.org/package=metabodeconplus" class="external-link">CRAN</a>, paste the following command in a running R session:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"metabodeconplus"</span><span class="op">)</span></span></code></pre></div>
+<p>To install the development version from <a href="https://github.com/spang-lab/metabodeconplus/" class="external-link">GitHub</a> use:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"pak"</span><span class="op">)</span></span>
 <span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pkg_install.html" class="external-link">pkg_install</a></span><span class="op">(</span><span class="st">"spang-lab/metabodeconplus"</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -96,9 +91,42 @@ install.packages("metabodeconplus")
 <p>metabodeconplus’s documentation is available at <a href="https://spang-lab.github.io/metabodeconplus/">spang-lab.github.io/metabodeconplus</a>. It includes pages about</p>
 <ul>
 <li><a href="https://spang-lab.github.io/metabodeconplus/articles/Get_Started.html">Getting Started</a></li>
+<li><a href="https://spang-lab.github.io/metabodeconplus/articles/MDM.html">Model Fitting</a></li>
+<li><a href="https://spang-lab.github.io/metabodeconplus/articles/Datasets.html">Datasets</a></li>
 <li><a href="https://spang-lab.github.io/metabodeconplus/articles/Contributing.html">Contribution Guidelines</a></li>
 <li><a href="https://spang-lab.github.io/metabodeconplus/reference/index.html">Function Reference</a></li>
 </ul>
+</div>
+<div class="section level2">
+<h2 id="related-work">Related work<a class="anchor" aria-label="anchor" href="#related-work"></a>
+</h2>
+<p>metabodeconplus is the latest stage of a package that has been renamed twice:</p>
+<ul>
+<li><p>MetaboDecon1D (up to v0.2.2, until 2023) was the first implementation, described and evaluated in <a href="https://doi.org/10.3390/metabo11070452" class="external-link">Haeckl et al. (2021)</a>.</p></li>
+<li><p><a href="https://github.com/spang-lab/metabodecon" class="external-link">metabodecon</a> (v1.0.0 to v1.7.x, since 2023) is its renamed and reworked successor, which remains available for existing workflows.</p></li>
+<li><p>metabodeconplus (v0.20.0 onwards, since 2026) continues metabodecon 1.7 and adds model fitting.</p></li>
+</ul>
+<p>Methods and software used by the package:</p>
+<ul>
+<li><p>Deconvolution: <a href="https://doi.org/10.1016/j.jmr.2009.09.003" class="external-link">Koh et al. (2009)</a>; optional Rust backend <a href="https://github.com/spang-lab/mdrb" class="external-link">mdrb</a>.</p></li>
+<li><p>Alignment: the ‘speaq’ package, described in <a href="https://doi.org/10.1371/journal.pcbi.1006018" class="external-link">Beirnaert et al. (2018)</a> and <a href="https://doi.org/10.1186/1471-2105-12-405" class="external-link">Vu et al. (2011)</a>.</p></li>
+<li><p>Choice of the number of signals: the Kneedle method of <a href="https://doi.org/10.1109/ICDCSW.2011.20" class="external-link">Satopää et al. (2011)</a>.</p></li>
+<li><p>Classification: random forests (<a href="https://doi.org/10.1023/A:1010933404324" class="external-link">Breiman, 2001</a>) via ‘ranger’ (<a href="https://doi.org/10.18637/jss.v077.i01" class="external-link">Wright and Ziegler, 2017</a>) and the lasso via ‘glmnet’ (<a href="https://doi.org/10.18637/jss.v033.i01" class="external-link">Friedman et al., 2010</a>).</p></li>
+<li><p>700-bin feature matrix and AKI dataset: <a href="https://doi.org/10.1007/s11306-012-0479-4" class="external-link">Zacharias et al. (2013)</a>.</p></li>
+</ul>
+<p>Other tools for 1D NMR processing:</p>
+<ul>
+<li><p>Deconvolution and profiling: BATMAN (<a href="https://doi.org/10.1093/bioinformatics/bts308" class="external-link">Hao et al., 2012</a>), rDolphin (<a href="https://doi.org/10.1007/s11306-018-1319-y" class="external-link">Cañueto et al., 2018</a>), ASICS (<a href="https://doi.org/10.1093/bioinformatics/btz248" class="external-link">Lefort et al., 2019</a>), BAYESIL (<a href="https://doi.org/10.1371/journal.pone.0124219" class="external-link">Ravanbakhsh et al., 2015</a>), DEEP Picker1D (<a href="https://doi.org/10.5194/mr-4-19-2023" class="external-link">Li et al., 2023</a>), decon1d (<a href="https://doi.org/10.1371/journal.pone.0134474" class="external-link">Hughes et al., 2015</a>), mldecon (<a href="https://doi.org/10.1016/j.jmr.2022.107357" class="external-link">Schmid et al., 2023</a>).</p></li>
+<li><p>Alignment: icoshift (<a href="https://doi.org/10.1016/j.jmr.2009.11.012" class="external-link">Savorani et al., 2010</a>), COW (<a href="https://doi.org/10.1002/cem.859" class="external-link">Tomasi et al., 2004</a>).</p></li>
+<li><p>Processing workflows: NMRProcFlow (<a href="https://doi.org/10.1007/s11306-017-1178-y" class="external-link">Jacob et al., 2017</a>), SigMa (<a href="https://doi.org/10.1016/j.aca.2020.02.025" class="external-link">Khakimov et al., 2020</a>).</p></li>
+<li><p>Downstream statistical analysis: MetaboAnalyst (<a href="https://doi.org/10.1093/nar/gkae253" class="external-link">Pang et al., 2024</a>).</p></li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
+</h2>
+<p>If you use metabodeconplus in your research, please cite:</p>
+<p>Schmidt T, Sombke M, Zacharias HU, Oefner PJ, Spang R, Gronwald W, on behalf of the GCKD Investigators. Metabodeconplus—An R Package for Automated Deconvolution and Alignment of 1D NMR Metabolomics Data. Metabolites. 2026;16(9):604. <a href="https://doi.org/10.3390/metabo16090604" class="external-link">doi:10.3390/metabo16090604</a></p>
 </div>
 </div>
 
@@ -144,7 +172,7 @@ install.packages("metabodeconplus")
 <li><a href="https://app.codecov.io/gh/spang-lab/metabodeconplus?branch=main" class="external-link"><img src="https://codecov.io/gh/spang-lab/metabodeconplus/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
 <li><a href="https://github.com/spang-lab/metabodeconplus/releases" class="external-link"><img src="https://img.shields.io/github/v/release/spang-lab/metabodeconplus?label=GitHub&amp;color=blue" alt="GitHub version"></a></li>
 <li><a href="https://cran.r-project.org/package=metabodeconplus" class="external-link"><img src="https://img.shields.io/cran/v/metabodeconplus?label=CRAN&amp;color=blue" alt="CRAN version"></a></li>
-<li><a href="https://cranlogs.r-pkg.org/badges/grand-total/metabodeconplus" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/grand-total/metabodeconplus" alt="CRAN Downloads"></a></li>
+<li><a href="https://cran.r-project.org/package=metabodeconplus" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/grand-total/metabodeconplus" alt="CRAN Downloads"></a></li>
 </ul>
 </div>
 

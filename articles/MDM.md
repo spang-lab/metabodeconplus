@@ -2,7 +2,8 @@
 
 This article shows how to turn raw one-dimensional NMR spectra into a
 trained classifier with `metabodeconplus`, following the same pipeline
-described in the paper:
+described in [Schmidt et
+al. (2026)](https://doi.org/10.3390/metabo16090604):
 
 1.  **Deconvolution** – represent each spectrum as a list of Lorentzian
     peaks.

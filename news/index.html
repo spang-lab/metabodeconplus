@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">metabodeconplus</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,9 +39,17 @@
     </div>
 
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.22.4" id="metabodeconplus-0224">metabodeconplus 0.22.4<a class="anchor" aria-label="anchor" href="#metabodeconplus-0224"></a></h2>
+<ul><li><p>Added a citation entry: <code>citation("metabodeconplus")</code> now returns Schmidt et al. (2026), Metabolites 16(9):604, <a href="doi:10.3390/metabo16090604" class="uri">doi:10.3390/metabo16090604</a>, and Haeckl et al. (2021) for the original algorithm.</p></li>
+<li><p>The package description, README and Model Fitting article now reference Schmidt et al. (2026).</p></li>
+<li><p>README now presents CRAN as the stable source and GitHub as the development version, and links the Model Fitting and Datasets articles.</p></li>
+<li><p>Documentation fixes: titles and vignettes now say metabodeconplus instead of Metabodecon, and the Contributing article describes how to run the tests, install the package and prepare a release.</p></li>
+<li><p>CI: bumped GitHub Actions versions and allowed manual runs of R-CMD-check.</p></li>
+</ul></div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.22.3" id="metabodeconplus-0223">metabodeconplus 0.22.3<a class="anchor" aria-label="anchor" href="#metabodeconplus-0223"></a></h2>
-<ul><li><p><code><a href="../reference/alignment_funs.html">snap_to_ref()</a></code> no longer returns a zero-column feature matrix when it is handed spectra that did not pass through <code><a href="../reference/alignment_funs.html">clupa()</a></code>. It already derived a missing <code>pcial</code> for the reference spectrum but not for the others, so every non-reference peak snapped to <code>NA</code> and <code><a href="../reference/si_mat.html">si_mat()</a></code> dropped it – silently, with no error. The same fallback now applies to every spectrum. Results on the normal path are unchanged, since <code><a href="../reference/alignment_funs.html">clupa()</a></code> always sets <code>pcial</code>.</p></li>
-<li><p><code>combine_peaks()</code> documents why it is not usable as a <code>snap_fun</code> for <code><a href="../reference/mdm.html">fit_mdm()</a></code>: it declares <code>ref</code> and never reads it, so prediction would recompute a merge from the test spectra instead of reusing the trained one.</p></li>
+<ul><li>
+<code><a href="../reference/alignment_funs.html">snap_to_ref()</a></code> no longer returns a zero-column feature matrix when it is handed spectra that did not pass through <code><a href="../reference/alignment_funs.html">clupa()</a></code>. It already derived a missing <code>pcial</code> for the reference spectrum but not for the others, so every non-reference peak snapped to <code>NA</code> and <code><a href="../reference/si_mat.html">si_mat()</a></code> dropped it – silently, with no error. The same fallback now applies to every spectrum. Results on the normal path are unchanged, since <code><a href="../reference/alignment_funs.html">clupa()</a></code> always sets <code>pcial</code>.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.22.2" id="metabodeconplus-0222">metabodeconplus 0.22.2<a class="anchor" aria-label="anchor" href="#metabodeconplus-0222"></a></h2>

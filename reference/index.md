@@ -43,7 +43,7 @@ benchmark classification models.
   : 700-bin Zacharias 2013 feature matrix
 - [`fit_mdm()`](https://spang-lab.github.io/metabodeconplus/reference/mdm.md)
   [`benchmark()`](https://spang-lab.github.io/metabodeconplus/reference/mdm.md)
-  **\[experimental\]** : Metabodecon Models
+  **\[experimental\]** : metabodeconplus Models
 - [`predict(`*`<mdm>`*`)`](https://spang-lab.github.io/metabodeconplus/reference/mdm_methods.md)
   [`print(`*`<mdm>`*`)`](https://spang-lab.github.io/metabodeconplus/reference/mdm_methods.md)
   [`coef(`*`<mdm>`*`)`](https://spang-lab.github.io/metabodeconplus/reference/mdm_methods.md)
@@ -75,7 +75,7 @@ The spectrum and spectra classes and their methods.
   [`as_decon2()`](https://spang-lab.github.io/metabodeconplus/reference/metabodeconplus-classes.md)
   [`as_decons2()`](https://spang-lab.github.io/metabodeconplus/reference/metabodeconplus-classes.md)
   [`get_names()`](https://spang-lab.github.io/metabodeconplus/reference/metabodeconplus-classes.md)
-  : Metabodecon Classes and Helpers
+  : metabodeconplus Classes and Helpers
 
 ## Datasets
 
@@ -127,7 +127,7 @@ Utility functions, e.g. for converting between units or testing.
   : Evaluate an expression with predefined global state
 - [`aaa_Get_Started()`](https://spang-lab.github.io/metabodeconplus/reference/aaa_Get_Started.md)
   [`get_started()`](https://spang-lab.github.io/metabodeconplus/reference/aaa_Get_Started.md)
-  : Get URL of Metabodecon "Get Started" Page
+  : Get URL of metabodeconplus "Get Started" Page
 
 ## Deprecated
 

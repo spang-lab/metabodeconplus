@@ -25,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">metabodeconplus</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -89,17 +89,17 @@ describing the problem or feature you want to work on.</li>
 </h2>
 <p>Things you can update, are:</p>
 <ol style="list-style-type: decimal">
-<li>Function code in folder <a href="R">R</a>
+<li>Function code in folder <a href="https://github.com/spang-lab/metabodeconplus/tree/main/R" class="external-link">R</a>
 </li>
-<li>Function documentation in folder <a href="R">R</a>
+<li>Function documentation in folder <a href="https://github.com/spang-lab/metabodeconplus/tree/main/R" class="external-link">R</a>
 </li>
-<li>Package documentation in folder <code>vignettes</code>
+<li>Package documentation in folder <a href="https://github.com/spang-lab/metabodeconplus/tree/main/vignettes" class="external-link">vignettes</a>
 </li>
-<li>Test cases in folder <a href="tests">tests</a>
+<li>Test cases in folder <a href="https://github.com/spang-lab/metabodeconplus/tree/main/tests" class="external-link">tests</a>
 </li>
-<li>Dependencies in file <a href="DESCRIPTION">DESCRIPTION</a>
+<li>Dependencies in file <a href="https://github.com/spang-lab/metabodeconplus/blob/main/DESCRIPTION" class="external-link">DESCRIPTION</a>
 </li>
-<li>Authors in file <a href="DESCRIPTION">DESCRIPTION</a>
+<li>Authors in file <a href="https://github.com/spang-lab/metabodeconplus/blob/main/DESCRIPTION" class="external-link">DESCRIPTION</a>
 </li>
 </ol>
 <p>Whenever you update any of those things, you should run the below
@@ -108,12 +108,27 @@ commands to check that everything is still working as expected:</p>
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">document</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Build files in man folder</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/spell_check.html" class="external-link">spell_check</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Check spelling (add false positives to inst/WORDLIST)</span></span>
 <span><span class="fu">urlchecker</span><span class="fu">::</span><span class="fu"><a href="https://urlchecker.r-lib.org/reference/url_check.html" class="external-link">url_check</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Check URLs</span></span>
-<span><span class="fu">run_tests</span><span class="op">(</span>all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># Execute tests from tests folder inkl. slow tests</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/load_all.html" class="external-link">load_all</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Load the package incl. internal functions</span></span>
+<span><span class="fu">run_tests</span><span class="op">(</span>all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># Execute tests from tests folder incl. slow tests</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/run_examples.html" class="external-link">run_examples</a></span><span class="op">(</span>run_donttest <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># Run all examples in the package</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/check.html" class="external-link">check</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Check package formalities</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Install as required by next commands</span></span>
 <span><span class="fu">toscutil</span><span class="fu">::</span><span class="fu"><a href="https://toscm.github.io/toscutil/reference/check_pkg_docs.html" class="external-link">check_pkg_docs</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Check function documentation for missing tags</span></span>
 <span><span class="fu">pkgdown</span><span class="fu">::</span><span class="fu"><a href="https://pkgdown.r-lib.org/reference/build_site.html" class="external-link">build_site</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Build website in docs folder</span></span></code></pre></div>
+<p><code>run_tests()</code> is an internal helper, so it is only
+available after <code><a href="https://devtools.r-lib.org/reference/load_all.html" class="external-link">devtools::load_all()</a></code> (or as
+<code>metabodeconplus:::run_tests()</code> from an installed copy). With
+<code>all = TRUE</code> it sets the environment variable
+<code>RUN_SLOW_TESTS=TRUE</code>, which enables the slow tests
+(e.g. tests that download the example datasets). The same variable can
+be set manually before calling <code><a href="https://devtools.r-lib.org/reference/test.html" class="external-link">devtools::test()</a></code>.</p>
+<p>Some checks, e.g. tests that run with multiple workers, need the
+package to be installed. To install it from the repository root, run the
+following command in a shell:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="ex">R</span> CMD INSTALL <span class="at">--no-lock</span> <span class="at">--no-staged-install</span> .</span></code></pre></div>
+<p>The two flags avoid failures caused by stale
+<code>00LOCK-metabodeconplus</code> directories, which can occur if the
+package’s shared library is still in use by a running R session (e.g. on
+network file systems).</p>
 <p>After doing these steps, you can push your changes to Github and
 create a pull request.</p>
 </div>
@@ -129,7 +144,7 @@ Policies</a> are fulfilled</li>
 <li>Use the following commands to do a final check of the package and
 release it to CRAN</li>
 </ol>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Check spelling and URLs. False positive findings of spell check should be</span></span>
 <span><span class="co"># added to inst/WORDLIST.</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/spell_check.html" class="external-link">spell_check</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -162,6 +177,18 @@ release it to CRAN</li>
 <span><span class="co"># Use the following command to submit the package to CRAN or submit via the web</span></span>
 <span><span class="co"># interface available at https://cran.r-project.org/submit.html.</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/submit_cran.html" class="external-link">submit_cran</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>Release bookkeeping:</p>
+<ol style="list-style-type: decimal">
+<li>Before submitting, bump the version in <code>DESCRIPTION</code> and
+add a matching entry at the top of <code>NEWS.md</code>.</li>
+<li>Update <code>cran-comments.md</code> with the submission type (new
+release, update or resubmission) and the results of the checks
+above.</li>
+<li>After CRAN has accepted the package, tag the released commit as
+<code>vX.Y.Z</code>
+(e.g. <code>git tag v0.22.4 &amp;&amp; git push origin v0.22.4</code>)
+and create a matching GitHub release at <a href="https://github.com/spang-lab/metabodeconplus/releases" class="external-link">github.com/spang-lab/metabodeconplus/releases</a>.</li>
+</ol>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

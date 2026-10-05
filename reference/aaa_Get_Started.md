@@ -1,4 +1,4 @@
-# Get URL of Metabodecon "Get Started" Page
+# Get URL of metabodeconplus "Get Started" Page
 
 `get_started` and `aaa_Get_Started` both return (and optionally open)
 the URL of the "Get Started" page of the metabodeconplus documentation.
@@ -18,7 +18,7 @@ get_started(open_browser = interactive())
 
 - open_browser:
 
-  If TRUE, the "Get Stated" page is opened in the default browser.
+  If TRUE, the "Get Started" page is opened in the default browser.
 
 ## Value
 

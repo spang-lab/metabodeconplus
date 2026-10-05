@@ -1,6 +1,6 @@
-# Metabodecon Classes and Helpers
+# metabodeconplus Classes and Helpers
 
-Metabodecon represents NMR data using a small set of S3 classes
+metabodeconplus represents NMR data using a small set of S3 classes
 connected by **cumulative inheritance**. A raw spectrum has class
 `"spectrum"`. After
 [`deconvolute()`](https://spang-lab.github.io/metabodeconplus/reference/deconvolute.md)
@@ -188,44 +188,44 @@ is_spectrum(s)
 #> [1] TRUE
 
 d <- deconvolute(s, sfr = c(3.55, 3.35))
-#> 2026-08-09 09:53:19.74 Starting deconvolution (spectra: 1, workers: 1)
-#> 2026-08-09 09:53:19.74 Starting deconvolution of sim_01 using R backend
-#> 2026-08-09 09:53:19.74 Starting peak selection
-#> 2026-08-09 09:53:19.74 Detected 312 peaks
-#> 2026-08-09 09:53:19.74 Removing peaks with low scores
-#> 2026-08-09 09:53:19.74 Removed 285 peaks
-#> 2026-08-09 09:53:19.74 Fitting Lorentz curves (3 iterations)
-#> 2026-08-09 09:53:19.74 Finished deconvolution of sim_01
-#> 2026-08-09 09:53:19.74 Finished deconvolution 0.004 secs
+#> 2026-10-05 14:26:50.88 Starting deconvolution (spectra: 1, workers: 1)
+#> 2026-10-05 14:26:50.88 Starting deconvolution of sim_01 using R backend
+#> 2026-10-05 14:26:50.88 Starting peak selection
+#> 2026-10-05 14:26:50.88 Detected 312 peaks
+#> 2026-10-05 14:26:50.88 Removing peaks with low scores
+#> 2026-10-05 14:26:50.88 Removed 285 peaks
+#> 2026-10-05 14:26:50.88 Fitting Lorentz curves (3 iterations)
+#> 2026-10-05 14:26:50.88 Finished deconvolution of sim_01
+#> 2026-10-05 14:26:50.88 Finished deconvolution 0.004 secs
 class(d) # c("decon2", "spectrum")
 #> [1] "decon2"   "spectrum"
 inherits(d, "spectrum") # TRUE
 #> [1] TRUE
 
 ds <- deconvolute(sim[1:3], sfr = c(3.55, 3.35))
-#> 2026-08-09 09:53:19.75 Starting deconvolution (spectra: 3, workers: 1)
-#> 2026-08-09 09:53:19.75 Starting deconvolution of sim_01 using R backend
-#> 2026-08-09 09:53:19.75 Starting peak selection
-#> 2026-08-09 09:53:19.75 Detected 312 peaks
-#> 2026-08-09 09:53:19.75 Removing peaks with low scores
-#> 2026-08-09 09:53:19.75 Removed 285 peaks
-#> 2026-08-09 09:53:19.75 Fitting Lorentz curves (3 iterations)
-#> 2026-08-09 09:53:19.75 Finished deconvolution of sim_01
-#> 2026-08-09 09:53:19.75 Starting deconvolution of sim_02 using R backend
-#> 2026-08-09 09:53:19.75 Starting peak selection
-#> 2026-08-09 09:53:19.75 Detected 316 peaks
-#> 2026-08-09 09:53:19.75 Removing peaks with low scores
-#> 2026-08-09 09:53:19.75 Removed 286 peaks
-#> 2026-08-09 09:53:19.75 Fitting Lorentz curves (3 iterations)
-#> 2026-08-09 09:53:19.75 Finished deconvolution of sim_02
-#> 2026-08-09 09:53:19.75 Starting deconvolution of sim_03 using R backend
-#> 2026-08-09 09:53:19.75 Starting peak selection
-#> 2026-08-09 09:53:19.75 Detected 333 peaks
-#> 2026-08-09 09:53:19.75 Removing peaks with low scores
-#> 2026-08-09 09:53:19.75 Removed 308 peaks
-#> 2026-08-09 09:53:19.75 Fitting Lorentz curves (3 iterations)
-#> 2026-08-09 09:53:19.76 Finished deconvolution of sim_03
-#> 2026-08-09 09:53:19.76 Finished deconvolution 0.011 secs
+#> 2026-10-05 14:26:50.88 Starting deconvolution (spectra: 3, workers: 1)
+#> 2026-10-05 14:26:50.88 Starting deconvolution of sim_01 using R backend
+#> 2026-10-05 14:26:50.89 Starting peak selection
+#> 2026-10-05 14:26:50.89 Detected 312 peaks
+#> 2026-10-05 14:26:50.89 Removing peaks with low scores
+#> 2026-10-05 14:26:50.89 Removed 285 peaks
+#> 2026-10-05 14:26:50.89 Fitting Lorentz curves (3 iterations)
+#> 2026-10-05 14:26:50.89 Finished deconvolution of sim_01
+#> 2026-10-05 14:26:50.89 Starting deconvolution of sim_02 using R backend
+#> 2026-10-05 14:26:50.89 Starting peak selection
+#> 2026-10-05 14:26:50.89 Detected 316 peaks
+#> 2026-10-05 14:26:50.89 Removing peaks with low scores
+#> 2026-10-05 14:26:50.89 Removed 286 peaks
+#> 2026-10-05 14:26:50.89 Fitting Lorentz curves (3 iterations)
+#> 2026-10-05 14:26:50.89 Finished deconvolution of sim_02
+#> 2026-10-05 14:26:50.89 Starting deconvolution of sim_03 using R backend
+#> 2026-10-05 14:26:50.89 Starting peak selection
+#> 2026-10-05 14:26:50.89 Detected 333 peaks
+#> 2026-10-05 14:26:50.89 Removing peaks with low scores
+#> 2026-10-05 14:26:50.89 Removed 308 peaks
+#> 2026-10-05 14:26:50.89 Fitting Lorentz curves (3 iterations)
+#> 2026-10-05 14:26:50.90 Finished deconvolution of sim_03
+#> 2026-10-05 14:26:50.90 Finished deconvolution 0.011 secs
 class(ds)              # c("decons2", "spectra")
 #> [1] "decons2" "spectra"
 as_spectra(s)

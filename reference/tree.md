@@ -84,6 +84,7 @@ tree(metabodeconplus_dir, max.level = 1)
 #> ├── help/
 #> ├── html/
 #> ├── libs/
+#> ├── CITATION
 #> ├── DESCRIPTION
 #> ├── INDEX
 #> ├── NAMESPACE

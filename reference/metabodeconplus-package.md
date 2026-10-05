@@ -14,6 +14,9 @@ and Vu et al. (2011)
 . A detailed description and evaluation of an early version of the
 package can be found in Haeckl et al. (2021)
 [doi:10.3390/metabo11070452](https://doi.org/10.3390/metabo11070452) .
+The current package, including the model fitting workflow, is described
+in Schmidt et al. (2026)
+[doi:10.3390/metabo16090604](https://doi.org/10.3390/metabo16090604) .
 'metabodeconplus' is the actively developed successor to the
 'metabodecon' package and introduces backwards-incompatible API changes.
 
