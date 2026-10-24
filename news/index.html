@@ -45,6 +45,7 @@
 <li><p>README now presents CRAN as the stable source and GitHub as the development version, and links the Model Fitting and Datasets articles.</p></li>
 <li><p>Documentation fixes: titles and vignettes now say metabodeconplus instead of Metabodecon, and the Contributing article describes how to run the tests, install the package and prepare a release.</p></li>
 <li><p>CI: bumped GitHub Actions versions and allowed manual runs of R-CMD-check.</p></li>
+<li><p>Fixed the internal test helper <code>run_tests()</code>, which aborted because it tried to mock the no longer existing function <code>assert()</code>.</p></li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.22.3" id="metabodeconplus-0223">metabodeconplus 0.22.3<a class="anchor" aria-label="anchor" href="#metabodeconplus-0223"></a></h2>
