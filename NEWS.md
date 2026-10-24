@@ -10,6 +10,8 @@
 
 * CI: bumped GitHub Actions versions and allowed manual runs of R-CMD-check.
 
+* Fixed the internal test helper `run_tests()`, which aborted because it tried to mock the no longer existing function `assert()`.
+
 # metabodeconplus 0.22.3
 
 * `snap_to_ref()` no longer returns a zero-column feature matrix when it
