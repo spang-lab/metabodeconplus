@@ -258,15 +258,15 @@ this point we have n = 4 unique labels (1.024, 1.025, 1.027 and 1.028).
 
 ``` r
 decon <- deconvolute(sim[[1]], sfr = c(3.55, 3.35))
-#> 2026-10-24 13:22:32.56 Starting deconvolution (spectra: 1, workers: 1)
-#> 2026-10-24 13:22:32.56 Starting deconvolution of sim_01 using R backend
-#> 2026-10-24 13:22:32.57 Starting peak selection
-#> 2026-10-24 13:22:32.57 Detected 312 peaks
-#> 2026-10-24 13:22:32.57 Removing peaks with low scores
-#> 2026-10-24 13:22:32.57 Removed 285 peaks
-#> 2026-10-24 13:22:32.57 Fitting Lorentz curves (3 iterations)
-#> 2026-10-24 13:22:32.57 Finished deconvolution of sim_01
-#> 2026-10-24 13:22:32.57 Finished deconvolution 0.005 secs
+#> 2026-10-24 14:34:11.49 Starting deconvolution (spectra: 1, workers: 1)
+#> 2026-10-24 14:34:11.49 Starting deconvolution of sim_01 using R backend
+#> 2026-10-24 14:34:11.49 Starting peak selection
+#> 2026-10-24 14:34:11.49 Detected 312 peaks
+#> 2026-10-24 14:34:11.49 Removing peaks with low scores
+#> 2026-10-24 14:34:11.49 Removed 285 peaks
+#> 2026-10-24 14:34:11.49 Fitting Lorentz curves (3 iterations)
+#> 2026-10-24 14:34:11.49 Finished deconvolution of sim_01
+#> 2026-10-24 14:34:11.49 Finished deconvolution 0.004 secs
 draw_spectrum(obj = decon)
 
 #> $plt_rgn_ndc
